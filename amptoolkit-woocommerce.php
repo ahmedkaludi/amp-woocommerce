@@ -12,7 +12,7 @@ Author URI: http://ampforwp.com
 
 // Check if the dependent plugins are activated, if not, then return.
 // As there is no use of this plugin, if parent plugins are not activated.
-	if ( defined( 'AMP__FILE__' ) && defined( 'AMPFORWP_PLUGIN_DIR' ) ) {
+	if ( defined( 'AMPFORWP_PLUGIN_DIR' ) ) {
 		
 	} else {  return; }
 

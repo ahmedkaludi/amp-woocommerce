@@ -64,13 +64,13 @@
     		    // get cart url
     		    $cart_url = wc_get_cart_url();
     		    // if multiple products in cart
-    		    // if($qty>1)
-    		    // echo '<a href="'.$cart_url.'">Cart items <i>'.$qty.'</i></a>';
-    		    // // if single product in cart
-    		    // if($qty==1)
-    		    // echo '<a href="'.$cart_url.'">Cart item <i>1</i></a>';
-    		    // if($qty==0)
-    		    // echo '<a href="'.$cart_url.'">Your Cart is empty with <i>0</i> items.</a>';
+    		    if($qty>1)
+    		    echo '<a href="'.$cart_url.'">Cart items <i>'.$qty.'</i></a>';
+    		    // if single product in cart
+    		    if($qty==1)
+    		    echo '<a href="'.$cart_url.'">Cart item <i>1</i></a>';
+    		    if($qty==0)
+    		    echo '<a href="'.$cart_url.'">Your Cart is empty with <i>0</i> items.</a>';
 						
 						// Price of the product (html), including sale price strikeout & new price
 						$amp_product_price =  $woocommerce->product_factory->get_product()->get_price_html();
@@ -86,35 +86,37 @@
 		$review_count = $woocommerce->product_factory->get_product()->get_review_count();
 		$average 			= $woocommerce->product_factory->get_product()->get_average_rating();
 		$rating_html 	= $woocommerce->product_factory->get_product()->get_rating_html();
-		// echo '$rating_count = ' . $rating_count . '<br />' ;
-		// echo '$review_count = ' . $review_count . '<br />' ;
-		// echo '$average 			= ' . $average . '<br />' ;
-		// echo '$rating_html 	= ' . $rating_html . '<br />' ;
+	 	echo '$rating_count 	= ' . $rating_count . '<br />' ;
+	 	echo '$review_count 	= ' . $review_count . '<br />' ;
+	 	echo '$average 			= ' . $average . '<br />' ;
+	 	// echo '$rating_html 		= ' . $rating_html . '<br />' ;
 		
 		// Meta info 
-		$categories 	=	$woocommerce->product_factory->get_product()->get_categories(); 
+		$categories 		=	$woocommerce->product_factory->get_product()->get_categories(); 
 		$tags 				=	$woocommerce->product_factory->get_product()->get_tags(); 
-		// echo '$categories 	= ' . $categories . '<br />' ;
-		// echo '$tags 				= ' . $tags . '<br />' ;
+	  	echo '$categories 	= ' . $categories . '<br />' ;
+	  	echo '$tags 		= ' . $tags . '<br />' ;
 		
 		// Check sale status
 		$sale					=	$woocommerce->product_factory->get_product()->is_on_sale();
 		// $sale has boolean value 
-		// echo '$sale 				= ' . $sale . '<br />' ;
+		 echo '$sale 				= ' . $sale . '<br />' ;
 	
 		// Add to cart button with button text and button url
 		$add_to_cart 			= $woocommerce->product_factory->get_product()->add_to_cart_url();	
 		$add_to_cart_text = $woocommerce->product_factory->get_product()->add_to_cart_text();	
-		// echo '<div class="ampforwp-add-to-cart-button"> <a href="' .  $add_to_cart . '"> ' . $add_to_cart_text .' </a> </div> <br /> <br />';
+		  echo '<div class="ampforwp-add-to-cart-button"> <a href="' .  $add_to_cart . '"> ' . $add_to_cart_text .' </a> </div> <br /> <br />';
 		
 		// Featured Image for WooCommerce Product
 		$get_image = $woocommerce->product_factory->get_product()->get_image();
-		// echo $get_image . '<br />';
+		//  echo $get_image . '<br />';
+
+		//  var_dump($get_image);
 		
 		// Product Description.
-		//woocommerce_template_single_excerpt();
+		 woocommerce_template_single_excerpt();
 		
-		// the_excerpt();
+		 // the_excerpt();
 		
 		// PHP tag ends
 		?>
@@ -123,10 +125,10 @@
 		
 		echo "<br /><br /><br />";
 			// Images and gallery
-			// $gallery	=	$woocommerce->product_factory->get_product()->get_gallery_attachment_ids(); 
+			$gallery	=	$woocommerce->product_factory->get_product()->get_gallery_attachment_ids(); 
 			// 
-			// echo $gallery . '<br />';
-			// var_dump($gallery); 
+			//echo $gallery . '<br />';
+			//var_dump($gallery); 
 			
 			
 
