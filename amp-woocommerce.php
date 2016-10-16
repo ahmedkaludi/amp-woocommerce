@@ -1,10 +1,12 @@
 <?php
 /*
-Plugin Name: WooCommerce for AMP-Toolkit
-Description: An Extension of AMP-Toolkit. This is simple plugin enables WooCommerce for AMP pages.
+Plugin Name: AMP WooCommerce
+Description: WooCommerce for AMP (Accelerated Mobile Pages). This is simple plugin enables e-commerce store with WooCommerce for AMP pages.
 Author: Mohammed Kaludi
 Version: 1.0
 Author URI: http://ampforwp.com
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 // Exit if accessed directly.
 	if ( ! defined( 'ABSPATH' ) ) exit;
