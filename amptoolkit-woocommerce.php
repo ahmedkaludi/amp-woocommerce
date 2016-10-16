@@ -6,181 +6,176 @@ Author: Mohammed Kaludi
 Version: 1.0
 Author URI: http://ampforwp.com
 */
-
 // Exit if accessed directly.
 	if ( ! defined( 'ABSPATH' ) ) exit;
-
-// Check if the dependent plugins are activated, if not, then return.
-// As there is no use of this plugin, if parent plugins are not activated.
-	if ( defined( 'AMPFORWP_PLUGIN_DIR' ) ) {
-		
-	} else {  return; }
-
 // Enable WooCommerce support for AMP
-	function ampforwp_add_woocommerce_support() {
+	function amp_woocommerce_add_woocommerce_support() {
+
+		// Check if the dependent plugins are activated, if not, then return.
+		// As there is no use of this plugin, if parent plugins are not activated.
+		if ( ! defined( 'AMP__FILE__' ) ) {  return; }
 
 		add_rewrite_endpoint( AMP_QUERY_VAR, EP_PERMALINK | EP_PAGES | EP_ROOT );
 		add_post_type_support( 'product', AMP_QUERY_VAR );
 
 	}
-	add_action( 'init', 'ampforwp_add_woocommerce_support',11);
+	add_action( 'amp_init', 'amp_woocommerce_add_woocommerce_support',11);
 
-// create new template for WooCommerce
-	add_action('ampforwp_after_features_include', 'ampforwp_include_woocommerce_files');
-	function ampforwp_include_woocommerce_files() {
-			add_filter( 'amp_post_template_file', 'ampforwp_woocommerce_template', 10, 3 );
-	}
-	function ampforwp_woocommerce_template( $file, $type, $post ) {
+	add_filter( 'amp_post_template_file', 'amp_woocommerce_custom_woocommerce_template', 10, 3 );
+
+	function amp_woocommerce_custom_woocommerce_template( $file, $type, $post ) {
 		if ( 'single' === $type && 'product' === $post->post_type ) {
-			$file = dirname(__FILE__) . '/wc.php';
+			$file = dirname(__FILE__) . '/templates/wc.php';
 		}
 		return $file;
-	} 
-	
-	// Add WooCommerce Support in the theme.
-	add_action( 'pre_amp_render_post', 'ampforwp_add_woocommerce_image_action' );
-	function ampforwp_add_woocommerce_image_action() {
-		add_filter( 'the_content', 'ampforwp_add_woocommerce_featured_image' );	
 	}
 
-	function ampforwp_add_woocommerce_featured_image( $content ) {
+/* Add WooCommerce elements in the page
+
+	1. Add WooCommerce container
+	2. Add Custom Style for WooCommerce Page
+	3. Add WooCommerce gallery
+	4. Add WooCommerce amp-carousel script 
+	5. Remove Default Post Meta from header
+	6. Add WooCommerce Meta information
+	7. Add Product Description
+*/	
+	// 1. Add WooCommerce container
+	// Add container for WooCommerce elements
+	add_action('amp_woocommerce_after_the_content','amp_woocommerce_container_starts',9);
+	function amp_woocommerce_container_starts(){
+		echo ' <div class="amp-woocommerce-container">' ;
+	}
+
+	add_action('amp_woocommerce_after_the_content','amp_woocommerce_container_ends',20);
+	function amp_woocommerce_container_ends(){
+		echo ' </div>' ;
+	}
+
+	// 2. Add Custom Style for WooCommerce Page
+	add_action('amp_post_template_css','amp_woocommerce_custom_style');
+	function amp_woocommerce_custom_style() { 
+		if ( function_exists( 'is_on_sale' ) ) {
 			global $woocommerce;
-			$get_wc_image = $woocommerce->product_factory->get_product()->get_image();
-			// Just add the raw <img /> tag; our sanitizer will take care of it later.
-			$image = sprintf( '<p class="ampforwp-wc-product-desc">%s</p>', $get_wc_image );
-			$content = $image . $content;
-			return $content;
+			$amp_woocommerce_sale =	$woocommerce->product_factory->get_product()->is_on_sale();
+			if ( $amp_woocommerce_sale == 1 ) { ?>
+				.amp-wp-article-featured-image::before {
+					content: 'Sale';
+					background: #0a89c0;
+					padding: 20px 15px;
+					border-radius: 50%;
+					color: #fff;
+					position: relative;
+					z-index: 1;
+					left: 5%px;
+					top: 30px;
+				}
+			<?php } ?>
+				.amp-woocommerce-container amp-carousel {
+					background: none;
+				}
+				.ampforwp-add-to-cart-button a {
+					background: #0a89c0;
+					color: #fff;
+					padding: 10px 8px;
+					text-decoration: none;
+				}
+			<?php 
+		}
 	}
 
+	// 3. Add WooCommerce gallery
+	add_action('amp_woocommerce_after_the_content','amp_woocommerce_add_wc_elements_gallery');
 
-if ( ! function_exists( 'ampforwp_woocommerce_settings' ) ) {
-	function ampforwp_woocommerce_settings($sections){
-	    $sections[] = array(
-	        'title' => __('In Content Ads', 'redux-framework-demo'),
-	        'desc' => __('<p class="description">This is a section created by adding a filter to the sections array. Can be used by child themes to add/remove sections from the options.</p>', 'redux-framework-demo'),
-	        'icon' => 'el el-th-large',
-	        'fields' => array(	
-							array(
-		                'id'        =>'ampforwp-incontent-ad-1-enable',
-		                'type'      => 'switch', 
-		                'title'     => __('AD #1', 'redux-framework-demo'),
-										'subtitle' 	=> __('Show Ad after 50% of content, or set custom lenght.','redux-framework-demo'),
-		                'default'   => 0,
-		                'true'      => 'Enabled',
-		                'false'     => 'Disabled',
-		            ),
-							array(
-										'id'       => 'ampforwp-incontent-ad-1',
-										'type'     => 'select',
-										'title'    => __('AD Size', 'redux-framework-demo'), 
-										'options'  => array(
-												'1' => '300x250',
-												'2' => '336x280', 
-												'3' => '728x90',
-												'4' => '300x600',
-												'5' => '320x100',
-												'6' => '200x50',
-												'7' => '320x50'
-										),
-										'default'  => '2',
-										'required'	=> array('ampforwp-incontent-ad-1-enable','=','1'),
-								),
-								array(
-										'id'        =>'ampforwp-incontent-ad-1-data-ad-client',
-										'type'      => 'text',   
-										'title'     => __('Data AD Client', 'redux-framework-demo'),
-										'desc'      => __('Enter the Data Ad Client (data-ad-client) from the adsense ad code. e.g. ca-pub-2005XXXXXXXXX342', 'redux-framework-demo'),
-										'default'   => '',
-										'placeholder'=> 'ca-pub-2005XXXXXXXXX342',
-										'required'	=> array('ampforwp-incontent-ad-1-enable','=','1'),
-								),          
-								array(
-										'id'        => 'ampforwp-incontent-ad-1-data-ad-slot',
-										'type'      => 'text', 
-										'title'     => __('Data AD Slot', 'redux-framework-demo'),
-										'desc'      => __('Enter the Data Ad Slot (data-ad-slot) from the adsense ad code. e.g. 70XXXXXX12', 'redux-framework-demo'),
-										'default'  => '',
-										'placeholder'=> '70XXXXXX12',
-										'required'	=> array('ampforwp-incontent-ad-1-enable','=','1'),
-								),
-								array(
-		              'id'       => 'amp-content-advert-middle',
-		              'type'      => 'switch', 
-		              'title'    => __( 'Show Ad after 50% of content', 'redux-framework-demo' ),
-		              'subtitle' => __( 'Show Ad after 50% of content', 'redux-framework-demo' ),
-									'true'      => 'Enabled',
-	                'false'     => 'Disabled',
-		              'default'  => 1,
-									'required'	=> array('ampforwp-incontent-ad-1-enable','=','1'),
-							),	
-							array(
-		              'id'       => 'amp-content-advert',
-		              'type'     => 'select',
-		              'title'    => __( 'In content Ads', 'redux-framework-demo' ),
-		              'subtitle' => __( 'Select after how many paragraphs your ads should show.', 'redux-framework-demo' ),
-									'required'  => array('amp-content-advert-middle', '=' , 0),
-		              'options'  => array( 
-												'1' => '1', 
-												'2'  => '2', 
-												'3'  => '3', 
-												'4'  => '4', 
-												'5'  => '5', 
-												'6'  => '6', 
-												'7'  => '7', 
-												'8'  => '8', 
-												'9'  => '9', 
-												'10'  => '10', 
-									 	),
-		              'default'  => '2',
-							),
-								// array(
-								// 			'id'        =>'ampforwp-incontent-ad-2-enable',
-								// 			'type'      => 'switch', 
-								// 			'title'     => __('AD #2', 'redux-framework-demo'),
-								// 			'subtitle' 	=> __('Show Ad after 75% of content','redux-framework-demo'),
-								// 			'default'   => 0,
-								// 			'true'      => 'Enabled',
-								// 			'false'     => 'Disabled',
-								// 	),
-								// array(
-								// 			'id'       => 'ampforwp-incontent-ad-2',
-								// 			'type'     => 'select',
-								// 			'title'    => __('AD Size', 'redux-framework-demo'),  
-								// 			// Must provide key => value pairs for select options
-								// 			'options'  => array(
-								// 					'1' => '300x250',
-								// 					'2' => '336x280', 
-								// 					'3' => '728x90',
-								// 					'4' => '300x600',
-								// 					'5' => '320x100',
-								// 					'6' => '200x50',
-								// 					'7' => '320x50'
-								// 			),
-								// 			'default'  => '2',
-								// 			'required'	=> array('ampforwp-incontent-ad-2-enable','=','1'),
-								// 	),
-								// 	array(
-								// 			'id'        =>'ampforwp-incontent-ad-2-data-ad-client',
-								// 			'type'      => 'text',   
-								// 			'title'     => __('Data AD Client', 'redux-framework-demo'),
-								// 			'desc'      => __('Enter the Data Ad Client (data-ad-client) from the adsense ad code. e.g. ca-pub-2005XXXXXXXXX342', 'redux-framework-demo'),
-								// 			'default'   => '',
-								// 			'placeholder'=> 'ca-pub-2005XXXXXXXXX342',
-								// 			'required'	=> array('ampforwp-incontent-ad-2-enable','=','1'),
-								// 	),          
-								// 	array(
-								// 			'id'        => 'ampforwp-incontent-ad-2-data-ad-slot',
-								// 			'type'      => 'text', 
-								// 			'title'     => __('Data AD Slot', 'redux-framework-demo'),
-								// 			'desc'      => __('Enter the Data Ad Slot (data-ad-slot) from the adsense ad code. e.g. 70XXXXXX12', 'redux-framework-demo'),
-								// 			'default'  => '',
-								// 			'placeholder'=> '70XXXXXX12',
-								// 			'required'	=> array('ampforwp-incontent-ad-2-enable','=','1'),
-								// 	),	
-					)
-	    );
-	    return $sections;
+	function amp_woocommerce_add_wc_elements_gallery(){ 
+		if ( ! function_exists( 'get_gallery_attachment_ids' ) ) {
+			global $woocommerce;
+				$amp_woocommerce_gallery =	$woocommerce->product_factory->get_product()->get_gallery_attachment_ids(); 
+				if ( $amp_woocommerce_gallery ) { ?>
+					<amp-carousel width="400"
+					  height="300"
+					  layout="responsive"
+					  autoplay
+					  delay="2000"
+					  type="slides">
+						<?php
+						foreach ($amp_woocommerce_gallery as $amp_woocommerce_image) {
+							$attachment_image = wp_get_attachment_image_src( $amp_woocommerce_image, $size = 'large');
+							$attachment_image = $attachment_image[0];
+							?>
+							<amp-img src="<?php echo esc_url($attachment_image); ?>"
+							    width="400"
+							    height="300"
+							    layout="responsive"></amp-img>
+							<?php 
+						} ?>
+					</amp-carousel> 
+					<?php 
+				}
+		}	 
 	}
-}
 
-// add_filter("redux/options/redux_builder_amp/sections", 'ampforwp_woocommerce_settings');
+	// 4. Add WooCommerce amp-carousel script only if WC galley is available
+	add_action('amp_post_template_head','amp_woocommerce_add_amp_carousel_script');
+
+	function amp_woocommerce_add_amp_carousel_script() {
+		if ( ! function_exists( 'get_gallery_attachment_ids' ) ) { ?>
+			 	<script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
+			<?php 				 
+		}
+	}
+
+	// 5. Remove Default Post Meta from header
+
+	// removed directly for now, but will use filters 
+
+		// 	// 5.1 Remove Meta Author info
+		// add_filter( 'amp_post_article_header_meta', 'amp_woocommerce_remove_meta_author' );
+		// function amp_woocommerce_remove_meta_author( $meta_parts ) {
+		// 	foreach ( array_keys( $meta_parts, 'meta-author', true ) as $key ) {
+		// 		unset( $meta_parts[ $key ] );
+		// 	}
+		// 	return $meta_parts;
+		// } 
+		// 	// 5.2 Remove Meta Time info
+		// add_filter( 'amp_post_article_header_meta', 'amp_woocommerce_remove_meta_time' );
+		// function amp_woocommerce_remove_meta_time( $meta_parts ) {
+		// 	foreach ( array_keys( $meta_parts, 'meta-time', true ) as $key ) {
+		// 		unset( $meta_parts[ $key ] );
+		// 	}
+		// 	return $meta_parts;
+		// }   
+		// 	// 5.3 Remove Comments button
+
+		// if ( 'product' === $post->post_type ) {
+		// 	add_filter( 'amp_post_article_footer_meta', 'amp_woocommerce_remove_comment_button' );
+		// }
+		
+		// function amp_woocommerce_remove_comment_button( $meta_parts ) {
+		// 	foreach ( array_keys( $meta_parts, 'meta-comments-link', true ) as $key ) {
+		// 		unset( $meta_parts[ $key ] );
+		// 	}
+		// 	return $meta_parts;
+		// }  
+
+	// 6. Add WooCommerce Meta information
+	add_filter( 'amp_post_article_header_meta', 'amp_woocommerce_add_wc_meta' );
+	function amp_woocommerce_add_wc_meta( $meta_parts ) {
+		$meta_parts[] = 'amp-woocommerce-meta-info';
+		return $meta_parts;
+	}
+
+	add_filter( 'amp_post_template_file', 'amp_woocommerce_add_wc_meta_path', 10, 3 );
+	function amp_woocommerce_add_wc_meta_path( $file, $type, $post ) {
+		if ( 'amp-woocommerce-meta-info' === $type  && 'product' === $post->post_type ) {
+			$file = dirname( __FILE__ ) . '/templates/amp-woocommerce-meta-info.php';
+		}
+		return $file;
+	}
+
+	// 7. Add Product Description
+	add_action('amp_woocommerce_after_the_content','amp_woocommerce_add_product_description', 11);
+
+	function amp_woocommerce_add_product_description(){
+		woocommerce_template_single_excerpt();
+	}
