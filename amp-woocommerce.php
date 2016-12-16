@@ -3,7 +3,7 @@
 Plugin Name: AMP WooCommerce
 Description: WooCommerce for AMP (Accelerated Mobile Pages). This is simple plugin enables e-commerce store with WooCommerce for AMP pages.
 Author: Mohammed Kaludi
-Version: 1.0
+Version: 0.1
 Author URI: http://ampforwp.com
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -26,8 +26,15 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	add_filter( 'amp_post_template_file', 'amp_woocommerce_custom_woocommerce_template', 10, 3 );
 
 	function amp_woocommerce_custom_woocommerce_template( $file, $type, $post ) {
+		global  $redux_builder_amp;
 		if ( 'single' === $type && 'product' === $post->post_type ) {
-			$file = dirname(__FILE__) . '/templates/wc.php';
+
+			if ( class_exists( 'Ampforwp_Init' ) && $redux_builder_amp['amp-design-selector'] == 2) {
+					$file = dirname(__FILE__) . '/templates/ampforwp-wc.php';
+			} else {
+					$file = dirname(__FILE__) . '/templates/wc.php';
+			}
+
 		}
 		return $file;
 	}
@@ -37,11 +44,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	1. Add WooCommerce container
 	2. Add Custom Style for WooCommerce Page
 	3. Add WooCommerce gallery
-	4. Add WooCommerce amp-carousel script 
+	4. Add WooCommerce amp-carousel script
 	5. Remove Default Post Meta from header
 	6. Add WooCommerce Meta information
 	7. Add Product Description
-*/	
+*/
 	// 1. Add WooCommerce container
 	// Add container for WooCommerce elements
 	add_action('amp_woocommerce_after_the_content','amp_woocommerce_container_starts',9);
@@ -56,7 +63,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 	// 2. Add Custom Style for WooCommerce Page
 	add_action('amp_post_template_css','amp_woocommerce_custom_style');
-	function amp_woocommerce_custom_style() { 
+	function amp_woocommerce_custom_style() {
 		if ( function_exists( 'is_on_sale' ) ) {
 			global $woocommerce;
 			$amp_woocommerce_sale =	$woocommerce->product_factory->get_product()->is_on_sale();
@@ -82,17 +89,22 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 					padding: 10px 8px;
 					text-decoration: none;
 				}
-			<?php 
+
+			<?php
+		}?>
+	.amp-wp-meta.amp-woocommerce-add-cart{
+				display: block;
 		}
+		<?php
 	}
 
 	// 3. Add WooCommerce gallery
 	add_action('amp_woocommerce_after_the_content','amp_woocommerce_add_wc_elements_gallery');
 
-	function amp_woocommerce_add_wc_elements_gallery(){ 
+	function amp_woocommerce_add_wc_elements_gallery(){
 		if ( ! function_exists( 'get_gallery_attachment_ids' ) ) {
 			global $woocommerce;
-				$amp_woocommerce_gallery =	$woocommerce->product_factory->get_product()->get_gallery_attachment_ids(); 
+				$amp_woocommerce_gallery =	$woocommerce->product_factory->get_product()->get_gallery_attachment_ids();
 				if ( $amp_woocommerce_gallery ) { ?>
 					<amp-carousel width="400"
 					  height="300"
@@ -109,12 +121,12 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 							    width="400"
 							    height="300"
 							    layout="responsive"></amp-img>
-							<?php 
+							<?php
 						} ?>
-					</amp-carousel> 
-					<?php 
+					</amp-carousel>
+					<?php
 				}
-		}	 
+		}
 	}
 
 	// 4. Add WooCommerce amp-carousel script only if WC galley is available
@@ -123,13 +135,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	function amp_woocommerce_add_amp_carousel_script() {
 		if ( ! function_exists( 'get_gallery_attachment_ids' ) ) { ?>
 			 	<script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
-			<?php 				 
+			<?php
 		}
 	}
 
 	// 5. Remove Default Post Meta from header
 
-	// removed directly for now, but will use filters 
+	// removed directly for now, but will use filters
 
 		// 	// 5.1 Remove Meta Author info
 		// add_filter( 'amp_post_article_header_meta', 'amp_woocommerce_remove_meta_author' );
@@ -138,7 +150,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 		// 		unset( $meta_parts[ $key ] );
 		// 	}
 		// 	return $meta_parts;
-		// } 
+		// }
 		// 	// 5.2 Remove Meta Time info
 		// add_filter( 'amp_post_article_header_meta', 'amp_woocommerce_remove_meta_time' );
 		// function amp_woocommerce_remove_meta_time( $meta_parts ) {
@@ -146,19 +158,19 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 		// 		unset( $meta_parts[ $key ] );
 		// 	}
 		// 	return $meta_parts;
-		// }   
+		// }
 		// 	// 5.3 Remove Comments button
 
 		// if ( 'product' === $post->post_type ) {
 		// 	add_filter( 'amp_post_article_footer_meta', 'amp_woocommerce_remove_comment_button' );
 		// }
-		
+
 		// function amp_woocommerce_remove_comment_button( $meta_parts ) {
 		// 	foreach ( array_keys( $meta_parts, 'meta-comments-link', true ) as $key ) {
 		// 		unset( $meta_parts[ $key ] );
 		// 	}
 		// 	return $meta_parts;
-		// }  
+		// }
 
 	// 6. Add WooCommerce Meta information
 	add_filter( 'amp_post_article_header_meta', 'amp_woocommerce_add_wc_meta' );
@@ -170,7 +182,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	add_filter( 'amp_post_template_file', 'amp_woocommerce_add_wc_meta_path', 10, 3 );
 	function amp_woocommerce_add_wc_meta_path( $file, $type, $post ) {
 		if ( 'amp-woocommerce-meta-info' === $type  && 'product' === $post->post_type ) {
+
 			$file = dirname( __FILE__ ) . '/templates/amp-woocommerce-meta-info.php';
+
 		}
 		return $file;
 	}

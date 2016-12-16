@@ -1,7 +1,7 @@
 <div class="amp-wp-meta amp-woocommerce-price" >
-	<?php  
+	<?php
 	if ( ! function_exists( 'get_price_html' )) {
-	
+
 		global $woocommerce;
 
 		$amp_product_price 	=  $woocommerce->product_factory->get_product()->get_price_html();
@@ -20,14 +20,14 @@
 <?php if ( $amp_product_price ) { ?>
 
 	<div class="amp-wp-meta amp-woocommerce-add-cart" >
-		<?php 
+		<?php
 			global $woocommerce;
 
-			$add_to_cart_text	=	$woocommerce->product_factory->get_product()->add_to_cart_text();	
+			$add_to_cart_text	=	$woocommerce->product_factory->get_product()->add_to_cart_text();
 			$product_id 		= $woocommerce->product_factory->get_product()->id;
 			$product_url 		=  get_permalink( $product->id );
 				$add_to_cart_url .= "?add-to-cart=$product_id";
-			$product_url 		= $product_url . $add_to_cart_url; 
+			$product_url 		= $product_url . $add_to_cart_url;
 
 			echo '<div class="ampforwp-add-to-cart-button"> <a target="_blank" href="' .  esc_url($product_url) . '"> ' . esc_html($add_to_cart_text) .' </a> </div> ';
 		?>
