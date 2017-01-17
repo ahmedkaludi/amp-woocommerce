@@ -14,8 +14,47 @@
 <body class="ampforwp-style <?php echo esc_attr( $this->get( 'body_class' ) ); ?>">
 	<?php $this->load_parts( array( 'header-bar' ) ); ?>
 
-	<?php do_action( 'ampforwp_after_header', $this ); ?>
+	<?php do_action( 'ampforwp_after_header', $this ); 
 
+
+
+	// global $woocommerce;
+
+	// var_dump($woocommerce->product_factory->get_product());
+
+	
+
+
+	// $get_variation_attributes  = $woocommerce->product_factory->get_product()->get_variation_attributes();
+
+	// $get_variation_prices  = $woocommerce->product_factory->get_product()->get_variation_prices();
+	//$get_matching_variation  = $woocommerce->product_factory->get_product()->get_matching_variation();
+
+	//  $get_available_variations  = $woocommerce->product_factory->get_product()->get_available_variations();
+
+	// var_dump($get_variation_prices);
+	
+	// var_dump($get_available_variations[0]); 
+
+	 // $get_available_variations[$i]['is_purchasable']
+
+
+		$total_vartiants = count($get_available_variations);
+
+		for ($i=0; $i < $total_vartiants; $i++) { ?>
+
+			<div style="width: 30%; float: left" class="amp-product-variant product-variants-<?php echo $i?>">
+				<img src="<?php echo $get_available_variations[$i]['image_src'];?>" alt="">
+
+				<?php echo $get_available_variations[$i]['price_html'] ?>
+				<?php echo $get_available_variations[$i]['attributes']['attribute_size'] ?>
+
+			</div>		 
+			<?php 
+		}
+
+	?>
+	<div class="cb"></div>
 
 	<div class="amp-wp-content post-title-meta amp-wp-article-header">
 
