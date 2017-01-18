@@ -16,53 +16,51 @@
 
 	<?php do_action( 'ampforwp_after_header', $this );
 
-
-
 	global $woocommerce;
 
-	// var_dump($woocommerce->product_factory->get_product());
+  if( $woocommerce->product_factory->get_product()->product_type === "variable" ) {
 
+    $get_available_variations  = $woocommerce->product_factory->get_product()->get_available_variations();
+    $total_vartiants = count($get_available_variations);
 
+    ?>
+    <div class="amp-wp-content"><!--start of main div for variant-->
+      <?php
+      		for ( $i=0 ; $i<$total_vartiants ; $i++) { ?>
+           <div><!--start of div for description-->
+             <?php
+             /// code start for description of the variant
+             $variant_attr_count = count($get_available_variations[$i]['attributes']);
+             $variant_attr = array_values($get_available_variations[$i]['attributes']);
+             for ($j=0; $j<$variant_attr_count ; $j++) {
+               echo $variant_attr[$j];
+               echo ' ';
+             }
+             /// code end for descriptio of the variant
+              ?>
+           </div><!--end of div for description-->
+            <div class="main-container">
+             <div class="amp-part-images">
+              <div class="amp-buttons">
+               <div class="amp-img">
+             		 <amp-img src="<?php echo $get_available_variations[$i]['image_src'];?>" height="500" width="500">
+             		 </amp-img>
 
+                       <?php echo $get_available_variations[$i]['price_html'] ?>
 
-	// $get_variation_attributes  = $woocommerce->product_factory->get_product()->get_variation_attributes();
+             		 <div class="add-cart">
+            			<a href="<?php echo trailingslashit(get_permalink()).'?add-to-cart='.$get_available_variations[$i]["variation_id"]; ?>">Add to Cart</a>
+             		 </div><!-- /.add-cart -->
+               </div><!-- /.amp-img -->
+             </div><!-- /.amp-buttons -->
+            </div><!--/. amp-part-images -->
+            </div><!-- /.main-container -->
+    			<?php
+    		} // end of for loop
+      } // end of if loop
+    ?>
+  </div><!--end of main div for variant-->
 
-	// $get_variation_prices  = $woocommerce->product_factory->get_product()->get_variation_prices();
-	//$get_matching_variation  = $woocommerce->product_factory->get_product()->get_matching_variation();
-
-
-	// var_dump($get_variation_prices);
-
-	// var_dump($get_available_variations[0]);
-
-	 // $get_available_variations[$i]['is_purchasable']
-
-   $get_available_variations  = $woocommerce->product_factory->get_product()->get_available_variations();
-
-		$total_vartiants = count($get_available_variations); ?>
-<div class="amp-wp-content">
-  <?php
-		for ($i=0; $i <$total_vartiants; $i++) { ?>
-        <div class="main-container">
-         <div class="amp-part-images">
-          <div class="amp-buttons">
-           <div class="amp-img">
-     		 <amp-img src="<?php echo $get_available_variations[$i]['image_src'];?>" height="500" width="500">
-     		 </amp-img>
-     		 <div class="price">
-                <?php echo $get_available_variations[$i]['price_html'] ?>
-     		 </div><!-- /.price -->
-     		 <div class="add-cart">
-    			<a href="<?php echo trailingslashit(get_permalink()).'?add-to-cart='.$get_available_variations[$i]["variation_id"]; ?>">Add to Cart</a>
-     		 </div><!-- /.add-cart -->
-           </div><!-- /.amp-img -->
-         </div><!-- /.amp-buttons -->
-        </div><!--/. amp-part-images -->
-        </div><!-- /.main-container -->
-			<?php
-		}
-	?>
-</div>
 	<div class="cb"></div>
 	<div class="amp-wp-content post-title-meta amp-wp-article-header">
 
