@@ -14,15 +14,15 @@
 <body class="ampforwp-style <?php echo esc_attr( $this->get( 'body_class' ) ); ?>">
 	<?php $this->load_parts( array( 'header-bar' ) ); ?>
 
-	<?php do_action( 'ampforwp_after_header', $this ); 
+	<?php do_action( 'ampforwp_after_header', $this );
 
 
 
-	// global $woocommerce;
+	global $woocommerce;
 
 	// var_dump($woocommerce->product_factory->get_product());
 
-	
+
 
 
 	// $get_variation_attributes  = $woocommerce->product_factory->get_product()->get_variation_attributes();
@@ -30,72 +30,45 @@
 	// $get_variation_prices  = $woocommerce->product_factory->get_product()->get_variation_prices();
 	//$get_matching_variation  = $woocommerce->product_factory->get_product()->get_matching_variation();
 
-	//  $get_available_variations  = $woocommerce->product_factory->get_product()->get_available_variations();
 
 	// var_dump($get_variation_prices);
-	
-	// var_dump($get_available_variations[0]); 
+
+	// var_dump($get_available_variations[0]);
 
 	 // $get_available_variations[$i]['is_purchasable']
 
+   $get_available_variations  = $woocommerce->product_factory->get_product()->get_available_variations();
 
-		$total_vartiants = count($get_available_variations);
-
-		for ($i=0; $i < 5; $i++) { ?>
-
-			<div style="width: 30%; float: left" class="amp-product-variant product-variants-<?php echo $i?>">
-				<img src="<?php echo $get_available_variations[$i]['image_src'];?>" alt="">
-
-				<?php echo $get_available_variations[$i]['price_html'] ?>
-				<?php echo $get_available_variations[$i]['attributes']['attribute_size'] ?>
-
-			</div>		 
-			<?php 
+		$total_vartiants = count($get_available_variations); ?>
+<div class="amp-wp-content">
+  <?php
+		for ($i=0; $i <$total_vartiants; $i++) { ?>
+        <div class="main-container">
+         <div class="amp-part-images">
+          <div class="amp-buttons">
+           <div class="amp-img">
+     		 <amp-img src="<?php echo $get_available_variations[$i]['image_src'];?>" height="500" width="500">
+     		 </amp-img>
+     		 <div class="price">
+                <?php echo $get_available_variations[$i]['price_html'] ?>
+     		 </div><!-- /.price -->
+     		 <div class="add-cart">
+    			<a href="<?php echo trailingslashit(get_permalink()).'?add-to-cart='.$get_available_variations[$i]["variation_id"]; ?>">Add to Cart</a>
+     		 </div><!-- /.add-cart -->
+           </div><!-- /.amp-img -->
+         </div><!-- /.amp-buttons -->
+        </div><!--/. amp-part-images -->
+        </div><!-- /.main-container -->
+			<?php
 		}
-
 	?>
+</div>
 	<div class="cb"></div>
 	<div class="amp-wp-content post-title-meta amp-wp-article-header">
 
 			<h1 class="amp-wp-title"><?php echo wp_kses_data( $this->get( 'post_title' ) ); ?></h1>
 			<?php $this->load_parts( apply_filters( 'amp_post_article_header_meta', array( ) ) ); ?>
-    <div class="main-container">
-     <div clas="amp-part-images">
-      <div class="amp-buttons">
-       <div class="amp-img">
- 		 <img src="http://webneel.com/wallpaper/sites/default/files/images/01-2014/20-flower-wallpaper.preview.jpg">
- 		 <div class="price">
-            <a href="#">$99 only</a>
- 		 </div><!-- /.price -->
- 		 <div class="add-cart">
-			<a href="#">Add to Cart</a> 
- 		 </div><!-- /.add-cart -->
-       </div><!-- /.amp-img -->
-     </div><!-- /.amp-buttons -->
-     <div class="amp-buttons">
-       <div class="amp-img">
- 		 <img src="http://webneel.com/wallpaper/sites/default/files/images/01-2014/20-flower-wallpaper.preview.jpg">
- 		 <div class="price">
-            <a href="#">$99 only</a>
- 		 </div><!-- /.price -->
- 		 <div class="add-cart">
-			<a href="#">Add to Cart</a> 
- 		 </div><!-- /.add-cart -->
-       </div><!-- /.amp-img -->
-     </div><!-- /.amp-buttons -->
-     <div class="amp-buttons">
-       <div class="amp-img">
- 		 <img src="http://webneel.com/wallpaper/sites/default/files/images/01-2014/20-flower-wallpaper.preview.jpg">
- 		 <div class="price">
-            <a href="#">$99 only</a>
- 		 </div><!-- /.price -->
- 		 <div class="add-cart">
-			<a href="#">Add to Cart</a> 
- 		 </div><!-- /.add-cart -->
-       </div><!-- /.amp-img -->
-     </div><!-- /.amp-buttons -->
-    </div><!--/. amp-part-images -->
-    </div><!-- /.main-container -->
+
 
 	</div>
 
@@ -111,9 +84,9 @@
 						height=<?php echo $redux_builder_amp['enable-single-featured-img-height']?> layout=responsive></amp-img></div>
 			<?php }  ?>
 	</div>
-  
+
 	<div class="amp-wp-content the_content amp-wp-article-content">
- 
+
 		 <?php do_action('amp_woocommerce_before_the_content'); ?>
 
 		 <?php echo $this->get( 'post_amp_content' ); // amphtml content; no kses ?>
