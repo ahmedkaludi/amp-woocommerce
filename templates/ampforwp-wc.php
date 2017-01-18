@@ -41,7 +41,7 @@
 
 		$total_vartiants = count($get_available_variations);
 
-		for ($i=0; $i < $total_vartiants; $i++) { ?>
+		for ($i=0; $i < 5; $i++) { ?>
 
 			<div style="width: 30%; float: left" class="amp-product-variant product-variants-<?php echo $i?>">
 				<img src="<?php echo $get_available_variations[$i]['image_src'];?>" alt="">
@@ -55,11 +55,47 @@
 
 	?>
 	<div class="cb"></div>
-
 	<div class="amp-wp-content post-title-meta amp-wp-article-header">
 
 			<h1 class="amp-wp-title"><?php echo wp_kses_data( $this->get( 'post_title' ) ); ?></h1>
 			<?php $this->load_parts( apply_filters( 'amp_post_article_header_meta', array( ) ) ); ?>
+    <div class="main-container">
+     <div clas="amp-part-images">
+      <div class="amp-buttons">
+       <div class="amp-img">
+ 		 <img src="http://webneel.com/wallpaper/sites/default/files/images/01-2014/20-flower-wallpaper.preview.jpg">
+ 		 <div class="price">
+            <a href="#">$99 only</a>
+ 		 </div><!-- /.price -->
+ 		 <div class="add-cart">
+			<a href="#">Add to Cart</a> 
+ 		 </div><!-- /.add-cart -->
+       </div><!-- /.amp-img -->
+     </div><!-- /.amp-buttons -->
+     <div class="amp-buttons">
+       <div class="amp-img">
+ 		 <img src="http://webneel.com/wallpaper/sites/default/files/images/01-2014/20-flower-wallpaper.preview.jpg">
+ 		 <div class="price">
+            <a href="#">$99 only</a>
+ 		 </div><!-- /.price -->
+ 		 <div class="add-cart">
+			<a href="#">Add to Cart</a> 
+ 		 </div><!-- /.add-cart -->
+       </div><!-- /.amp-img -->
+     </div><!-- /.amp-buttons -->
+     <div class="amp-buttons">
+       <div class="amp-img">
+ 		 <img src="http://webneel.com/wallpaper/sites/default/files/images/01-2014/20-flower-wallpaper.preview.jpg">
+ 		 <div class="price">
+            <a href="#">$99 only</a>
+ 		 </div><!-- /.price -->
+ 		 <div class="add-cart">
+			<a href="#">Add to Cart</a> 
+ 		 </div><!-- /.add-cart -->
+       </div><!-- /.amp-img -->
+     </div><!-- /.amp-buttons -->
+    </div><!--/. amp-part-images -->
+    </div><!-- /.main-container -->
 
 	</div>
 
@@ -75,14 +111,15 @@
 						height=<?php echo $redux_builder_amp['enable-single-featured-img-height']?> layout=responsive></amp-img></div>
 			<?php }  ?>
 	</div>
+  
 	<div class="amp-wp-content the_content amp-wp-article-content">
-		<?php do_action('amp_woocommerce_before_the_content'); ?>
+ 
+		 <?php do_action('amp_woocommerce_before_the_content'); ?>
 
-		<?php echo $this->get( 'post_amp_content' ); // amphtml content; no kses ?>
+		 <?php echo $this->get( 'post_amp_content' ); // amphtml content; no kses ?>
 
-		<?php do_action('amp_woocommerce_after_the_content'); ?>
-
-	</div>
+		 <?php do_action('amp_woocommerce_after_the_content'); ?>
+    </div>
 
 
 	<?php if($redux_builder_amp['enable-single-social-icons'] == true)  { ?>

@@ -95,6 +95,166 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	.amp-wp-meta.amp-woocommerce-add-cart{
 				display: block;
 		}
+
+
+
+
+.main-container{
+	width:100%;
+	float:left;
+}
+.amp-buttons{
+	width:49%;
+	height:auto;
+	float:left;
+	line-height:0;
+	padding-bottom:20px;
+}
+.amp-img > img{
+	width:100%;
+	height:auto;
+}
+.amp-img{
+	position:relative;
+}
+
+.price{
+   position:absolute;
+   top:15px;
+   right:15px;
+   bottom:auto;
+}
+.price a{
+   background:#ccc;
+   padding:20px 20px;
+}
+.price a::before {
+    background: #2098d1 none repeat scroll 0 0;
+    bottom: 0;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: scale(0);
+    transition-duration: 0.3s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+    z-index: -1;
+}
+.price a{
+    background: #e1e1e1 none repeat scroll 0 0;
+    box-shadow: 0 0 1px transparent;
+    display: inline-block;
+    position: relative;
+    transform: perspective(1px) translateZ(0px);
+    transition-duration: 0.3s;
+    transition-property: color;
+    vertical-align: middle;
+}
+.price a:hover::before, .price a:focus::before, .price a:active::before {
+    transform: scale(1);
+}
+.price a::before {
+    background: #2098d1 none repeat scroll 0 0;
+    bottom: 0;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: scale(0);
+    transition-duration: 0.3s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+    z-index: -1;
+}
+.price a:hover, .price a:focus, .price a:active {
+    color: white;
+}
+.price a{
+    background: #e1e1e1 none repeat scroll 0 0;
+    box-shadow: 0 0 1px transparent;
+    display: inline-block;
+    position: relative;
+    transform: perspective(1px) translateZ(0px);
+    transition-duration: 0.3s;
+    transition-property: color;
+    vertical-align: middle;
+}
+.add-cart {
+  bottom: 15px;
+  position: absolute;
+  right: 15px;
+}
+.add-cart a{
+   background:#ccc;
+   padding:20px 20px;
+}
+.add-cart a::before {
+    background: #2098d1 none repeat scroll 0 0;
+    bottom: 0;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: scaleY(0);
+    transform-origin: 50% 0 0;
+    transition-duration: 0.3s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+    z-index: -1;
+}
+.add-cart a {
+    box-shadow: 0 0 1px transparent;
+    display: inline-block;
+    position: relative;
+    transform: perspective(1px) translateZ(0px);
+    transition-duration: 0.3s;
+    transition-property: color;
+    vertical-align: middle;
+}
+.add-cart a:hover::before, .add-cart a:focus::before, .add-cart a:active::before {
+    transform: scaleY(1);
+}
+.add-cart a::before {
+    background: #2098d1 none repeat scroll 0 0;
+    bottom: 0;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: scaleY(0);
+    transform-origin: 50% 0 0;
+    transition-duration: 0.3s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+    z-index: -1;
+}
+.add-cart:hover a, .add-cart a:focus, .add-cart a:active {
+    color: white;
+}
+.add-cart a {
+    box-shadow: 0 0 1px transparent;
+    display: inline-block;
+    position: relative;
+    transform: perspective(1px) translateZ(0px);
+    transition-duration: 0.3s;
+    transition-property: color;
+    vertical-align: middle;
+}
+.amp-buttons:nth-child(odd){
+	padding-right:20px;
+}
+.main-container .amp-part-images{
+	width:100%;
+	float:none;
+	margin:0 auto;
+}
+
+
 		<?php
 	}
 
