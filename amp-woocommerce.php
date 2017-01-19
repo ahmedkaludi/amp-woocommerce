@@ -98,13 +98,18 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 
+/*------ raju -styles ------ */
+
+* http://cssreset.com
+*/
+input,select{vertical-align:middle}
+*,*:after,*:before {box-sizing: border-box;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;-o-box-sizing: border-box;}
 
 .main-container{
 	width:100%;
-	float:left;
 }
 .amp-buttons{
-	width:49%;
+	width:50%;
 	height:auto;
 	float:left;
 	line-height:0;
@@ -124,136 +129,124 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
    right:15px;
    bottom:auto;
 }
-.price a{
+.price{
    background:#ccc;
    padding:20px 20px;
-}
-.price a::before {
-    background: #2098d1 none repeat scroll 0 0;
-    bottom: 0;
-    content: "";
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transform: scale(0);
-    transition-duration: 0.3s;
-    transition-property: transform;
-    transition-timing-function: ease-out;
-    z-index: -1;
-}
-.price a{
-    background: #e1e1e1 none repeat scroll 0 0;
-    box-shadow: 0 0 1px transparent;
-    display: inline-block;
-    position: relative;
-    transform: perspective(1px) translateZ(0px);
-    transition-duration: 0.3s;
-    transition-property: color;
-    vertical-align: middle;
-}
-.price a:hover::before, .price a:focus::before, .price a:active::before {
-    transform: scale(1);
-}
-.price a::before {
-    background: #2098d1 none repeat scroll 0 0;
-    bottom: 0;
-    content: "";
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transform: scale(0);
-    transition-duration: 0.3s;
-    transition-property: transform;
-    transition-timing-function: ease-out;
-    z-index: -1;
-}
-.price a:hover, .price a:focus, .price a:active {
-    color: white;
-}
-.price a{
-    background: #e1e1e1 none repeat scroll 0 0;
-    box-shadow: 0 0 1px transparent;
-    display: inline-block;
-    position: relative;
-    transform: perspective(1px) translateZ(0px);
-    transition-duration: 0.3s;
-    transition-property: color;
-    vertical-align: middle;
+   margin-top:20px;
 }
 .add-cart {
-  bottom: 15px;
+  bottom: 40px;
   position: absolute;
   right: 15px;
 }
 .add-cart a{
    background:#ccc;
-   padding:20px 20px;
-}
-.add-cart a::before {
-    background: #2098d1 none repeat scroll 0 0;
-    bottom: 0;
-    content: "";
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transform: scaleY(0);
-    transform-origin: 50% 0 0;
-    transition-duration: 0.3s;
-    transition-property: transform;
-    transition-timing-function: ease-out;
-    z-index: -1;
-}
-.add-cart a {
-    box-shadow: 0 0 1px transparent;
-    display: inline-block;
-    position: relative;
-    transform: perspective(1px) translateZ(0px);
-    transition-duration: 0.3s;
-    transition-property: color;
-    vertical-align: middle;
-}
-.add-cart a:hover::before, .add-cart a:focus::before, .add-cart a:active::before {
-    transform: scaleY(1);
-}
-.add-cart a::before {
-    background: #2098d1 none repeat scroll 0 0;
-    bottom: 0;
-    content: "";
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transform: scaleY(0);
-    transform-origin: 50% 0 0;
-    transition-duration: 0.3s;
-    transition-property: transform;
-    transition-timing-function: ease-out;
-    z-index: -1;
-}
-.add-cart:hover a, .add-cart a:focus, .add-cart a:active {
-    color: white;
-}
-.add-cart a {
-    box-shadow: 0 0 1px transparent;
-    display: inline-block;
-    position: relative;
-    transform: perspective(1px) translateZ(0px);
-    transition-duration: 0.3s;
-    transition-property: color;
-    vertical-align: middle;
+   padding:10px 20px;
 }
 .amp-buttons:nth-child(odd){
-	padding-right:20px;
+	padding:10px 10px 0px 10px;
 }
-.main-container .amp-part-images{
-	width:100%;
-	float:none;
-	margin:0 auto;
+.add-cart:hover a{
+  background-color:#0077B5;
+   transition: all 0.3s ease-in-out 0s;
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  -ms-transition: all 0.3s ease-in-out 0s;
+  -o-transition: all 0.3s ease-in-out 0s;
+  color:#ffffff
 }
-
+.amp-img {
+  margin-top: 20px;
+}
+.product-size {
+  padding-top: 20px;
+  text-align: center;
+}
+/* responsive styles for mobile */
+@media (max-width:767px){
+.amp-wp-content, .amp-wp-content.post-title-meta.amp-wp-article-header{
+	width: 100%;
+	padding:0 10px;
+}
+.amp-img {
+  margin-top: 14px;
+}
+.amp-buttons {
+  width:50%;
+  padding-bottom: 5px;
+}
+.price {
+  font-size: 11px;
+  margin-top: 5px;
+  padding: 11px;
+  top:0px;
+}
+.product-size {
+  font-size: 11px;
+}
+.add-cart {
+  bottom: 25px;
+  font-size: 11px;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: auto;
+}
+.add-cart a {
+  padding: 6px 10px;
+}
+.amp-conatiner {
+  clear: both;
+  margin: 0 auto !important;
+  width: 100%;
+}
+.add-cart a {
+  padding: 4px 8px;
+}
+.product-size {
+  padding-top: 15px;
+}
+}
+@media (min-width:768px) and (max-width:979px){
+.amp-wp-content{
+	width: 750px;
+}
+.price {
+  margin-top: 5px;
+}
+}
+@media (min-width:980px) and (max-width:1199px){
+.amp-wp-content{
+	width: 950px;
+}
+}
+@media (min-width:480px) and (max-width:767px){
+.amp-buttons {
+  width: 50%;
+}
+.price {
+  top: 10px;
+}
+.add-cart {
+  font-size: 15px;
+  bottom:35px;
+}
+.product-size {
+  font-size: 15px;
+}
+.price {
+  font-size: 14px;
+  padding: 15px;
+}
+.add-cart a {
+  padding: 6px 15px;
+}
+.product-size {
+  padding-top: 20px;
+}
+}
 
 		<?php
 	}
