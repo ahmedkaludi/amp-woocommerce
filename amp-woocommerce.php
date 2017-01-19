@@ -199,7 +199,7 @@ input,select{vertical-align:middle}
 }
 .amp-conatiner {
   clear: both;
-  margin: 0 auto !important;
+  margin: 0 auto;
   width: 100%;
 }
 .add-cart a {

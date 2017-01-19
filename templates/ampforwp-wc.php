@@ -23,15 +23,8 @@
     $get_available_variations  = $woocommerce->product_factory->get_product()->get_available_variations();
     $total_vartiants = count($get_available_variations);
 
-    $variant_size = $total_vartiants;
-
-    if ($total_vartiants > 2) {
-    	$variant_size = 2;
-    }
-
-
     ?>
-    <div class="amp-wp-content variant-<?php echo esc_attr($variant_size);?>"><!--start of main div for variant-->
+    <div class="amp-wp-content"><!--start of main div for variant-->
      <div class="amp-conatiner">
       <?php
       		for ( $i=0 ; $i<$total_vartiants ; $i++) { ?>
