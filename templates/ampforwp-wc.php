@@ -24,7 +24,7 @@
     $total_vartiants = count($get_available_variations);
 
     ?>
-    
+
 
 	<div class="cb"></div>
 	<div class="amp-wp-content post-title-meta amp-wp-article-header">
@@ -55,7 +55,7 @@
 		 <?php do_action('amp_woocommerce_before_the_content'); ?>
 
 		 <?php echo $this->get( 'post_amp_content' ); // amphtml content; no kses ?>
-       <A NAME="amp-wp-content"></a>
+       <a name="amp-wp-content"></a>
 		<div class="amp-wp-content"><!--start of main div for variant-->
             <div class="amp-conatiner">
             	<div class="varients-title">
@@ -67,7 +67,7 @@
              <?php
              /// code start for description of the variant
              $variant_attr_count = count($get_available_variations[$i]['attributes']);
-             $variant_attr = array_values($get_available_variations[$i]['attributes']); 
+             $variant_attr = array_values($get_available_variations[$i]['attributes']);
              /// code end for descriptio of the variant
               ?>
            </div><!--end of div for description-->
@@ -100,7 +100,7 @@
     ?>
         </div><!-- amp-conatiner -->
       </div><!--end of main div for variant-->
-      
+
 		 <?php do_action('amp_woocommerce_after_the_content'); ?>
     </div>
 
