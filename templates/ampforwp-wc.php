@@ -24,9 +24,44 @@
     $total_vartiants = count($get_available_variations);
 
     ?>
-    <div class="amp-wp-content"><!--start of main div for variant-->
-     <div class="amp-conatiner">
-      <?php
+    
+
+	<div class="cb"></div>
+	<div class="amp-wp-content post-title-meta amp-wp-article-header">
+
+			<h1 class="amp-wp-title"><?php echo wp_kses_data( $this->get( 'post_title' ) ); ?></h1>
+			<?php $this->load_parts( apply_filters( 'amp_post_article_header_meta', array( ) ) ); ?>
+
+	<div class="Add-to-cart">
+		<A HREF="#amp-wp-content">Add to cart</A>
+    </div>
+	</div>
+
+	<div class="amp-wp-content featured-image-content">
+			<?php if ( has_post_thumbnail() ) { ?>
+					<?php
+					$thumb_id = get_post_thumbnail_id();
+					$thumb_url_array = wp_get_attachment_image_src($thumb_id, 'large', true);
+					$thumb_url = $thumb_url_array[0];
+					?>
+					<div class="post-featured-img"><amp-img src=<?php echo $thumb_url ?>
+						width=<?php global $redux_builder_amp; echo $redux_builder_amp['enable-single-featured-img-width'] ?>
+						height=<?php echo $redux_builder_amp['enable-single-featured-img-height']?> layout=responsive></amp-img></div>
+			<?php }  ?>
+	</div>
+
+	<div class="amp-wp-content the_content amp-wp-article-content">
+
+		 <?php do_action('amp_woocommerce_before_the_content'); ?>
+
+		 <?php echo $this->get( 'post_amp_content' ); // amphtml content; no kses ?>
+       <A NAME="amp-wp-content"></a>
+		<div class="amp-wp-content"><!--start of main div for variant-->
+            <div class="amp-conatiner">
+            	<div class="varients-title">
+            		<h3>VARIENTS</h3>
+            	</di><!-- /.variant-title -->
+      		<?php
       		for ( $i=0 ; $i<$total_vartiants ; $i++) { ?>
            <div><!--start of div for description-->
              <?php
@@ -39,7 +74,7 @@
             <div class="main-container">
               <div class="amp-buttons">
               	<div class="product-size"> <?php
-              		echo 'Variable attributes : ';
+              		echo 'Varient attributes : ';
 					for ($j=0; $j<$variant_attr_count ; $j++) {
 						echo $variant_attr[$j];
 						echo ' ';
@@ -63,37 +98,9 @@
     		} // end of for loop
       } // end of if loop
     ?>
-    </div><!-- amp-conatiner -->
-  </div><!--end of main div for variant-->
-
-	<div class="cb"></div>
-	<div class="amp-wp-content post-title-meta amp-wp-article-header">
-
-			<h1 class="amp-wp-title"><?php echo wp_kses_data( $this->get( 'post_title' ) ); ?></h1>
-			<?php $this->load_parts( apply_filters( 'amp_post_article_header_meta', array( ) ) ); ?>
-
-
-	</div>
-
-	<div class="amp-wp-content featured-image-content">
-			<?php if ( has_post_thumbnail() ) { ?>
-					<?php
-					$thumb_id = get_post_thumbnail_id();
-					$thumb_url_array = wp_get_attachment_image_src($thumb_id, 'large', true);
-					$thumb_url = $thumb_url_array[0];
-					?>
-					<div class="post-featured-img"><amp-img src=<?php echo $thumb_url ?>
-						width=<?php global $redux_builder_amp; echo $redux_builder_amp['enable-single-featured-img-width'] ?>
-						height=<?php echo $redux_builder_amp['enable-single-featured-img-height']?> layout=responsive></amp-img></div>
-			<?php }  ?>
-	</div>
-
-	<div class="amp-wp-content the_content amp-wp-article-content">
-
-		 <?php do_action('amp_woocommerce_before_the_content'); ?>
-
-		 <?php echo $this->get( 'post_amp_content' ); // amphtml content; no kses ?>
-
+        </div><!-- amp-conatiner -->
+      </div><!--end of main div for variant-->
+      
 		 <?php do_action('amp_woocommerce_after_the_content'); ?>
     </div>
 

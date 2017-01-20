@@ -162,6 +162,42 @@ input,select{vertical-align:middle}
   padding-top: 20px;
   text-align: center;
 }
+.amp-wp-meta.amp-woocommerce-price {
+  float: left;
+  width: 50%;
+}
+.amp-wp-meta.amp-woocommerce-add-cart {
+   float: left;
+   width: 30%;
+   text-align:right;
+}
+.Add-to-cart {
+  float: right;
+  width: 20%;
+  text-align:right;
+  font-size:12px;
+}
+.amp-wp-content, .amp-wp-title-bar div, .amp-woocommerce-container {
+  clear: both;
+}
+.amp-woocommerce-container > div {
+  padding-top: 20px;
+}
+.ampforwp-add-to-cart-button {
+  display: none;
+}
+.amp-wp-content.the_content.amp-wp-article-content p {
+  text-align: justify;
+}
+.varients-title {
+  text-align: center;
+}
+.varients-title h3 {
+  color: #373737;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
 /* responsive styles for mobile */
 @media (max-width:767px){
 .amp-wp-content, .amp-wp-content.post-title-meta.amp-wp-article-header{
@@ -176,7 +212,7 @@ input,select{vertical-align:middle}
   padding-bottom: 5px;
 }
 .price {
-  font-size: 11px;
+  font-size: 9px;
   margin-top: 5px;
   padding: 11px;
   top:0px;
@@ -206,7 +242,35 @@ input,select{vertical-align:middle}
   padding: 4px 8px;
 }
 .product-size {
-  padding-top: 15px;
+  padding-top: 10px;
+}
+.amp-wp-meta.amp-woocommerce-price {
+  float: left;
+  width: 60%;
+}
+.amp-wp-meta.amp-woocommerce-add-cart {
+  display:none;
+}
+.amp-wp-meta.amp-woocommerce-add-cart {
+  float: left;
+  text-align: center;
+  width: 30%;
+}
+.Add-to-cart {
+  float: right;
+  font-size: 12px;
+  text-align: right;
+  width: 30%;
+}
+.amp-wp-content, .amp-wp-content.post-title-meta.amp-wp-article-header {
+  clear: both;
+}
+.amp-wp-content.the_content.amp-wp-article-content p {
+  text-align: justify;
+  line-height:21px;
+}
+.amp-woocommerce-container > div {
+  padding-top: 10px;
 }
 }
 @media (min-width:768px) and (max-width:979px){
@@ -245,6 +309,17 @@ input,select{vertical-align:middle}
 }
 .product-size {
   padding-top: 20px;
+}
+.amp-wp-meta.amp-woocommerce-price {
+  width: 50%;
+}
+.amp-wp-meta {
+  font-size: 12px;
+}
+.amp-wp-meta.amp-woocommerce-add-cart {
+  float: left;
+  text-align: right;
+  width: 20%;
 }
 }
 
@@ -348,3 +423,5 @@ input,select{vertical-align:middle}
 	function amp_woocommerce_add_product_description(){
 		woocommerce_template_single_excerpt();
 	}
+
+    
