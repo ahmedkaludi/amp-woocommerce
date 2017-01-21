@@ -106,6 +106,7 @@
 
 
 	<?php
+ global $redux_builder_amp;
   if($redux_builder_amp['enable-single-social-icons'] == true)  { ?>
 		<div class="sticky_social">
 			<?php if($redux_builder_amp['enable-single-facebook-share'] == true)  { ?>
