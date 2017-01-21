@@ -5,6 +5,7 @@
 		global $woocommerce;
 
 		$amp_product_price 	=  $woocommerce->product_factory->get_product()->get_price_html();
+		$context = '';
 		$allowed_tags 		= wp_kses_allowed_html( $context );
 
 		if ( $amp_product_price ) {
@@ -25,6 +26,7 @@
 
 			$add_to_cart_text	=	$woocommerce->product_factory->get_product()->add_to_cart_text();
 			$product_id 		= $woocommerce->product_factory->get_product()->id;
+			// global $product;
 			$product_url 		=  get_permalink( $product->id );
 				$add_to_cart_url .= "?add-to-cart=$product_id";
 			$product_url 		= $product_url . $add_to_cart_url;
