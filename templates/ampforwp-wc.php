@@ -14,16 +14,7 @@
 <body class="ampforwp-style <?php echo esc_attr( $this->get( 'body_class' ) ); ?>">
 	<?php $this->load_parts( array( 'header-bar' ) ); ?>
 
-	<?php do_action( 'ampforwp_after_header', $this );
-
-	global $woocommerce;
-
-  if( $woocommerce->product_factory->get_product()->product_type === "variable" ) {
-
-    $get_available_variations  = $woocommerce->product_factory->get_product()->get_available_variations();
-    $total_vartiants = count($get_available_variations);
-
-    ?>
+	<?php do_action( 'ampforwp_after_header', $this );  ?>
 
 
 	<div class="cb"></div>
@@ -32,9 +23,11 @@
 			<h1 class="amp-wp-title"><?php echo wp_kses_data( $this->get( 'post_title' ) ); ?></h1>
 			<?php $this->load_parts( apply_filters( 'amp_post_article_header_meta', array( ) ) ); ?>
 
+<?php global $woocommerce; if( $woocommerce->product_factory->get_product()->product_type === "variable" ) { ?>
 	<div class="Add-to-cart">
 		<A HREF="#amp-wp-content">Add to cart</A>
-    </div>
+  </div>
+<?php } ?>
 	</div>
 
 	<div class="amp-wp-content featured-image-content">
@@ -55,8 +48,18 @@
 		 <?php do_action('amp_woocommerce_before_the_content'); ?>
 
 		 <?php echo $this->get( 'post_amp_content' ); // amphtml content; no kses ?>
-       <a name="amp-wp-content"></a>
-		<div class="amp-wp-content"><!--start of main div for variant-->
+    <a name="amp-wp-content"></a>
+		<div class="amp-wp-content">
+
+		<!--start of main div for variant-->
+		<?php
+				global $woocommerce;
+			  if( $woocommerce->product_factory->get_product()->product_type === "variable" ) {
+
+			    $get_available_variations  = $woocommerce->product_factory->get_product()->get_available_variations();
+			    $total_vartiants = count($get_available_variations);
+
+					?>
             <div class="amp-conatiner">
             	<div class="varients-title">
             		<h3>VARIENTS</h3>
@@ -68,17 +71,17 @@
              /// code start for description of the variant
              $variant_attr_count = count($get_available_variations[$i]['attributes']);
              $variant_attr = array_values($get_available_variations[$i]['attributes']);
-             /// code end for descriptio of the variant
+             /// code end for description of the variant
               ?>
            </div><!--end of div for description-->
             <div class="main-container">
               <div class="amp-buttons">
               	<div class="product-size"> <?php
               		echo 'Varient attributes : ';
-					for ($j=0; $j<$variant_attr_count ; $j++) {
-						echo $variant_attr[$j];
-						echo ' ';
-					} ?>
+									for ($j=0; $j<$variant_attr_count ; $j++) {
+										echo $variant_attr[$j];
+										echo ' ';
+									} ?>
               	</div>
                <div class="amp-img">
                	    <a href="<?php echo trailingslashit(get_permalink()).'?add-to-cart='.$get_available_variations[$i]["variation_id"]; ?>">
@@ -94,12 +97,13 @@
                </div><!-- /.amp-img -->
              </div><!-- /.amp-buttons -->
            </div><!-- /.main-container -->
-    			<?php
-    		} // end of for loop
-      } // end of if loop
-    ?>
         </div><!-- amp-conatiner -->
       </div><!--end of main div for variant-->
+			<?php
+			} // end of for loop
+		} // end of if loop
+	?>
+	<!--End of main div for variant-->
 
 		 <?php do_action('amp_woocommerce_after_the_content'); ?>
     </div>
