@@ -28,7 +28,7 @@
 			$product_id 		= $woocommerce->product_factory->get_product()->id;
 
 			$product_url 		=  trailingslashit(get_permalink( $product_id ));
-			$add_to_cart_url .= "?add-to-cart=$product_id";
+			$add_to_cart_url = "?add-to-cart=$product_id";
 
 			$product_url 		= $product_url . $add_to_cart_url;
 
