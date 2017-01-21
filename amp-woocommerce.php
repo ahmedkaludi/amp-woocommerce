@@ -184,7 +184,7 @@ input,select{vertical-align:middle}
   padding-top: 20px;
 }
 .ampforwp-add-to-cart-button {
-  display: none;
+  display: block;
 }
 .amp-wp-content.the_content.amp-wp-article-content p {
   text-align: justify;
@@ -249,7 +249,7 @@ input,select{vertical-align:middle}
   width: 60%;
 }
 .amp-wp-meta.amp-woocommerce-add-cart {
-  display:none;
+  display:block;
 }
 .amp-wp-meta.amp-woocommerce-add-cart {
   float: left;
@@ -424,4 +424,3 @@ input,select{vertical-align:middle}
 		woocommerce_template_single_excerpt();
 	}
 
-    
