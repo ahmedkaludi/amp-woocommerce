@@ -57,9 +57,106 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	}
 
 	add_action('amp_woocommerce_after_the_content','amp_woocommerce_container_ends',20);
-	function amp_woocommerce_container_ends(){
-		echo ' </div>' ;
+	function amp_woocommerce_container_ends() {
+      global $woocommerce;
+
+      if( $woocommerce->product_factory->get_product()->product_type === "variable" ) {
+        $get_available_variations  = $woocommerce->product_factory->get_product()->get_available_variations();
+        $total_vartiants = count($get_available_variations);
+    ?>
+
+    <!--start of main div for variant-->
+    <!-- amp-wp-conatiner -->
+    <div class="amp-wp-content">
+            <div class="amp-conatiner">
+              <!--variant-title -->
+                <div class="varients-title">
+                  <h3>VARIENTS</h3>
+                </div>
+              <!-- /.variant-title -->
+
+              <!-- /.placeholder -->
+                <a name="amp-wp-content"></a>
+              <!-- /.placeholder -->
+
+              <?php
+              for ( $i=0 ; $i < $total_vartiants ; $i++ ) { ?>
+                <!--start of div for description-->
+                 <div>
+                   <?php
+                   /// code start for description of the variant
+                   $variant_attr_count = count($get_available_variations[$i]['attributes']);
+                   $variant_attr = array_values($get_available_variations[$i]['attributes']);
+                   /// code end for description of the variant
+                    ?>
+                  </div>
+                <!--end of div for description-->
+
+                <!-- main-container -->
+                  <div class="main-container">
+                    <!--amp-buttons-->
+                      <div class="amp-buttons">
+
+                        <!--attributes div-->
+                          <div class="product-size"> <?php
+                            echo 'Varient attributes : ';
+                            for ($j=0; $j<$variant_attr_count ; $j++) {
+                              echo $variant_attr[$j];
+                              echo ' ';
+                            } ?>
+                          </div>
+                        <!--attributes div-->
+
+                       <!--amp-img -->
+                         <div class="amp-img">
+
+                              <a href="<?php echo trailingslashit(get_permalink()).'?add-to-cart='.$get_available_variations[$i]["variation_id"]; ?>">
+                                <amp-img src="<?php echo $get_available_variations[$i]['image_src'];?>" height="500" layout="responsive" width="500">
+                                </amp-img>
+                              </a>
+
+                                 <?php echo $get_available_variations[$i]['price_html'] ?>
+                          <!--add-cart -->
+                            <div class="add-cart">
+                              <a href="<?php echo trailingslashit(get_permalink()).'?add-to-cart='.$get_available_variations[$i]["variation_id"]; ?>">Add to Cart
+                              </a>
+                            </div>
+                          <!-- /.add-cart -->
+
+                        </div>
+                      <!-- /.amp-img -->
+
+                     </div>
+                   <!-- /.amp-buttons -->
+
+                 </div>
+               <!-- /.main-container -->
+              <?php
+            } // end of for loop
+          ?></div><!-- amp-conatiner -->
+        </div><!-- amp-wp-conatiner -->
+        <!--end of main div for variant-->
+        <div class="cb"></div>
+      </div>
+		<?php }// end of if condition
+    echo '</div>' ;
+
+
 	}
+
+
+add_action('amp_woocommerce_before_the_content','amp_woocommerce_bfr_content');
+function amp_woocommerce_bfr_content() {
+  global $woocommerce;
+  if( $woocommerce->product_factory->get_product()->product_type === "variable" ) { ?>
+          <div class="amp-wp-article-content">
+            <div class="Add-to-cart">
+              <a href="#amp-wp-content">Add to cart</a>
+            </div>
+          </div>
+<?php } // end of if condition for variant check
+} // end of amp_woocommerce_bfr_content()
+
 
 	// 2. Add Custom Style for WooCommerce Page
 	add_action('amp_post_template_css','amp_woocommerce_custom_style');
@@ -90,8 +187,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 					text-decoration: none;
 				}
 
-			<?php
-		}?>
+<?php } ?>
 	.amp-wp-meta.amp-woocommerce-add-cart{
 				display: block;
 		}
