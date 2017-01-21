@@ -18,7 +18,7 @@
 	?>
 </div>
 
-<?php if ( $amp_product_price ) { ?>
+<?php global $woocommerce;  if ( $amp_product_price && $woocommerce->product_factory->get_product()->product_type !== "variable" )  { ?>
 
 	<div class="amp-wp-meta amp-woocommerce-add-cart" >
 		<?php
