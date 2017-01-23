@@ -12,18 +12,23 @@
 
 <body class="<?php echo esc_attr( $this->get( 'body_class' ) ); ?>">
 
-<?php $this->load_parts( array( 'header-bar' ) ); ?>
+<?php $this->load_parts( array( 'header-bar' ) );
+
+?>
 
 <article class="amp-wp-article">
 
 	<header class="amp-wp-article-header">
 		<h1 class="amp-wp-title"><?php echo wp_kses_data( $this->get( 'post_title' ) ); ?></h1>
 		<?php $this->load_parts( apply_filters( 'amp_post_article_header_meta', array( ) ) ); ?>
+
+
 	</header>
 
 	<?php $this->load_parts( array( 'featured-image' ) ); ?>
 
 	<div class="amp-wp-article-content">
+
 		<?php do_action('amp_woocommerce_before_the_content'); ?>
 
 		<?php echo $this->get( 'post_amp_content' ); // amphtml content; no kses ?>

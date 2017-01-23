@@ -14,14 +14,12 @@
 <body class="ampforwp-style <?php echo esc_attr( $this->get( 'body_class' ) ); ?>">
 	<?php $this->load_parts( array( 'header-bar' ) ); ?>
 
-	<?php do_action( 'ampforwp_after_header', $this ); ?>
-
-
+	<div class="cb"></div>
 	<div class="amp-wp-content post-title-meta amp-wp-article-header">
 
 			<h1 class="amp-wp-title"><?php echo wp_kses_data( $this->get( 'post_title' ) ); ?></h1>
-			<?php $this->load_parts( apply_filters( 'amp_post_article_header_meta', array( ) ) ); ?>
-
+			<?php $this->load_parts( apply_filters( 'amp_post_article_header_meta', array( ) ) );
+      ?>
 	</div>
 
 	<div class="amp-wp-content featured-image-content">
@@ -36,17 +34,21 @@
 						height=<?php echo $redux_builder_amp['enable-single-featured-img-height']?> layout=responsive></amp-img></div>
 			<?php }  ?>
 	</div>
+
 	<div class="amp-wp-content the_content amp-wp-article-content">
-		<?php do_action('amp_woocommerce_before_the_content'); ?>
 
-		<?php echo $this->get( 'post_amp_content' ); // amphtml content; no kses ?>
+  		<?php do_action('amp_woocommerce_before_the_content'); ?>
 
-		<?php do_action('amp_woocommerce_after_the_content'); ?>
+  		<?php echo $this->get( 'post_amp_content' ); // amphtml content; no kses ?>
 
-	</div>
+		 <?php do_action('amp_woocommerce_after_the_content'); ?>
+
+  </div>
 
 
-	<?php if($redux_builder_amp['enable-single-social-icons'] == true)  { ?>
+	<?php
+ global $redux_builder_amp;
+  if($redux_builder_amp['enable-single-social-icons'] == true)  { ?>
 		<div class="sticky_social">
 			<?php if($redux_builder_amp['enable-single-facebook-share'] == true)  { ?>
 		    	<amp-social-share type="facebook"    data-param-app_id="<?php echo $redux_builder_amp['amp-facebook-app-id']; ?>" width="50" height="28"></amp-social-share>
@@ -75,8 +77,6 @@
         <?php } ?>
 		</div>
 	<?php } ?>
-
-
 
 
 </article>
