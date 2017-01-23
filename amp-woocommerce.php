@@ -74,6 +74,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
                   <h3>VARIENTS</h3>
                 </div>
               <!-- /.variant-title -->
+                <!-- main-container -->
+                  <div class="wcv-main-container">
 
               <!-- /.placeholder -->
                 <a name="amp-wp-content"></a>
@@ -82,18 +84,14 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
               <?php
               for ( $i=0 ; $i < $total_vartiants ; $i++ ) { ?>
                 <!--start of div for description-->
-                 <div>
                    <?php
                    /// code start for description of the variant
                    $variant_attr_count = count($get_available_variations[$i]['attributes']);
                    $variant_attr = array_values($get_available_variations[$i]['attributes']);
                    /// code end for description of the variant
                     ?>
-                  </div>
                 <!--end of div for description-->
 
-                <!-- main-container -->
-                  <div class="main-container">
                     <!--amp-buttons-->
                       <div class="amp-buttons">
 
@@ -129,11 +127,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
                      </div>
                    <!-- /.amp-buttons -->
 
-                 </div>
-               <!-- /.main-container -->
               <?php
             } // end of for loop
-          ?></div><!-- amp-conatiner -->
+          ?>                 </div>
+               <!-- /.main-container -->
+</div><!-- amp-conatiner -->
         </div><!-- amp-wp-conatiner -->
         <!--end of main div for variant-->
         <div class="cb"></div>
@@ -147,14 +145,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 add_action('amp_woocommerce_before_the_content','amp_woocommerce_bfr_content');
 function amp_woocommerce_bfr_content() {
-  global $woocommerce;
-  if( $woocommerce->product_factory->get_product()->product_type === "variable" ) { ?>
-          <div class="amp-wp-article-content">
-            <div class="Add-to-cart">
-              <a href="#amp-wp-content">Add to cart</a>
-            </div>
-          </div>
-<?php } // end of if condition for variant check
+  // end of if condition for variant check
 } // end of amp_woocommerce_bfr_content()
 
 
@@ -180,19 +171,15 @@ function amp_woocommerce_bfr_content() {
 				.amp-woocommerce-container amp-carousel {
 					background: none;
 				}
-				.ampforwp-add-to-cart-button a {
-					background: #0a89c0;
-					color: #fff;
-					padding: 10px 8px;
-					text-decoration: none;
-				}
 
 <?php } ?>
 	.amp-wp-meta.amp-woocommerce-add-cart{
 				display: block;
 		}
 
-
+.amp-wp-article .ampforwp-add-to-cart-button a{
+color:#fff
+}
 
 /*------ raju -styles ------ */
 
@@ -201,15 +188,16 @@ function amp_woocommerce_bfr_content() {
 input,select{vertical-align:middle}
 *,*:after,*:before {box-sizing: border-box;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;-o-box-sizing: border-box;}
 
-.main-container{
+.wcv-main-container{
 	width:100%;
+    display:inline-block
 }
 .amp-buttons{
 	width:50%;
+    padding:10px;
 	height:auto;
 	float:left;
-	line-height:0;
-	padding-bottom:20px;
+	line-height:0; 
 }
 .amp-img > img{
 	width:100%;
@@ -235,22 +223,8 @@ input,select{vertical-align:middle}
   position: absolute;
   right: 15px;
 }
-.add-cart a{
-   background:#ccc;
-   padding:10px 20px;
-}
-.amp-buttons:nth-child(odd){
-	padding:10px 10px 0px 10px;
-}
-.add-cart:hover a{
-  background-color:#0077B5;
-   transition: all 0.3s ease-in-out 0s;
-  -webkit-transition: all 0.3s ease-in-out 0s;
-  -moz-transition: all 0.3s ease-in-out 0s;
-  -ms-transition: all 0.3s ease-in-out 0s;
-  -o-transition: all 0.3s ease-in-out 0s;
-  color:#ffffff
-}
+
+ 
 .amp-img {
   margin-top: 20px;
 }
@@ -264,7 +238,7 @@ input,select{vertical-align:middle}
 }
 .amp-wp-meta.amp-woocommerce-add-cart {
    float: left;
-   width: 30%;
+   width: 50%;
    text-align:right;
 }
 .Add-to-cart {
@@ -272,6 +246,16 @@ input,select{vertical-align:middle}
   width: 20%;
   text-align:right;
   font-size:12px;
+}
+.add-cart a {
+    background: #0a89c0;
+    padding: 10px 20px;
+    border-radius: 60px;
+    color: #fff;
+}
+.amp-wp-content{
+font-size:13px; 
+padding:8px 10px;
 }
 .amp-wp-content, .amp-wp-title-bar div, .amp-woocommerce-container {
   clear: both;
@@ -286,13 +270,29 @@ input,select{vertical-align:middle}
   text-align: justify;
 }
 .varients-title {
-  text-align: center;
+    text-align: center;
+    margin-top: 20px;
 }
 .varients-title h3 {
   color: #373737;
   font-size: 16px;
   letter-spacing: 0.5px;
   margin: 0;
+}
+.ampforwp-add-to-cart-button a {
+    background: #0a89c0;
+    color: #fff;
+    padding: 7px 20px;
+    text-decoration: none;
+    border-radius: 40px;
+}
+.amp-woocommerce-meta-info {
+    display: inline-block; 
+    width: 100%;
+    padding:10px;
+}
+.amp-woocommerce-meta-info .amp-wp-meta{
+    font-size:15px; 
 }
 /* responsive styles for mobile */
 @media (max-width:767px){
@@ -326,9 +326,7 @@ input,select{vertical-align:middle}
   text-align: center;
   top: auto;
 }
-.add-cart a {
-  padding: 6px 10px;
-}
+
 .amp-conatiner {
   clear: both;
   margin: 0 auto;
@@ -338,20 +336,17 @@ input,select{vertical-align:middle}
   padding: 4px 8px;
 }
 .product-size {
-  padding-top: 10px;
+  padding-top: 10px;  
 }
+
 .amp-wp-meta.amp-woocommerce-price {
   float: left;
-  width: 60%;
-}
+ }
 .amp-wp-meta.amp-woocommerce-add-cart {
   display:block;
-}
-.amp-wp-meta.amp-woocommerce-add-cart {
   float: left;
   text-align: center;
-  width: 30%;
-}
+ }
 .Add-to-cart {
   float: right;
   font-size: 12px;
@@ -414,11 +409,12 @@ input,select{vertical-align:middle}
 }
 .amp-wp-meta.amp-woocommerce-add-cart {
   float: left;
-  text-align: right;
-  width: 20%;
+  text-align: right; 
 }
 }
-
+.amp-wp-article .add-cart a{
+color:#fff
+}
 		<?php
 	}
 
