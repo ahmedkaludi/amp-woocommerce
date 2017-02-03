@@ -109,8 +109,17 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
                          <div class="amp-img">
 
                               <a href="<?php echo trailingslashit(get_permalink()).'?add-to-cart='.$get_available_variations[$i]["variation_id"]; ?>">
-                                <amp-img src="<?php echo $get_available_variations[$i]['image_src'];?>" height="500" layout="responsive" width="500">
+																<?php if($get_available_variations[$i]['image_src']) { ?>
+
+																<amp-img src="<?php echo $get_available_variations[$i]['image_src'];?>" height="500" layout="responsive" width="500">
                                 </amp-img>
+
+																<?php } else { ?>
+
+																<amp-img src="<?php echo trailingslashit( plugin_dir_url(__FILE__) ) . 'images\no-image-available-banner.jpg' ?>" height="500" layout="responsive" width="500">
+																</amp-img>
+
+																<?php } ?>
                               </a>
 
                                  <?php echo $get_available_variations[$i]['price_html'] ?>
@@ -197,7 +206,7 @@ input,select{vertical-align:middle}
     padding:10px;
 	height:auto;
 	float:left;
-	line-height:0; 
+	line-height:0;
 }
 .amp-img > img{
 	width:100%;
@@ -224,7 +233,7 @@ input,select{vertical-align:middle}
   right: 15px;
 }
 
- 
+
 .amp-img {
   margin-top: 20px;
 }
@@ -254,7 +263,7 @@ input,select{vertical-align:middle}
     color: #fff;
 }
 .amp-wp-content{
-font-size:13px; 
+font-size:13px;
 padding:8px 10px;
 }
 .amp-wp-content, .amp-wp-title-bar div, .amp-woocommerce-container {
@@ -287,12 +296,12 @@ padding:8px 10px;
     border-radius: 40px;
 }
 .amp-woocommerce-meta-info {
-    display: inline-block; 
+    display: inline-block;
     width: 100%;
     padding:10px;
 }
 .amp-woocommerce-meta-info .amp-wp-meta{
-    font-size:15px; 
+    font-size:15px;
 }
 /* responsive styles for mobile */
 @media (max-width:767px){
@@ -336,7 +345,7 @@ padding:8px 10px;
   padding: 4px 8px;
 }
 .product-size {
-  padding-top: 10px;  
+  padding-top: 10px;
 }
 
 .amp-wp-meta.amp-woocommerce-price {
@@ -409,7 +418,7 @@ padding:8px 10px;
 }
 .amp-wp-meta.amp-woocommerce-add-cart {
   float: left;
-  text-align: right; 
+  text-align: right;
 }
 }
 .amp-wp-article .add-cart a{
