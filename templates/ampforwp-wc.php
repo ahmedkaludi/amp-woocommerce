@@ -94,13 +94,10 @@ $caption = $featured_image['caption'];
 <?php
 // $this->load_parts( array( 'footer' ) );
 ?>
-
 <?php
  $this->load_parts( array( 'footer' ) );
  do_action( 'amp_post_template_footer', $this );
 ?>
-
-
 <?php
 // do_action( 'amp_post_template_footer', $this );
 ?>

@@ -9,20 +9,17 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 // Exit if accessed directly.
-	if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) exit;
 // Enable WooCommerce support for AMP
-	function amp_woocommerce_add_woocommerce_support() {
-
+function amp_woocommerce_add_woocommerce_support() {
 		// Check if the dependent plugins are activated, if not, then return.
 		// As there is no use of this plugin, if parent plugins are not activated.
 		if ( ! defined( 'AMP__FILE__' ) ) {  return; }
 
 		add_rewrite_endpoint( AMP_QUERY_VAR, EP_PERMALINK | EP_PAGES | EP_ROOT );
 		add_post_type_support( 'product', AMP_QUERY_VAR );
-
 	}
 	add_action( 'amp_init', 'amp_woocommerce_add_woocommerce_support',11);
-
 	add_filter( 'amp_post_template_file', 'amp_woocommerce_custom_woocommerce_template', 10, 3 );
 
 	function amp_woocommerce_custom_woocommerce_template( $file, $type, $post ) {
@@ -93,70 +90,43 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
                 <!--end of div for description-->
 
                     <!--amp-buttons-->
-                      <div class="amp-buttons">
+                      <div class="amp-buttons <?php if($get_available_variations[$i]['image_src']) { ?><?php } else { ?>ampwc-noimg-varients<?php } ?>">
 
                         <!--attributes div-->
                           <div class="product-size"> <?php
-                            echo 'Varient attributes : ';
                             for ($j=0; $j<$variant_attr_count ; $j++) {
                               echo $variant_attr[$j];
-                              echo ' ';
                             } ?>
                           </div>
                         <!--attributes div-->
 
                        <!--amp-img -->
                          <div class="amp-img">
-
-                              <a href="<?php echo trailingslashit(get_permalink()).'?add-to-cart='.$get_available_variations[$i]["variation_id"]; ?>">
-																<?php if($get_available_variations[$i]['image_src']) { ?>
-
-																<amp-img src="<?php echo $get_available_variations[$i]['image_src'];?>" height="500" layout="responsive" width="500">
-                                </amp-img>
-
-																<?php } else { ?>
-
-																<amp-img src="<?php echo trailingslashit( plugin_dir_url(__FILE__) ) . 'images\no-image-available-banner.jpg' ?>" height="500" layout="responsive" width="500">
-																</amp-img>
-
-																<?php } ?>
-                              </a>
-
-                                 <?php echo $get_available_variations[$i]['price_html'] ?>
-                          <!--add-cart -->
+<a href="<?php echo trailingslashit(get_permalink()).'?add-to-cart='.$get_available_variations[$i]["variation_id"]; ?>">
+<?php if($get_available_variations[$i]['image_src']) { ?>
+<amp-img src="<?php echo $get_available_variations[$i]['image_src'];?>" height="500" layout="responsive" width="500">
+</amp-img>
+<?php } else { ?>
+<?php } ?></a>
+                            <?php echo $get_available_variations[$i]['price_html'] ?>
                             <div class="add-cart">
-                              <a href="<?php echo trailingslashit(get_permalink()).'?add-to-cart='.$get_available_variations[$i]["variation_id"]; ?>">Add to Cart
-                              </a>
+                              <a href="<?php echo trailingslashit(get_permalink()).'?add-to-cart='.$get_available_variations[$i]["variation_id"]; ?>">Select</a>
                             </div>
-                          <!-- /.add-cart -->
-
                         </div>
-                      <!-- /.amp-img -->
-
                      </div>
-                   <!-- /.amp-buttons -->
-
-              <?php
-            } // end of for loop
-          ?>                 </div>
-               <!-- /.main-container -->
-</div><!-- amp-conatiner -->
-        </div><!-- amp-wp-conatiner -->
-        <!--end of main div for variant-->
-        <div class="cb"></div>
+              <?php } ?>
+                </div>
+ </div> 
+        </div> 
+         <div class="cb"></div>
       </div>
 		<?php }// end of if condition
-    echo '</div>' ;
-
-
-	}
-
+    echo '</div>' ; }
 
 add_action('amp_woocommerce_before_the_content','amp_woocommerce_bfr_content');
 function amp_woocommerce_bfr_content() {
   // end of if condition for variant check
 } // end of amp_woocommerce_bfr_content()
-
 
 	// 2. Add Custom Style for WooCommerce Page
 	add_action('amp_post_template_css','amp_woocommerce_custom_style');
@@ -182,18 +152,12 @@ function amp_woocommerce_bfr_content() {
 				}
 
 <?php } ?>
-	.amp-wp-meta.amp-woocommerce-add-cart{
-				display: block;
-		}
-
+.amp-wp-meta.amp-woocommerce-add-cart{
+        display: block;
+}
 .amp-wp-article .ampforwp-add-to-cart-button a{
 color:#fff
 }
-
-/*------ raju -styles ------ */
-
-* http://cssreset.com
-*/
 input,select{vertical-align:middle}
 *,*:after,*:before {box-sizing: border-box;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;-o-box-sizing: border-box;}
 
@@ -238,8 +202,7 @@ input,select{vertical-align:middle}
   margin-top: 20px;
 }
 .product-size {
-  padding-top: 20px;
-  text-align: center;
+   text-align: center;
 }
 .amp-wp-meta.amp-woocommerce-price {
   float: left;
@@ -394,12 +357,9 @@ padding:8px 10px;
   top: 10px;
 }
 .add-cart {
-  font-size: 15px;
-  bottom:35px;
 }
 .product-size {
-  font-size: 15px;
-}
+ }
 .price {
   font-size: 14px;
   padding: 15px;
@@ -424,9 +384,23 @@ padding:8px 10px;
 .amp-wp-article .add-cart a{
 color:#fff
 }
-		<?php
-	}
-
+.ampwc-noimg-varients .add-cart{
+    position: relative;
+    text-align:center;
+    bottom: 0;
+    right: 0;
+}
+.ampwc-noimg-varients{
+    display: inline-block;
+    margin-bottom: 15px;
+}
+.ampwc-noimg-varients .product-size{    float: none;
+    margin-right: 7px;
+    display: block;
+    margin-bottom: 30px;}
+.ampwc-noimg-varients .amp-img{float:none}
+.ampwc-noimg-varients .add-cart a{padding:6px 16px}
+<?php }
 	// 3. Add WooCommerce gallery
 	add_action('amp_woocommerce_after_the_content','amp_woocommerce_add_wc_elements_gallery');
 
@@ -459,15 +433,15 @@ color:#fff
 	}
 
 	// 4. Add WooCommerce amp-carousel script only if WC galley is available
-	// add_action('amp_post_template_head','amp_woocommerce_add_amp_carousel_script');
+	 add_action('amp_post_template_head','amp_woocommerce_add_amp_carousel_script');
 
-	// function amp_woocommerce_add_amp_carousel_script() {
-	// 	if ( ! function_exists( 'get_gallery_attachment_ids' ) ) {
+	 function amp_woocommerce_add_amp_carousel_script() {
+		if ( ! function_exists( 'get_gallery_attachment_ids' ) ) {
 	?>
-			 	<!-- <script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script> -->
+			 	<script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
 			<?php
-	// 	}
-	// }
+	 	}
+	 }
 
 	// 5. Remove Default Post Meta from header
 
@@ -525,4 +499,3 @@ color:#fff
 	function amp_woocommerce_add_product_description(){
 		woocommerce_template_single_excerpt();
 	}
-
