@@ -286,7 +286,7 @@ padding:8px 10px;
   top:0px;
 }
 .product-size {
-  font-size: 11px;
+  font-size: 13px;
 }
 .add-cart {
   bottom: 25px;
@@ -356,10 +356,6 @@ padding:8px 10px;
 .price {
   top: 10px;
 }
-.add-cart {
-}
-.product-size {
- }
 .price {
   font-size: 14px;
   padding: 15px;
