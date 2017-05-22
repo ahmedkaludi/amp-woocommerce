@@ -309,6 +309,7 @@ padding:8px 10px;
 }
 .product-size {
   padding-top: 10px;
+line-height:1.5
 }
 
 .amp-wp-meta.amp-woocommerce-price {
