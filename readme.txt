@@ -3,8 +3,8 @@ Contributors: ahmedkaludi, mohammed_kaludi
 Tags: WooCommerce, AMP
 Donate link: https://www.paypal.me/Kaludi/5
 Requires at least: 3.5
-Tested up to: 4.7.1
-Stable tag: 0.2
+Tested up to: 4.7.3
+Stable tag: 0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,6 +19,11 @@ Step 2: Activate this plugin,
 Step 3. Done.
 
 == Changelog ==
+= 0.3 (7th April 2017) =
+* non img Variants improved
+* Product Gallery Carousel
+* Featured Image issue fixed
+
 = 0.2 =
 * Variants feature added
 * Added CSS styling to the Products page
