@@ -433,11 +433,14 @@ color:#fff
 
 	 function amp_woocommerce_add_amp_carousel_script() {
 		if ( ! function_exists( 'get_gallery_attachment_ids' ) ) {
+			$type = get_post_type();
+			if( $type == 'product' ){
 	?>
 			 	<script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
 			<?php
 	 	}
 	 }
+	}
 
 	// 5. Remove Default Post Meta from header
 
