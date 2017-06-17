@@ -16,19 +16,22 @@
 
 <?php global $woocommerce;
     if ( $amp_product_price && $woocommerce->product_factory->get_product()->product_type !== "variable" )  { ?>
-        <div class="amp-wp-meta amp-woocommerce-add-cart" >
-            <?php global $woocommerce;
+        <div class="amp-wp-meta amp-woocommerce-add-cart" ><?php 
+            global $woocommerce;
+            global $product;
 
-                $add_to_cart_text	=	$woocommerce->product_factory->get_product()->add_to_cart_text();
-                $product_id 		= $woocommerce->product_factory->get_product()->id;
+            $add_to_cart_text	=	$woocommerce->product_factory->get_product()->add_to_cart_text();
+            $product_id 		= $woocommerce->product_factory->get_product()->id;
 
-                $product_url 		=  trailingslashit(get_permalink( $product_id ));
-                $add_to_cart_url = "?add-to-cart=$product_id";
+            $product_url 		=  trailingslashit(get_permalink( $product_id ));
+            $add_to_cart_url    = "?add-to-cart=$product_id";
+            $product_url 		= $product_url . $add_to_cart_url;
 
-                $product_url 		= $product_url . $add_to_cart_url;
+            if ($product->product_type  === 'external') {
+                $product_url  = $product->product_url;
+            }
 
-                echo '<div class="ampforwp-add-to-cart-button"> <a target="_blank" href="' .  esc_url($product_url) . '"> ' . esc_html($add_to_cart_text) .' </a> </div> ';
-            ?>
+            echo '<div class="ampforwp-add-to-cart-button"> <a target="_blank" href="' .  esc_url($product_url) . '"> ' . esc_html($add_to_cart_text) .' </a> </div> ';?>
         </div>
         <?php 
     } 
