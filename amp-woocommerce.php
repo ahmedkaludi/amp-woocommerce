@@ -423,8 +423,10 @@ function amp_woocommerce_bfr_content() {
 	add_filter( 'amp_post_template_data', 'amp_woocommerce_add_amp_carousel_script', 20 );
 	function amp_woocommerce_add_amp_carousel_script( $data ) {
 		global $redux_builder_amp;
-		// Adding Sidebar Script
-		if ( ! function_exists( 'get_gallery_attachment_ids' ) ) { 
+		$post_type = '';
+		$post_type = get_post_type();
+
+		if ( $post_type == 'product' &&  ! function_exists( 'get_gallery_attachment_ids' ) ) { 
 			if ( empty( $data['amp_component_scripts']['amp-carousel'] ) ) {
 				$data['amp_component_scripts']['amp-carousel'] = 'https://cdn.ampproject.org/v0/amp-carousel-0.1.js';
 			}
