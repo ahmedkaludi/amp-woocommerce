@@ -133,7 +133,7 @@ function amp_woocommerce_bfr_content() {
 } // end of amp_woocommerce_bfr_content()
 
 	// 2. Add Custom Style for WooCommerce Page
-	add_action('amp_post_template_css','amp_woocommerce_custom_style');
+	add_action('amp_post_wc_specific_template_css','amp_woocommerce_custom_style');
 	function amp_woocommerce_custom_style() {
 		if ( function_exists( 'is_on_sale' ) ) {
 			global $woocommerce;

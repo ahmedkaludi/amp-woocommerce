@@ -8,6 +8,7 @@
 	<style amp-custom>
 	<?php $this->load_parts( array( 'style' ) ); ?>
 	<?php do_action( 'amp_post_template_css', $this ); ?>
+	<?php do_action( 'amp_post_wc_specific_template_css', $this ); ?>
 	</style>
 </head>
 <body class="design_3_wrapper single-post <?php if(is_page()){ echo'amp-single-page'; };?>">
