@@ -27,8 +27,10 @@ function amp_woocommerce_add_woocommerce_support() {
 		if ( 'single' === $type && 'product' === $post->post_type ) {
 
 			if ( class_exists( 'Ampforwp_Init' ) && $redux_builder_amp['amp-design-selector'] == 2) {
-					$file = dirname(__FILE__) . '/templates/ampforwp-wc.php';
-			} else {
+					$file = dirname(__FILE__) . '/templates/design2-wc.php';
+			} elseif( class_exists( 'Ampforwp_Init' ) && $redux_builder_amp['amp-design-selector'] == 3 ) {
+					$file = dirname(__FILE__) . '/templates/design3-wc.php';
+			}else {
 					$file = dirname(__FILE__) . '/templates/wc.php';
 			}
 
