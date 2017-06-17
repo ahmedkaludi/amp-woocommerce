@@ -189,8 +189,6 @@ color: #999;
   position: absolute;
   right: 15px;
 }
-
-
 .amp-img {
   margin-top: 20px;
 }
@@ -258,6 +256,9 @@ padding:8px 10px;
 }
 .amp-woocommerce-meta-info .amp-wp-meta{
     font-size:15px;
+}
+.amp-wp-article amp-carousel {
+	background: none
 }
 /* responsive styles for mobile */
 @media (max-width:767px){
@@ -480,7 +481,7 @@ color:#fff
 		global $post;
 		$sanitized_excerpt = '';
 		$post_excerpt = '';
-		
+
 		$post_excerpt = $post->post_excerpt;
 		$post_excerpt = wpautop( $post_excerpt );
 
