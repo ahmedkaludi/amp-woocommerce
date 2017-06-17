@@ -476,5 +476,27 @@ color:#fff
 	add_action('amp_woocommerce_after_the_content','amp_woocommerce_add_product_description', 11);
 
 	function amp_woocommerce_add_product_description(){
-		woocommerce_template_single_excerpt();
+
+		global $post;
+		$sanitized_excerpt = '';
+		$post_excerpt = '';
+		
+		$post_excerpt = $post->post_excerpt;
+		$post_excerpt = wpautop( $post_excerpt );
+
+		$sanitized_excerpt = new AMPFORWP_Content( $post_excerpt, array(), 
+			apply_filters( 'ampforwp_content_sanitizers',
+				array( 
+					'AMP_Style_Sanitizer' 		=> array(),
+					'AMP_Blacklist_Sanitizer' 	=> array(),
+					'AMP_Img_Sanitizer' 		=> array(),
+					'AMP_Video_Sanitizer' 		=> array(),
+					'AMP_Audio_Sanitizer' 		=> array(),
+					'AMP_Iframe_Sanitizer' 		=> array(
+						'add_placeholder' 		=> true,
+					)
+				) ) );
+		$sanitized_excerpt = $sanitized_excerpt->get_amp_content();
+
+		echo $sanitized_excerpt;
 	}
