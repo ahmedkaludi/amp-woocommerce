@@ -420,15 +420,18 @@ function amp_woocommerce_bfr_content() {
 	}
 
 	// 4. Add WooCommerce amp-carousel script only if WC galley is available
-	 add_action('amp_post_template_head','amp_woocommerce_add_amp_carousel_script');
+	add_filter( 'amp_post_template_data', 'amp_woocommerce_add_amp_carousel_script', 20 );
+	function amp_woocommerce_add_amp_carousel_script( $data ) {
+		global $redux_builder_amp;
+		// Adding Sidebar Script
+		if ( ! function_exists( 'get_gallery_attachment_ids' ) ) { 
+			if ( empty( $data['amp_component_scripts']['amp-carousel'] ) ) {
+				$data['amp_component_scripts']['amp-carousel'] = 'https://cdn.ampproject.org/v0/amp-carousel-0.1.js';
+			}
+		}
 
-	 function amp_woocommerce_add_amp_carousel_script() {
-		if ( ! function_exists( 'get_gallery_attachment_ids' ) ) {
-	?>
-			 	<script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
-			<?php
-	 	}
-	 }
+		return $data;
+	}
 
 	// 5. Remove Default Post Meta from header
 
