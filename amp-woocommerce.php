@@ -187,7 +187,9 @@ function amp_woocommerce_bfr_content() {
 			.price{
 			color: #999; 
 			}
-
+            .amp-woocommerce-container .price{    color: #999; text-align:center;
+    display: block;font-size:14px; 
+    height: 30px;}
 			.add-cart {
 			  bottom: 40px;
 			  position: absolute;
