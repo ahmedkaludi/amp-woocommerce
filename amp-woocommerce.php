@@ -3,7 +3,7 @@
 Plugin Name: AMP WooCommerce
 Description: WooCommerce for AMP (Accelerated Mobile Pages). This plugin enables e-commerce store functionality with WooCommerce for AMP. AMP for Ecommerce out of the box.
 Author: Mohammed Kaludi
-Version: 0.4-beta
+Version: 0.4
 Author URI: http://ampforwp.com
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
