@@ -433,8 +433,8 @@ function amp_woocommerce_bfr_content() {
 				$data['amp_component_scripts']['amp-carousel'] = 'https://cdn.ampproject.org/v0/amp-carousel-0.1.js';
 			}
 		}
-
-		return $data;
+    
+    return $data;
 	}
 
 	// 5. Remove Default Post Meta from header
