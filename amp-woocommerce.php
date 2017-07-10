@@ -522,7 +522,7 @@ Examples:
 [amp-woocommerce num=5]
 [amp-woocommerce num=5 link=noamp]
 *******************************/
-	 function get_amp_latest_prodcuts_markup( $atts ) {
+	 function get_amp_latest_products_markup( $atts ) {
 		 // initializing these to avoid debug errors
 		 global $redux_builder_amp;
 		 global $woocommerce;
@@ -612,7 +612,7 @@ Examples:
 	 }
 
  // Generating Short code for AMP Woocommerce latest Products
- function ampforwp_latest_products_register_shortcodes() {
-	 add_shortcode('amp-woocommerce', 'get_amp_latest_prodcuts_markup');
+ function ampforwp_products_shortcodes() {
+	 add_shortcode('amp-woocommerce', 'get_amp_latest_products_markup');
  }
- add_action( 'amp_init', 'ampforwp_latest_products_register_shortcodes');
+ add_action( 'amp_init', 'ampforwp_products_shortcodes');
