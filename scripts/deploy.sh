@@ -89,7 +89,7 @@ svn co -q "http://svn.wp-plugins.org/$PLUGIN" svn
 #Add new version tag
 #mkdir svn/$PLUGIN/tags/$VERSION
 echo "directory created"
-rsync -r -p /* svn/tags/$VERSION
+rsync -r -p svn/tags/$VERSION
 echo "rsync done"
 # Add new files to SVN
 svn stat svn | grep '^?' | awk '{print $2}' | xargs -I x svn add x@
