@@ -87,7 +87,7 @@ svn co -q "http://svn.wp-plugins.org/" svn
 # rm -fR svn-trunk
 
 #Add new version tag
-mkdir svn/$PLUGIN/tags/$VERSION
+#mkdir svn/$PLUGIN/tags/$VERSION
 echo "directory created"
 rsync -r -p $PLUGIN/* svn/tags/$VERSION
 echo "rsync done"
