@@ -37,7 +37,7 @@ echo
 # printf "Q1. WordPress Repo Plugin Slug e.g. my-awesome-plugin: "
 # read -e PLUGINSLUG
 # echo
-PLUGIN="amp-woocommerce"
+PLUGINSLUG="amp-woocommerce"
 
 # Set up some default values. Feel free to change these in your own script
 CURRENTDIR=$(pwd)
