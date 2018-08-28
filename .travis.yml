@@ -65,12 +65,12 @@ script:
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
       phpcs
     fi
-# deploy:
-#   #
-#   # Auto-deploys the built plugin to WordPress.org on push to master branch
-#   #
-#   file_glob: true
-#   provider: script
-#   skip_cleanup: true
-#   #script: ./scripts/deploy.sh
-#   script: chmod +x scripts/deploy.sh && scripts/deploy.sh
+deploy:
+  #
+  # Auto-deploys the built plugin to WordPress.org on push to master branch
+  #
+  file_glob: true
+  provider: script
+  skip_cleanup: true
+  #script: ./scripts/deploy.sh
+  script: chmod +x scripts/deploy.sh && scripts/deploy.sh
