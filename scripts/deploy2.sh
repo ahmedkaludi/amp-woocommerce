@@ -172,7 +172,7 @@ cd $SVNPATH/trunk/
 svn status | grep -v "^.[ \t]*\..*" | grep "^\!" | awk '{print $2"@"}' | xargs svn del
 # Add all new files that are not set to be ignored
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2"@"}' | xargs svn add
-svn commit --username=$SVNUSER --password=$WP_ORG_PASSWORD -m "Preparing for $PLUGINVERSION release"
+svn svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Preparing for $PLUGINVERSION release"
 
 
 echo
