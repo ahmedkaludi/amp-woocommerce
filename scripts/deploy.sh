@@ -45,3 +45,8 @@ ZIP_FILE="$PLUGIN_BUILDS_PATH/$PLUGIN.zip"
 cd "$PLUGIN_BUILDS_PATH"
 # Remove any unzipped dir so we start from scratch
 rm -fR "$PLUGIN"
+# Unzip the built plugin
+unzip -q -o "$ZIP_FILE"
+
+
+
