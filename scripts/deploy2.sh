@@ -110,12 +110,27 @@ cd $PLUGINDIR
 
 # Check for git branch (may need to allow for leading "v"?)
 # if git show-ref --branches --quiet --verify -- "refs/branches /$PLUGINVERSION"
-if git show-ref --branches --quiet --verify -- "refs/branches/$PLUGINVERSION"
-	then
-		echo "Git branch with $PLUGINVERSION does exist. Let's continue..."
-	else
-		echo "$PLUGINVERSION does not exist as a git branch. Aborting.";
-		exit 1;
-fi
+# if git show-ref --branches --quiet --verify -- "refs/branches/$PLUGINVERSION"
+# 	then
+# 		echo "Git branch with $PLUGINVERSION does exist. Let's continue..."
+# 	else
+# 		echo "$PLUGINVERSION does not exist as a git branch. Aborting.";
+# 		exit 1;
+# fi
 
 echo
+
+echo "Creating local copy of SVN repo trunk..."
+svn checkout $SVNURL $SVNPATH --depth immediates
+svn update --quiet $SVNPATH/trunk --set-depth infinity
+
+echo "Ignoring GitHub specific files"
+svn propset svn:ignore "README.md
+Thumbs.db
+.github/*
+.git
+.gitattributes
+.gitignore" "$SVNPATH/trunk/"
+
+echo "Exporting the HEAD of master from git to the trunk of SVN"
+git checkout-index -a -f --prefix=$SVNPATH/trunk/
