@@ -170,8 +170,8 @@ cd $SVNPATH/tags/$VERSION
 # Delete all files that should not now be added.
 #svn stat svn | grep '^!' | awk '{print $2}' | xargs -I x svn rm --force x@
 # Add all new files that are not set to be ignored
-#svn stat svn | grep '^?' | awk '{print $2}' | xargs -I x svn add x@
-svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2"@"}' | xargs svn add
-svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD svn -m "Preparing for $PLUGINVERSION release"
+svn stat svn | grep '^?' | awk '{print $2}' | xargs -I x svn add x@
+svn stat svn
+svn commit --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD svn -m "Preparing for $PLUGINVERSION release"
 
 echo "committing done"
