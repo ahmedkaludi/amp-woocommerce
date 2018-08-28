@@ -174,4 +174,5 @@ svn status | grep -v "^.[ \t]*\..*" | grep "^\!" | awk '{print $2"@"}' | xargs s
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2"@"}' | xargs svn add
 svn commit --username=$SVNUSER --password=$WP_ORG_PASSWORD -m "Preparing for $PLUGINVERSION release"
 
+
 echo
