@@ -82,6 +82,8 @@ echo
 
 SVNUSER="$default_svnuser" # Populate with default if empty
 echo
+PLUGINVERSION=$(grep -i "Version:" $PLUGINDIR/$MAINFILE | awk -F' ' '{print $NF}' | tr -d '\r')
+echo
 
 echo "That's all of the data collected."
 echo
@@ -91,4 +93,29 @@ echo "Main file: $MAINFILE"
 echo "Temp checkout path: $SVNPATH"
 echo "Remote SVN repo: $SVNURL"
 echo "SVN username: $SVNUSER"
+echo
+
+# Let's begin...
+echo ".........................................."
+echo
+echo "Preparing to deploy WordPress plugin"
+echo
+echo ".........................................."
+echo
+
+echo
+
+echo "Changing to $PLUGINDIR"
+cd $PLUGINDIR
+
+# Check for git tag (may need to allow for leading "v"?)
+# if git show-ref --tags --quiet --verify -- "refs/tags/$PLUGINVERSION"
+if git show-ref --tags --quiet --verify -- "refs/tags/$PLUGINVERSION"
+	then
+		echo "Git tag $PLUGINVERSION does exist. Let's continue..."
+	else
+		echo "$PLUGINVERSION does not exist as a git tag. Aborting.";
+		exit 1;
+fi
+
 echo
