@@ -69,9 +69,9 @@ deploy:
   #
   # Auto-deploys the built plugin to WordPress.org on push to master branch
   #
-  file_glob: true
-  provider: script
-  all_branches: true
-  skip_cleanup: true
-  #script: ./scripts/deploy.sh
-  script: chmod +x scripts/deploy.sh && scripts/deploy.sh
+  - provider: script
+    skip_cleanup: true
+    on:
+      branch: beta
+    #script: ./scripts/deploy.sh
+    script: chmod +x scripts/deploy.sh && scripts/deploy.sh
