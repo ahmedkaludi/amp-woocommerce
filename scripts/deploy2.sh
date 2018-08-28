@@ -120,9 +120,9 @@ cd $PLUGINDIR
 
 echo
 
-echo "Creating local copy of SVN repo trunk..."
-svn checkout $SVNURL $SVNPATH --depth immediates
-svn update --quiet $SVNPATH/trunk --set-depth infinity
+# echo "Creating local copy of SVN repo trunk..."
+# svn checkout $SVNURL $SVNPATH --depth immediates
+# svn update --quiet $SVNPATH/trunk --set-depth infinity
 
 echo "Ignoring GitHub specific files"
 svn propset svn:ignore "README.md
@@ -170,7 +170,8 @@ cd $SVNPATH/tags/$VERSION
 # Delete all files that should not now be added.
 #svn stat svn | grep '^!' | awk '{print $2}' | xargs -I x svn rm --force x@
 # Add all new files that are not set to be ignored
-svn stat svn | grep '^?' | awk '{print $2}' | xargs -I x svn add x@
+#svn stat svn | grep '^?' | awk '{print $2}' | xargs -I x svn add x@
+svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2"@"}' | xargs svn add
 svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD svn -m "Preparing for $PLUGINVERSION release"
 
 echo "committing done"
