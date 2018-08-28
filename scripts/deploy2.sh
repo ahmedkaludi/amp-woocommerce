@@ -134,7 +134,7 @@ Thumbs.db
 
 echo "Exporting the HEAD of master from git to the trunk of SVN"
 git checkout-index -a -f --prefix=$SVNPATH/trunk/
-echo "Moving assets."
+#echo "Moving assets."
 
 # If submodule exist, recursively check out their indexes
 # if [ -f ".gitmodules" ]
@@ -159,9 +159,19 @@ echo "Moving assets."
 
 # Support for the /assets folder on the .org repo.
 # Make the directory if it doesn't already exist
-mkdir -p $SVNPATH/assets/
-mv $SVNPATH/trunk/assets/* $SVNPATH/assets/
-svn add --force $SVNPATH/assets/
-svn delete --force $SVNPATH/trunk/assets
+# mkdir -p $SVNPATH/assets/
+# mv $SVNPATH/trunk/assets/* $SVNPATH/assets/
+# svn add --force $SVNPATH/assets/
+# svn delete --force $SVNPATH/trunk/assets
 
-echo "assets done"
+#echo "assets done"
+
+echo "Changing directory to SVN and committing to trunk."
+cd $SVNPATH/trunk/
+# Delete all files that should not now be added.
+svn status | grep -v "^.[ \t]*\..*" | grep "^\!" | awk '{print $2"@"}' | xargs svn del
+# Add all new files that are not set to be ignored
+svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2"@"}' | xargs svn add
+svn commit --username=$SVNUSER -m "Preparing for $PLUGINVERSION release"
+
+echo
