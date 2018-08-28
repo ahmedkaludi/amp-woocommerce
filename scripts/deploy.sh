@@ -57,7 +57,7 @@ svn co -q "http://svn.wp-plugins.org/$PLUGIN" svn
 # Move out the trunk directory to a temp location
  mv svn/trunk ./svn-trunk
 # # Create trunk directory
-# mkdir svn/trunk
+ mkdir svn/trunk
 # # Copy our new version of the plugin into trunk
  rsync -r -p $PLUGIN/* svn/trunk
 
