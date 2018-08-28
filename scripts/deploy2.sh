@@ -134,6 +134,7 @@ Thumbs.db
 
 echo "Exporting the HEAD of master from git to the trunk of SVN"
 git checkout-index -a -f --prefix=$SVNPATH/trunk/
+echo "Moving assets."
 
 # If submodule exist, recursively check out their indexes
 # if [ -f ".gitmodules" ]
@@ -157,7 +158,6 @@ git checkout-index -a -f --prefix=$SVNPATH/trunk/
 # echo
 
 # Support for the /assets folder on the .org repo.
-echo "Moving assets."
 # Make the directory if it doesn't already exist
 mkdir -p $SVNPATH/assets/
 mv $SVNPATH/trunk/assets/* $SVNPATH/assets/
