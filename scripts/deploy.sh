@@ -88,16 +88,19 @@ svn co -q "http://svn.wp-plugins.org/" svn
 
 #Add new version tag
 mkdir svn/tags/$VERSION
+echo "directory created"
 rsync -r -p $PLUGIN/* svn/tags/$VERSION
-
+echo "rsync done"
 # Add new files to SVN
 svn stat svn | grep '^?' | awk '{print $2}' | xargs -I x svn add x@
+echo "Add new files done"
 # Remove deleted files from SVN
 svn stat svn | grep '^!' | awk '{print $2}' | xargs -I x svn rm --force x@
+echo "Remove files done"
 svn stat svn
-
+echo "svn stat done"
 # Commit to SVN
 svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD svn -m "Deploy version $VERSION"
-
+echo "committing done"
 # Remove SVN temp dir
 rm -fR svn
