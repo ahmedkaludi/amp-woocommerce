@@ -52,5 +52,55 @@ unzip -q -o "$ZIP_FILE"
 rm -fR svn
 
 # Checkout the SVN repo
-svn co -q "http://svn.wp-plugins.org/" svn
+svn co -q "http://svn.wp-plugins.org/$PLUGIN" svn
 
+# Move out the trunk directory to a temp location
+# mv svn/trunk ./svn-trunk
+# # Create trunk directory
+# mkdir svn/trunk
+# # Copy our new version of the plugin into trunk
+# rsync -r -p $PLUGIN/* svn/trunk
+
+# # Copy all the .svn folders from the checked out copy of trunk to the new trunk.
+# # This is necessary as the Travis container runs Subversion 1.6 which has .svn dirs in every sub dir
+# cd svn/trunk/
+# TARGET=$(pwd)
+# cd ../../svn-trunk/
+
+# Find all .svn dirs in sub dirs
+# SVN_DIRS=`find . -type d -iname .svn`
+
+# for SVN_DIR in $SVN_DIRS; do
+#     SOURCE_DIR=${SVN_DIR/.}
+#     TARGET_DIR=$TARGET${SOURCE_DIR/.svn}
+#     TARGET_SVN_DIR=$TARGET${SVN_DIR/.}
+#     if [ -d "$TARGET_DIR" ]; then
+#         # Copy the .svn directory to trunk dir
+#         cp -r $SVN_DIR $TARGET_SVN_DIR
+#     fi
+# done
+
+# Back to builds dir
+# cd ../
+
+# Remove checked out dir
+# rm -fR svn-trunk
+
+#Add new version tag
+#mkdir svn/$PLUGIN/tags/$VERSION
+echo "directory created"
+rsync -r -p /* svn/tags/$VERSION
+echo "rsync done"
+# Add new files to SVN
+svn stat svn | grep '^?' | awk '{print $2}' | xargs -I x svn add x@
+echo "Add new files done"
+# Remove deleted files from SVN
+svn stat svn | grep '^!' | awk '{print $2}' | xargs -I x svn rm --force x@
+echo "Remove files done"
+svn stat svn
+echo "svn stat done"
+# Commit to SVN
+svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD svn -m "Deploy version $VERSION"
+echo "committing done"
+# Remove SVN temp dir
+rm -fR svn
