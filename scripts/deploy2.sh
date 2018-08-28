@@ -168,10 +168,9 @@ echo "Exporting the HEAD of master from git to the trunk of SVN"
 echo "Changing directory to SVN and committing to beta tag."
 cd $SVNPATH/tags/$VERSION
 # Delete all files that should not now be added.
-svn stat svn | grep '^!' | awk '{print $2}' | xargs -I x svn rm --force x@
+#svn stat svn | grep '^!' | awk '{print $2}' | xargs -I x svn rm --force x@
 # Add all new files that are not set to be ignored
 svn stat svn | grep '^?' | awk '{print $2}' | xargs -I x svn add x@
 svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD svn -m "Preparing for $PLUGINVERSION release"
 
-
-echo
+echo "committing done"
