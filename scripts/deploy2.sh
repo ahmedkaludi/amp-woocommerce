@@ -133,7 +133,6 @@ Thumbs.db
 .gitignore" "$SVNPATH/trunk/"
 
 echo "Exporting the HEAD of master from git to the trunk of SVN"
-git checkout-index -a -f --prefix=$SVNPATH/trunk/
 #echo "Moving assets."
 
 # If submodule exist, recursively check out their indexes
@@ -166,8 +165,8 @@ git checkout-index -a -f --prefix=$SVNPATH/trunk/
 
 #echo "assets done"
 
-echo "Changing directory to SVN and committing to trunk."
-cd $SVNPATH/trunk/
+echo "Changing directory to SVN and committing to beta tag."
+cd $SVNPATH/tags/$VERSION
 # Delete all files that should not now be added.
 svn status | grep -v "^.[ \t]*\..*" | grep "^\!" | awk '{print $2"@"}' | xargs svn del
 # Add all new files that are not set to be ignored
