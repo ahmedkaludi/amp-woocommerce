@@ -51,7 +51,7 @@ default_mainfile="$PLUGINSLUG.php"
 # printf "($default_plugindir): "
 # read -e  input
 # input="${input%/}" # Strip trailing slash
-PLUGINDIR="https://github.com/ahmedkaludi/amp-woocommerce" # Populate with default if empty
+PLUGINDIR="https://github.com/ahmedkaludi/amp-woocommerce/archive/beta.zip" # Populate with default if empty
 echo
 
 # Check directory exists.
