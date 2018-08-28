@@ -164,4 +164,4 @@ mv $SVNPATH/trunk/assets/* $SVNPATH/assets/
 svn add --force $SVNPATH/assets/
 svn delete --force $SVNPATH/trunk/assets
 
-echo
+echo "assets done"
