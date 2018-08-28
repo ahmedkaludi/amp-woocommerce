@@ -71,6 +71,7 @@ deploy:
   #
   file_glob: true
   provider: script
+  all_branches: true
   skip_cleanup: true
   #script: ./scripts/deploy.sh
   script: chmod +x scripts/deploy.sh && scripts/deploy.sh
