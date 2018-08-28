@@ -45,12 +45,3 @@ ZIP_FILE="$PLUGIN_BUILDS_PATH/$PLUGIN.zip"
 cd "$PLUGIN_BUILDS_PATH"
 # Remove any unzipped dir so we start from scratch
 rm -fR "$PLUGIN"
-# Unzip the built plugin
-unzip -q -o "$ZIP_FILE"
-
-# Clean up any previous svn dir
-rm -fR svn
-
-# Checkout the SVN repo
-svn co -q "http://svn.wp-plugins.org/" svn
-
