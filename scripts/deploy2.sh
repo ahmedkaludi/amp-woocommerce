@@ -108,13 +108,13 @@ echo
 echo "Changing to $PLUGINDIR"
 cd $PLUGINDIR
 
-# Check for git tag (may need to allow for leading "v"?)
-# if git show-ref --tags --quiet --verify -- "refs/tags/$PLUGINVERSION"
-if git show-ref --tags --quiet --verify -- "refs/tags/$PLUGINVERSION"
+# Check for git branch (may need to allow for leading "v"?)
+# if git show-ref --branches --quiet --verify -- "refs/branches /$PLUGINVERSION"
+if git show-ref --branches --quiet --verify -- "refs/branches/$PLUGINVERSION"
 	then
-		echo "Git tag $PLUGINVERSION does exist. Let's continue..."
+		echo "Git branch with $PLUGINVERSION does exist. Let's continue..."
 	else
-		echo "$PLUGINVERSION does not exist as a git tag. Aborting.";
+		echo "$PLUGINVERSION does not exist as a git branch. Aborting.";
 		exit 1;
 fi
 
