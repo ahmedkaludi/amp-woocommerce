@@ -73,3 +73,22 @@ fi
 
 echo "Checking version in main plugin file matches version in readme.txt file..."
 echo
+
+SVNPATH="$default_svnpath" # Populate with default if empty
+echo
+
+SVNURL="$default_svnurl" # Populate with default if empty
+echo
+
+SVNUSER="$default_svnuser" # Populate with default if empty
+echo
+
+echo "That's all of the data collected."
+echo
+echo "Slug: $PLUGINSLUG"
+echo "Plugin directory: $PLUGINDIR"
+echo "Main file: $MAINFILE"
+echo "Temp checkout path: $SVNPATH"
+echo "Remote SVN repo: $SVNURL"
+echo "SVN username: $SVNUSER"
+echo
