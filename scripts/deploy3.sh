@@ -30,18 +30,18 @@ echo "Starting deploy..."
 
 echo "$GH_REF"
 
-svn co -q "http://svn.wp-plugins.org/amp-woocommerce" svn
-echo "Delete the beta directory first svn/tags/$TRAVIS_TAG"
-svn delete --force svn/tags/$TRAVIS_TAG
-#svn delete $SVN_REPO/tags/$TRAVIS_TAG --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --message "Deleting"
-echo "Deleting of beta done"
+# svn co -q "http://svn.wp-plugins.org/amp-woocommerce" svn
+# echo "Delete the beta directory first svn/tags/$TRAVIS_TAG"
+# svn delete --force svn/tags/$TRAVIS_TAG
+# #svn delete $SVN_REPO/tags/$TRAVIS_TAG --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --message "Deleting"
+# echo "Deleting of beta done"
 
-echo "Delete the trunk directory first svn/trunk"
-svn delete --force svn/trunk
-#svn delete $SVN_REPO/trunk --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --message "Deleting"
-echo "Deleting of trunk done"
-svn commit -m "commit version $TRAVIS_TAG" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --non-interactive 2>/dev/null
-echo "commit done"
+# echo "Delete the trunk directory first svn/trunk"
+# svn delete --force svn/trunk
+# #svn delete $SVN_REPO/trunk --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --message "Deleting"
+# echo "Deleting of trunk done"
+# svn commit -m "commit version $TRAVIS_TAG" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --non-interactive 2>/dev/null
+# echo "commit done"
 
 mkdir build
 
@@ -51,6 +51,9 @@ BASE_DIR=$(pwd)
 echo "$BASE_DIR"
 
 echo "Checking out trunk from $SVN_REPO ..."
+svn co -q $SVN_REPO
+rm -fr ./trunk
+mkdir trunk
 svn co -q $SVN_REPO/trunk
 
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
@@ -68,24 +71,25 @@ echo "Syncing done"
 
 cd ./trunk
 
-if [ -e ".distignore" ]; then
-	echo "svn propset form .distignore"
-	svn propset -q -R svn:ignore -F .distignore .
+# if [ -e ".distignore" ]; then
+# 	echo "svn propset form .distignore"
+# 	svn propset -q -R svn:ignore -F .distignore .
 
-else
-	if [ -e ".svnignore" ]; then
-		echo "svn propset"
-		svn propset -q -R svn:ignore -F .svnignore .
-	fi
-fi
-echo "Ignoring GitHub specific files"
-svn propset -q -R svn:ignore -F scripts/.svnignore .
-svn propset svn:ignore "README.md
-Thumbs.db
-.github/*
-.git
-.gitattributes
-.gitignore" "$SVN_REPO/trunk/"
+# else
+# 	if [ -e ".svnignore" ]; then
+# 		echo "svn propset"
+# 		svn propset -q -R svn:ignore -F .svnignore .
+# 	fi
+# fi
+# echo "Ignoring GitHub specific files"
+# svn propset -q -R svn:ignore -F scripts/.svnignore .
+# svn propset svn:ignore "README.md
+# Thumbs.db
+# .github/*
+# .git
+# .gitattributes
+# .gitignore" "$SVN_REPO/trunk/"
+
 echo "Run svn add"
 svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 echo "Run svn del"
