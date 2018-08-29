@@ -23,3 +23,10 @@ GH_REF=https://github.com/${TRAVIS_REPO_SLUG}.git
 echo "Starting deploy..."
 
 echo "$GH_REF"
+
+mkdir build
+
+cd build
+BASE_DIR=$(pwd)
+
+echo "$BASE_DIR"
