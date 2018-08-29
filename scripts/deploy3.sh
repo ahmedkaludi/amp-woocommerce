@@ -35,10 +35,9 @@ echo "$GH_REF"
 # svn delete --force svn/tags/$TRAVIS_TAG
 # #svn delete $SVN_REPO/tags/$TRAVIS_TAG --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --message "Deleting"
 # echo "Deleting of beta done"
-
+# #svn delete $SVN_REPO/trunk --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --message "Deleting"
 # echo "Delete the trunk directory first svn/trunk"
 # svn delete --force svn/trunk
-# #svn delete $SVN_REPO/trunk --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --message "Deleting"
 # echo "Deleting of trunk done"
 # svn commit -m "commit version $TRAVIS_TAG" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --non-interactive 2>/dev/null
 # echo "commit done"
@@ -53,6 +52,7 @@ echo "$BASE_DIR"
 echo "Checking out trunk from $SVN_REPO ..."
 svn co -q $SVN_REPO
 rm -fr ./trunk
+svn delete $SVN_REPO/trunk --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --message "Deleting"
 mkdir trunk
 svn co -q $SVN_REPO/trunk
 
@@ -69,7 +69,7 @@ rsync -a --exclude=".svn" --checksum --delete ./git/ ./trunk/
 rm -fr ./git
 echo "Syncing done"
 
-cd ./trunk
+#cd ./trunk
 
 # if [ -e ".distignore" ]; then
 # 	echo "svn propset form .distignore"
@@ -90,26 +90,26 @@ cd ./trunk
 # .gitattributes
 # .gitignore" "$SVN_REPO/trunk/"
 
-echo "Run svn add"
-svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
-echo "Run svn del"
-svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
+# echo "Run svn add"
+# svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
+# echo "Run svn del"
+# svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 
-echo " Add and remove done"
+# echo " Add and remove done"
 
-# If tag number and credentials are provided, commit to trunk.
-if [[ $TRAVIS_TAG && $WP_ORG_USERNAME && $WP_ORG_PASSWORD ]]; then
-	#if [[ ! -d tags/$TRAVIS_TAG ]]; then
-		echo "Commit to $SVN_REPO."
-		svn commit -m "commit version $TRAVIS_TAG" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --non-interactive 2>/dev/null
-		echo "Take snapshot of $TRAVIS_TAG"
-		svn copy $SVN_REPO/trunk/ $SVN_REPO/tags/$TRAVIS_TAG -m "Take snapshot of $TRAVIS_TAG" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --non-interactive 2>/dev/null
-	#else
-	#	echo "tags/$TRAVIS_TAG already exists."
-	#fi
-else
-	echo "Nothing to commit and check \`svn st\`."
-	svn st
-fi
+# # If tag number and credentials are provided, commit to trunk.
+# if [[ $TRAVIS_TAG && $WP_ORG_USERNAME && $WP_ORG_PASSWORD ]]; then
+# 	#if [[ ! -d tags/$TRAVIS_TAG ]]; then
+# 		echo "Commit to $SVN_REPO."
+# 		svn commit -m "commit version $TRAVIS_TAG" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --non-interactive 2>/dev/null
+# 		echo "Take snapshot of $TRAVIS_TAG"
+# 		svn copy $SVN_REPO/trunk/ $SVN_REPO/tags/$TRAVIS_TAG -m "Take snapshot of $TRAVIS_TAG" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --non-interactive 2>/dev/null
+# 	#else
+# 	#	echo "tags/$TRAVIS_TAG already exists."
+# 	#fi
+# else
+# 	echo "Nothing to commit and check \`svn st\`."
+# 	svn st
+# fi
 
- echo "Everythings done"
+#  echo "Everythings done"
