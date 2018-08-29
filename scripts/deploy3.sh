@@ -30,6 +30,14 @@ echo "Starting deploy..."
 
 echo "$GH_REF"
 
+echo "Delete the beta directory first $SVN_REPO/tags/$TRAVIS_TAG/"
+rm -fr $SVN_REPO/tags/$TRAVIS_TAG/
+echo "Deleting of beta done"
+
+echo "Delete the trunk directory first $SVN_REPO/tags/$TRAVIS_TAG/"
+rm -fr $SVN_REPO/trunk/
+echo "Deleting of trunk done"
+
 mkdir build
 
 cd build
@@ -65,7 +73,13 @@ else
 		svn propset -q -R svn:ignore -F .svnignore .
 	fi
 fi
-
+echo "Ignoring GitHub specific files"
+svn propset svn:ignore "README.md
+Thumbs.db
+.github/*
+.git
+.gitattributes
+.gitignore" "$SVNPATH/trunk/"
 echo "Run svn add"
 svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 echo "Run svn del"
