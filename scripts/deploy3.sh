@@ -31,12 +31,14 @@ echo "Starting deploy..."
 echo "$GH_REF"
 
 echo "Delete the beta directory first $SVN_REPO/tags/$TRAVIS_TAG/"
-rm -fr $SVN_REPO/tags/$TRAVIS_TAG/
+rm -fr $SVN_REPO/tags/$TRAVIS_TAG
 echo "Deleting of beta done"
 
 echo "Delete the trunk directory first $SVN_REPO/trunk/"
 rm -fr $SVN_REPO/trunk/
 echo "Deleting of trunk done"
+svn commit -m "commit version $TRAVIS_TAG" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --non-interactive 2>/dev/null
+echo "commit done"
 
 # mkdir build
 
