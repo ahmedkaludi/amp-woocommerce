@@ -39,3 +39,10 @@ git clone -q $GH_REF ./git
 echo "cloning done"
 cd ./git
 echo "in the directory"
+
+cd $BASE_DIR
+echo "in $BASE_DIR"
+echo "Syncing git repository to svn"
+rsync -a --exclude=".svn" --checksum --delete ./git/ ./trunk/
+rm -fr ./git
+echo "Syncing done"
