@@ -20,6 +20,7 @@ if [[ ! $TRAVIS_TAG ]]; then
 	echo "Travis Tag is not specified."
 	TRAVIS_TAG="beta"
 fi
+echo "$TRAVIS_TAG"
 # Untrailing slash of SVN_REPO path
 SVN_REPO=`echo $SVN_REPO | sed -e "s/\/$//"`
 # Git repository
