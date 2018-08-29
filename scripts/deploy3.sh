@@ -49,11 +49,11 @@ echo "in the directory"
 cd $BASE_DIR
 echo "in $BASE_DIR"
 echo "Syncing git repository to svn"
-rsync -a --exclude=".svn" --checksum --delete ./git/ ./tags/$TRAVIS_TAG/
+rsync -a --exclude=".svn" --checksum --delete ./git/ $SVN_REPO/tags/$TRAVIS_TAG/
 rm -fr ./git
 echo "Syncing done"
 
-cd ./tags/$TRAVIS_TAG
+cd $SVN_REPO/tags/$TRAVIS_TAG
 
 if [ -e ".distignore" ]; then
 	echo "svn propset form .distignore"
