@@ -52,7 +52,7 @@ echo "$BASE_DIR"
 echo "Checking out trunk from $SVN_REPO ..."
 svn co -q $SVN_REPO
 rm -fr ./trunk
-svn delete $SVN_REPO/trunk --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --message "Deleting"
+svn delete $SVN_REPO/trunk --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --message "Deleting" --non-interactive 2>/dev/null
 mkdir trunk
 svn co -q $SVN_REPO/trunk
 
