@@ -1,4 +1,4 @@
-set -e
+#!/usr/bin/env bash
 
 if [[ "false" != "$TRAVIS_PULL_REQUEST" ]]; then
 	echo "Not deploying pull requests."
@@ -21,3 +21,5 @@ SVN_REPO=`echo $SVN_REPO | sed -e "s/\/$//"`
 GH_REF=https://github.com/${TRAVIS_REPO_SLUG}.git
 
 echo "Starting deploy..."
+
+echo "$GH_REF"
