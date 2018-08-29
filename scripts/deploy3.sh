@@ -15,6 +15,11 @@ if [[ ! $SVN_REPO ]]; then
 	exit
 fi
 
+# Travis Tag
+if [[ ! $TRAVIS_TAG ]]; then
+	echo "Travis Tag is not specified."
+	TRAVIS_TAG="beta"
+fi
 # Untrailing slash of SVN_REPO path
 SVN_REPO=`echo $SVN_REPO | sed -e "s/\/$//"`
 # Git repository
@@ -66,3 +71,20 @@ echo "Run svn del"
 svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 
 echo " Add and remove done"
+
+# If tag number and credentials are provided, commit to trunk.
+if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
+	if [[ ! -d tags/$TRAVIS_TAG ]]; then
+		echo "Commit to $SVN_REPO."
+		svn commit -m "commit version $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
+		echo "Take snapshot of $TRAVIS_TAG"
+		svn copy $SVN_REPO/trunk $SVN_REPO/tags/$TRAVIS_TAG -m "Take snapshot of $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
+	else
+		echo "tags/$TRAVIS_TAG already exists."
+	fi
+else
+	echo "Nothing to commit and check \`svn st\`."
+	svn st
+fi
+
+echo "Everythings done"
