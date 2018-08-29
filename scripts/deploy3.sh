@@ -30,7 +30,7 @@ echo "Starting deploy..."
 
 echo "$GH_REF"
 
-svn co -q "http://svn.wp-plugins.org/$TRAVIS_TAG"
+svn co -q "http://svn.wp-plugins.org/amp-woocommerce/$TRAVIS_TAG"
 echo "Delete the beta directory first $SVN_REPO/tags/$TRAVIS_TAG"
 svn rm tags/$TRAVIS_TAG
 #svn delete $SVN_REPO/tags/$TRAVIS_TAG --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --message "Deleting"
