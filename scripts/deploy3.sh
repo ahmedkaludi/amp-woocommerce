@@ -31,13 +31,13 @@ echo "Starting deploy..."
 echo "$GH_REF"
 
 svn co -q "http://svn.wp-plugins.org/amp-woocommerce" svn
-echo "Delete the beta directory first $SVN_REPO/tags/$TRAVIS_TAG"
-svn rm --force svn/tags/$TRAVIS_TAG
+echo "Delete the beta directory first svn/tags/$TRAVIS_TAG"
+svn delete --force svn/tags/$TRAVIS_TAG
 #svn delete $SVN_REPO/tags/$TRAVIS_TAG --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --message "Deleting"
 echo "Deleting of beta done"
 
-echo "Delete the trunk directory first $SVN_REPO/trunk"
-svn rm --force svn/trunk
+echo "Delete the trunk directory first svn/trunk"
+svn delete --force svn/trunk
 #svn delete $SVN_REPO/trunk --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --message "Deleting"
 echo "Deleting of trunk done"
 svn commit -m "commit version $TRAVIS_TAG" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --non-interactive 2>/dev/null
