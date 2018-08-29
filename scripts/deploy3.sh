@@ -79,7 +79,7 @@ else
 	fi
 fi
 echo "Ignoring GitHub specific files"
-svn propset -q -R svn:ignore -F .svnignore .
+svn propset -q -R svn:ignore -F scripts/.svnignore .
 svn propset svn:ignore "README.md
 Thumbs.db
 .github/*
