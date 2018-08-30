@@ -30,7 +30,7 @@ cd amp-woocommerce
 echo "Ignoring GitHub specific files"
 
 #svn propset svn:ignore "README.md" .
-svn propset -q -R svn:ignore -F .svnignore .
+svn propset -q -R svn:ignore -F ./.svnignore .
 
 mkdir build
 
