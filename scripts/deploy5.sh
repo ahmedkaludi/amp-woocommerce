@@ -78,9 +78,14 @@ fi
 
 
 echo "Run svn add"
-svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
+svn stat | grep '^?' | awk '{print $2}' | xargs -I x add x@
+# Remove deleted files from SVN
+svn stat | grep '^!' | awk '{print $2}' | xargs -I x rm --force x@
+svn stat svn
+
+#svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 echo "Run svn del"
-svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
+#svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 
 # If tag number and credentials are provided, commit to temp.
 if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
