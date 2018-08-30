@@ -28,9 +28,9 @@ echo "Starting deploy..."
 svn co -q $SVN_REPO
 cd amp-woocommerce
 echo "Ignoring GitHub specific files"
-
+ls
 #svn propset svn:ignore "README.md" .
-svn propset -q -R svn:ignore -F ./.svnignore .
+#svn propset -q -R svn:ignore -F ./.svnignore .
 
 mkdir build
 
