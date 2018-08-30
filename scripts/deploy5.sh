@@ -30,7 +30,9 @@ mkdir build
 
 cd build
 BASE_DIR=$(pwd)
-
+echo "deleting previous directory"
+svn co -q $SVN_REPO
+rm -fr ./temp
 echo "Checking out temp from $SVN_REPO ..."
 svn co -q $SVN_REPO/temp
 
