@@ -30,12 +30,12 @@ mkdir build
 
 cd build
 BASE_DIR=$(pwd)
-cd $BASE_DIR
 echo "checking out main directory"
 svn co -q $SVN_REPO
 
 echo "Ignoring GitHub specific files"
-svn propset svn:ignore "README.md" .
+
+svn propset svn:ignore "README.md" "$SVN_REPO"
 
 echo "Checking out temp from $SVN_REPO ..."
 svn co -q $SVN_REPO/temp
