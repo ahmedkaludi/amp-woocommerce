@@ -33,10 +33,11 @@ BASE_DIR=$(pwd)
 
 echo "Checking out temp from $SVN_REPO ..."
 svn co -q $SVN_REPO/temp
-echo "delete current temp/beta"
-rm -fr ./beta
-echo "create new beta in temp"
-mkdir beta
+# echo "delete current temp/beta"
+# rm -fr ./beta
+# echo "create new beta in temp"
+echo "create $TRAVIS_TAG directory"
+mkdir $TRAVIS_TAG
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
 git clone -q $GH_REF ./git
 
@@ -50,10 +51,10 @@ fi
 cd $BASE_DIR
 
 echo "Syncing git repository to svn"
-rsync -a --exclude=".svn" --checksum --delete ./git/ ./temp/beta/
+rsync -a --exclude=".svn" --checksum --delete ./git/ ./temp/$TRAVIS_TAG/
 rm -fr ./git
 
-cd ./temp/beta/
+cd ./temp/$TRAVIS_TAG/
 
 if [ -e ".distignore" ]; then
 	echo "svn propset form .distignore"
@@ -81,8 +82,8 @@ if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
 		echo "Commit to $SVN_REPO."
 		svn commit -m "commit version $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 		echo "Take snapshot of $TRAVIS_TAG"
-		echo "copy temp/beta into tags/beta"
-		svn copy $SVN_REPO/temp/beta $SVN_REPO/tags/$TRAVIS_TAG -m "Take snapshot of $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
+		echo "move temp/$TRAVIS_TAG into tags/$TRAVIS_TAG"
+		svn move $SVN_REPO/temp/$TRAVIS_TAG $SVN_REPO/tags/$TRAVIS_TAG -m "Move from temp/beta to tags/beta" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 		# echo "delete temp/beta"
 		# svn delete --force $SVN_REPO/temp/beta
 		# svn commit -m "delete beta of temp" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
