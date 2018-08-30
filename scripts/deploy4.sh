@@ -71,7 +71,7 @@ Thumbs.db
 .github/*
 .git
 .gitattributes
-.gitignore" .
+.gitignore" ./beta/
 echo "Run svn add"
 svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 echo "Run svn del"
