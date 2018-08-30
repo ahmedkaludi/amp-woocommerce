@@ -33,8 +33,8 @@ BASE_DIR=$(pwd)
 
 echo "Checking out trunk from $SVN_REPO ..."
 svn co -q $SVN_REPO
-mkdir trunk
-svn commit -m "commit version $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
+mkdir $SVN_REPO/trunk
+svn commit -m "Add trunk" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 echo "first commit done"
 svn co -q $SVN_REPO/trunk
 
