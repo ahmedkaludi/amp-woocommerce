@@ -33,6 +33,7 @@ BASE_DIR=$(pwd)
 
 echo "Checking $SVN_REPO ..."
 svn co -q $SVN_REPO
+cd $BASE_DIR
 mkdir trunk
 svn stat | grep '^?' | awk '{print $2}' | xargs -I x add x@
 svn commit -m "commit version $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
