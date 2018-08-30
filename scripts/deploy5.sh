@@ -66,7 +66,8 @@ else
 		svn propset -q -R svn:ignore -F .svnignore .
 	fi
 fi
-
+wget https://raw.githubusercontent.com/miya0001/wp-svnignore/master/.svnignore
+svn propset -R svn:ignore -F .svnignore .
 echo "Run svn add"
 svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 echo "Run svn del"
