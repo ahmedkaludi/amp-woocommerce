@@ -35,9 +35,11 @@ echo "Checking out beta from $SVN_REPO ..."
 #cd $SVN_REPO 
 # svn co -q $SVN_REPO
 # mkdir trunk
-svn co -q $SVN_REPO
+svn checkout -q $SVN_REPO/tags
+ls
 echo "create directory"
 mkdir temp
+ls
 svn commit -m "commit to create directory" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 echo "directory created"
 
