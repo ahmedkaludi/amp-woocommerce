@@ -16,7 +16,7 @@ if [[ ! $SVN_REPO ]]; then
 	echo "SVN repo is not specified."
 	exit
 fi
-TRAVIS_TAG="beta3"
+TRAVIS_TAG="beta4"
 SVN_USER="$WP_ORG_USERNAME"
 SVN_PASS="$WP_ORG_PASSWORD"
 # Untrailing slash of SVN_REPO path
@@ -30,12 +30,10 @@ mkdir build
 
 cd build
 BASE_DIR=$(pwd)
-echo "deleting previous directory"
-svn co -q $SVN_REPO
-rm -fr ./temp
+
 echo "Checking out temp from $SVN_REPO ..."
 svn co -q $SVN_REPO/temp
-
+mkdir beta
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
 git clone -q $GH_REF ./git
 
@@ -49,10 +47,10 @@ fi
 cd $BASE_DIR
 
 echo "Syncing git repository to svn"
-rsync -a --exclude=".svn" --checksum --delete ./git/ ./temp/
+rsync -a --exclude=".svn" --checksum --delete ./git/ ./temp/beta/
 rm -fr ./git
 
-cd ./temp
+cd ./temp/beta/
 
 if [ -e ".distignore" ]; then
 	echo "svn propset form .distignore"
@@ -76,7 +74,7 @@ if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
 		echo "Commit to $SVN_REPO."
 		svn commit -m "commit version $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 		echo "Take snapshot of $TRAVIS_TAG"
-		svn copy $SVN_REPO/temp $SVN_REPO/tags/$TRAVIS_TAG -m "Take snapshot of $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
+		svn copy $SVN_REPO/temp/beta $SVN_REPO/tags/$TRAVIS_TAG -m "Take snapshot of $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 	else
 		echo "tags/$TRAVIS_TAG already exists."
 	fi
