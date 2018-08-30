@@ -55,7 +55,9 @@ rm -fr ./git
 
 cd ./temp/$TRAVIS_TAG/
 
+svn status | grep ^\? | awk '{print $2}'
 echo "Ignoring GitHub specific files"
+
 svn propset svn:ignore "README.md
 Thumbs.db
 .github/*
