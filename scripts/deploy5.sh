@@ -30,6 +30,7 @@ mkdir build
 
 cd build
 BASE_DIR=$(pwd)
+cd $BASE_DIR
 echo "checking out main directory"
 svn co -q $SVN_REPO
 
