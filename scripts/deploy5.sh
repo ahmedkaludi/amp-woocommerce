@@ -29,7 +29,7 @@ svn co -q $SVN_REPO
 
 echo "Ignoring GitHub specific files"
 
-svn propset svn:ignore "README.md" ./
+svn propset svn:ignore "README.md" .
 
 echo "Starting deploy..."
 
