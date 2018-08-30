@@ -31,7 +31,7 @@ mkdir build
 cd build
 BASE_DIR=$(pwd)
 
-echo "Checking out trunk from $SVN_REPO ..."
+echo "Checking out beta from $SVN_REPO ..."
 #cd $SVN_REPO 
 # svn co -q $SVN_REPO
 # mkdir trunk
@@ -50,10 +50,10 @@ fi
 cd $BASE_DIR
 
 echo "Syncing git repository to svn"
-rsync -a --exclude=".svn" --checksum --delete ./git/ ./trunk/
+rsync -a --exclude=".svn" --checksum --delete ./git/ ./beta/
 rm -fr ./git
 
-cd ./trunk
+cd ./beta
 
 if [ -e ".distignore" ]; then
 	echo "svn propset form .distignore"
@@ -77,7 +77,7 @@ if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
 		echo "Commit to $SVN_REPO."
 		svn commit -m "commit version $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 		echo "Take snapshot of $TRAVIS_TAG"
-		svn copy $SVN_REPO/trunk $SVN_REPO/tags/$TRAVIS_TAG -m "Take snapshot of $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
+		#svn copy $SVN_REPO/trunk $SVN_REPO/tags/$TRAVIS_TAG -m "Take snapshot of $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 	else
 		echo "tags/$TRAVIS_TAG already exists."
 	fi
