@@ -25,12 +25,6 @@ SVN_REPO=`echo $SVN_REPO | sed -e "s/\/$//"`
 GH_REF=https://github.com/${TRAVIS_REPO_SLUG}.git
 
 echo "Starting deploy..."
-svn co -q $SVN_REPO
-cd amp-woocommerce
-echo "Ignoring GitHub specific files"
-ls
-#svn propset svn:ignore "README.md" .
-#svn propset -q -R svn:ignore -F ./.svnignore .
 
 mkdir build
 
@@ -39,7 +33,6 @@ BASE_DIR=$(pwd)
 
 echo "Checking out temp from $SVN_REPO ..."
 svn co -q $SVN_REPO/temp
-
 # echo "delete current temp/beta"
 # rm -fr ./beta
 # echo "create new beta in temp"
@@ -63,8 +56,6 @@ rm -fr ./git
 
 cd ./temp/$TRAVIS_TAG/
 
-
-
 if [ -e ".distignore" ]; then
 	echo "svn propset form .distignore"
 	svn propset -q -R svn:ignore -F .distignore .
@@ -76,16 +67,10 @@ else
 	fi
 fi
 
-
 echo "Run svn add"
-svn stat | grep '^?' | awk '{print $2}' | xargs -I x add x@
-# Remove deleted files from SVN
-svn stat | grep '^!' | awk '{print $2}' | xargs -I x rm --force x@
-svn stat svn
-
-#svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
+svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 echo "Run svn del"
-#svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
+svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 
 # If tag number and credentials are provided, commit to temp.
 if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
