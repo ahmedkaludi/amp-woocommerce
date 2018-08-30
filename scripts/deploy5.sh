@@ -32,10 +32,11 @@ cd build
 BASE_DIR=$(pwd)
 
 echo "Checking $SVN_REPO ..."
-svn co -q $SVN_REPO
 cd $BASE_DIR
+svn co -q $SVN_REPO
 mkdir trunk
-svn stat | grep '^?' | awk '{print $2}' | xargs -I x add x@
+svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
+svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 svn commit -m "commit version $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 echo "first commit done"
 svn co -q $SVN_REPO/trunk
