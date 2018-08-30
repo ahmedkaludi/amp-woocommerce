@@ -26,11 +26,12 @@ GH_REF=https://github.com/${TRAVIS_REPO_SLUG}.git
 
 echo "checking out main directory"
 svn co -q $SVN_REPO
-
+cd $SVN_REPO/temp
 echo "Ignoring GitHub specific files"
 
 svn propset svn:ignore "README.md" .
 
+cd ..
 echo "Starting deploy..."
 
 mkdir build
