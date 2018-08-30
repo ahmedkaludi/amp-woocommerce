@@ -47,7 +47,7 @@ ls
 # echo "Run svn del"
 # svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 # #svn commit --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version"
-# svn commit -m "commit to create directory" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
+svn commit -m "commit to create directory" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 # echo "directory created"
 
 
