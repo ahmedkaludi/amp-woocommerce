@@ -66,6 +66,14 @@ else
 		svn propset -q -R svn:ignore -F .svnignore .
 	fi
 fi
+echo "Ignoring GitHub specific files"
+svn propset svn:ignore "README.md
+Thumbs.db
+.github/*
+.git
+.gitattributes
+.gitignore bin" .
+svn status --no-ignore
 
 echo "Run svn add"
 svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
