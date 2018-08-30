@@ -37,7 +37,7 @@ echo "Checking out beta from $SVN_REPO ..."
 # mkdir trunk
 svn co -q $SVN_REPO/tags
 echo "deleting previous directory"
-svn delete --force $SVN_REPO/tags/beta
+svn rm --force $SVN_REPO/tags/beta
 mkdir beta
 svn co -q $SVN_REPO/tags/beta
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
