@@ -30,6 +30,11 @@ mkdir build
 
 cd build
 BASE_DIR=$(pwd)
+echo "checking out main directory"
+svn co -q $SVN_REPO
+
+echo "Ignoring GitHub specific files"
+svn propset svn:ignore "README.md" .
 
 echo "Checking out temp from $SVN_REPO ..."
 svn co -q $SVN_REPO/temp
@@ -50,9 +55,7 @@ if [ -e "bin/build.sh" ]; then
 fi
 
 cd $BASE_DIR
-echo "Ignoring GitHub specific files"
 
-svn propset svn:ignore "README.md" ./
 echo "Syncing git repository to svn"
 rsync -a --exclude=".svn" --checksum --delete ./git/ ./temp/$TRAVIS_TAG/
 rm -fr ./git
