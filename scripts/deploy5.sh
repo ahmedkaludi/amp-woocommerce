@@ -24,14 +24,6 @@ SVN_REPO=`echo $SVN_REPO | sed -e "s/\/$//"`
 # Git repository
 GH_REF=https://github.com/${TRAVIS_REPO_SLUG}.git
 
-echo "checking out main directory"
-svn co -q $SVN_REPO
-cd $SVN_REPO/temp
-echo "Ignoring GitHub specific files"
-
-svn propset svn:ignore "README.md" .
-
-cd ..
 echo "Starting deploy..."
 
 mkdir build
@@ -41,7 +33,9 @@ BASE_DIR=$(pwd)
 
 echo "Checking out temp from $SVN_REPO ..."
 svn co -q $SVN_REPO/temp
+echo "Ignoring GitHub specific files"
 
+svn propset svn:ignore "README.md" .
 # echo "delete current temp/beta"
 # rm -fr ./beta
 # echo "create new beta in temp"
