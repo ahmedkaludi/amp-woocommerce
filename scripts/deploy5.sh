@@ -27,7 +27,7 @@ GH_REF=https://github.com/${TRAVIS_REPO_SLUG}.git
 svn co -q $SVN_REPO
 cd amp-woocommerce
 wget https://raw.githubusercontent.com/miya0001/wp-svnignore/master/.svnignore
-svn propset -q -R svn:ignore -F .svnignore .
+svn propset -R svn:ignore -F .svnignore .
 cd ..
 echo "Starting deploy..."
 
