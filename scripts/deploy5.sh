@@ -34,7 +34,6 @@ BASE_DIR=$(pwd)
 echo "Checking out temp from $SVN_REPO ..."
 svn co -q $SVN_REPO/temp
 
-
 # echo "delete current temp/beta"
 # rm -fr ./beta
 # echo "create new beta in temp"
@@ -51,15 +50,15 @@ if [ -e "bin/build.sh" ]; then
 fi
 
 cd $BASE_DIR
-echo "Ignoring GitHub specific files"
-
-svn propset svn:ignore "README.md" .
-
 echo "Syncing git repository to svn"
 rsync -a --exclude=".svn" --checksum --delete ./git/ ./temp/$TRAVIS_TAG/
 rm -fr ./git
 
 cd ./temp/$TRAVIS_TAG/
+
+echo "Ignoring GitHub specific files"
+
+svn propset svn:ignore "README.md" ./
 
 if [ -e ".distignore" ]; then
 	echo "svn propset form .distignore"
