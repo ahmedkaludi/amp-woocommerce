@@ -33,9 +33,9 @@ BASE_DIR=$(pwd)
 
 echo "Checking out trunk from $SVN_REPO ..."
 #cd $SVN_REPO 
-svn co -q $SVN_REPO
-mkdir trunk
-svn co -q $SVN_REPO/trunk
+# svn co -q $SVN_REPO
+# mkdir trunk
+svn co -q $SVN_REPO/tags/beta
 
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
 git clone -q $GH_REF ./git
