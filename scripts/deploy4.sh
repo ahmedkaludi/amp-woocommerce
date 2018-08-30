@@ -36,6 +36,7 @@ echo "Checking out beta from $SVN_REPO ..."
 # svn co -q $SVN_REPO
 # mkdir trunk
 svn co -q $SVN_REPO/tags/
+cd $BASE_DIR
 ls
 echo "create directory"
 mkdir temp
