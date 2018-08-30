@@ -49,6 +49,12 @@ if [ -e "bin/build.sh" ]; then
 fi
 
 cd $BASE_DIR
+echo "Syncing git repository to svn"
+rsync -a --exclude=".svn" --checksum --delete ./git/ ./temp/$TRAVIS_TAG/
+rm -fr ./git
+
+cd ./temp/$TRAVIS_TAG/
+
 echo "Ignoring GitHub specific files"
 svn propset svn:ignore "README.md
 Thumbs.db
@@ -57,11 +63,6 @@ Thumbs.db
 .gitattributes
 .gitignore bin" .
 svn status --no-ignore
-echo "Syncing git repository to svn"
-rsync -a --exclude=".svn" --checksum --delete ./git/ ./temp/$TRAVIS_TAG/
-rm -fr ./git
-
-cd ./temp/$TRAVIS_TAG/
 
 if [ -e ".distignore" ]; then
 	echo "svn propset form .distignore"
