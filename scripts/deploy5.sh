@@ -25,6 +25,7 @@ SVN_REPO=`echo $SVN_REPO | sed -e "s/\/$//"`
 GH_REF=https://github.com/${TRAVIS_REPO_SLUG}.git
 
 echo "Starting deploy..."
+svn co -q $SVN_REPO
 cd amp-woocommerce
 echo "Ignoring GitHub specific files"
 
