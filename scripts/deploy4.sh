@@ -32,7 +32,7 @@ cd build
 BASE_DIR=$(pwd)
 
 echo "Checking out trunk from $SVN_REPO ..."
-cd $SVN_REPO 
+#cd $SVN_REPO 
 mkdir trunk
 svn co -q $SVN_REPO/trunk
 
