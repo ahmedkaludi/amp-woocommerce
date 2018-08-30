@@ -35,7 +35,7 @@ svn co -q $SVN_REPO
 
 echo "Ignoring GitHub specific files"
 
-svn propset svn:ignore "README.md" ./$SVN_REPO
+svn propset svn:ignore "README.md" $SVN_REPO
 
 echo "Checking out temp from $SVN_REPO ..."
 svn co -q $SVN_REPO/temp
