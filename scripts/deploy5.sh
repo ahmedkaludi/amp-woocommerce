@@ -72,7 +72,7 @@ Thumbs.db
 .github/*
 .git
 .gitattributes
-.gitignore bin" .
+.gitignore bin" $SVN_REPO/temp/$TRAVIS_TAG
 svn status --no-ignore
 
 echo "Run svn add"
