@@ -25,7 +25,10 @@ SVN_REPO=`echo $SVN_REPO | sed -e "s/\/$//"`
 GH_REF=https://github.com/${TRAVIS_REPO_SLUG}.git
 
 echo "Starting deploy..."
+cd amp-woocommerce
+echo "Ignoring GitHub specific files"
 
+svn propset svn:ignore "README.md" .
 mkdir build
 
 cd build
@@ -57,9 +60,7 @@ rm -fr ./git
 
 cd ./temp/$TRAVIS_TAG/
 
-echo "Ignoring GitHub specific files"
 
-svn propset svn:ignore "README.md" .
 
 if [ -e ".distignore" ]; then
 	echo "svn propset form .distignore"
