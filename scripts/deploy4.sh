@@ -35,12 +35,13 @@ echo "Checking out beta from $SVN_REPO ..."
 #cd $SVN_REPO 
 # svn co -q $SVN_REPO
 # mkdir trunk
-svn checkout -q $SVN_REPO/tags/
+svn checkout -q $SVN_REPO
 ls
 echo "create directory"
 #mkdir temp
 ls
-svn commit -m "commit to create directory" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
+svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD svn -m "Deploy version $VERSION"
+#svn commit -m "commit to create directory" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 echo "directory created"
 
 
