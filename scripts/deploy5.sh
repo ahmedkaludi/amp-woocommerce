@@ -36,7 +36,7 @@ svn co -q $SVN_REPO/temp
 
 echo "Ignoring GitHub specific files"
 
-svn propset svn:ignore "README.md" "$SVN_REPO/temp/"
+svn propset svn:ignore "README.md" .
 # echo "delete current temp/beta"
 # rm -fr ./beta
 # echo "create new beta in temp"
