@@ -16,7 +16,7 @@ if [[ ! $SVN_REPO ]]; then
 	echo "SVN repo is not specified."
 	exit
 fi
-TRAVIS_TAG="beta5"
+TRAVIS_TAG="beta4"
 SVN_USER="$WP_ORG_USERNAME"
 SVN_PASS="$WP_ORG_PASSWORD"
 # Untrailing slash of SVN_REPO path
@@ -70,12 +70,14 @@ svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 
 # If tag number and credentials are provided, commit to temp.
 if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
+	if [[ -d tags/$TRAVIS_TAG ]]; then
+		svn delete --force $SVN_REPO/tags/$TRAVIS_TAG
+	fi
 	if [[ ! -d tags/$TRAVIS_TAG ]]; then
-		svn copy beta $SVN_REPO/tags/$TRAVIS_TAG -m "Take snapshot of $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 		echo "Commit to $SVN_REPO."
 		svn commit -m "commit version $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 		echo "Take snapshot of $TRAVIS_TAG"
-		#svn copy $SVN_REPO/temp/beta $SVN_REPO/tags/$TRAVIS_TAG -m "Take snapshot of $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
+		svn copy $SVN_REPO/temp/beta $SVN_REPO/tags/$TRAVIS_TAG -m "Take snapshot of $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 	else
 		echo "tags/$TRAVIS_TAG already exists."
 	fi
