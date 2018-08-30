@@ -17,8 +17,8 @@ if [[ ! $SVN_REPO ]]; then
 	exit
 fi
 TRAVIS_TAG="beta"
-$SVN_USER="$WP_ORG_USERNAME"
-$SVN_PASS="$WP_ORG_PASSWORD"
+SVN_USER="$WP_ORG_USERNAME"
+SVN_PASS="$WP_ORG_PASSWORD"
 # Untrailing slash of SVN_REPO path
 SVN_REPO=`echo $SVN_REPO | sed -e "s/\/$//"`
 # Git repository
