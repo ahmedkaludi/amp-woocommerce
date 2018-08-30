@@ -31,23 +31,24 @@ mkdir build
 cd build
 BASE_DIR=$(pwd)
 
-echo "Checking out beta from $SVN_REPO ..."
+echo "Checking out $SVN_REPO ..."
+ls
 #cd $SVN_REPO 
 # svn co -q $SVN_REPO
 # mkdir trunk
-svn co -q $SVN_REPO/tags/
-cd $BASE_DIR
-ls
-echo "create directory"
-mkdir temp
-ls
-echo "Run svn add"
-svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
-echo "Run svn del"
-svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
-#svn commit --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version"
-svn commit -m "commit to create directory" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
-echo "directory created"
+# svn co -q $SVN_REPO/tags/
+# cd $BASE_DIR
+# ls
+# echo "create directory"
+# mkdir temp
+# ls
+# echo "Run svn add"
+# svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
+# echo "Run svn del"
+# svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
+# #svn commit --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version"
+# svn commit -m "commit to create directory" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
+# echo "directory created"
 
 
 
