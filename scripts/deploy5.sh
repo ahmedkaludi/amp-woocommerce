@@ -33,7 +33,7 @@ BASE_DIR=$(pwd)
 
 echo "Checking out trunk from $SVN_REPO ..."
 svn co -q $SVN_REPO
-mkdir $SVN_REPO/trunk
+mkdir http://svn.wp-plugins.org/amp-woocommerce/trunk
 svn commit -m "Add trunk" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 echo "first commit done"
 svn co -q $SVN_REPO/trunk
