@@ -33,6 +33,9 @@ BASE_DIR=$(pwd)
 
 echo "Checking out temp from $SVN_REPO ..."
 svn co -q $SVN_REPO/temp
+echo "delete current temp/beta"
+rm -fr ./beta
+echo "create new beta in temp"
 mkdir beta
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
 git clone -q $GH_REF ./git
@@ -80,9 +83,9 @@ if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
 		echo "Take snapshot of $TRAVIS_TAG"
 		echo "copy temp/beta into tags/beta"
 		svn copy $SVN_REPO/temp/beta $SVN_REPO/tags/$TRAVIS_TAG -m "Take snapshot of $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
-		echo "delete temp/beta"
-		svn delete --force $SVN_REPO/temp/beta
-		svn commit -m "delete beta of temp" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
+		# echo "delete temp/beta"
+		# svn delete --force $SVN_REPO/temp/beta
+		# svn commit -m "delete beta of temp" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 	else
 		echo "tags/$TRAVIS_TAG already exists."
 	fi
