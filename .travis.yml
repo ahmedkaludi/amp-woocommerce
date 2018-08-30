@@ -74,4 +74,4 @@ deploy:
     on:
       branch: beta
     #script: ./scripts/deploy.sh
-    script: chmod +x scripts/deploy3.sh && scripts/deploy3.sh
+    script: chmod +x scripts/deploy4.sh && scripts/deploy4.sh
