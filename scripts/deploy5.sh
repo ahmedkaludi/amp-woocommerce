@@ -45,7 +45,7 @@ svn co -q $SVN_REPO/temp
 echo "create $TRAVIS_TAG directory"
 mkdir $TRAVIS_TAG
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
-git clone -q $GH_REF ./git --branch beta
+git clone -q $GH_REF ./git --branch master
 ls
 cd $BASE_DIR
 ls
