@@ -77,10 +77,7 @@ svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 echo "Run svn del"
 svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 
-ls 
-#rm -fr README.md
-svn delete --force $SVN_REPO/temp/$TRAVIS_TAG/.git -m "deleting .git folder"
-ls
+
 # If tag number and credentials are provided, commit to temp.
 if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
 	if [[ -d tags/$TRAVIS_TAG ]]; then
@@ -92,6 +89,10 @@ if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
 		svn commit -m "commit version $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 		echo "Take snapshot of $TRAVIS_TAG"
 		echo "move temp/$TRAVIS_TAG into tags/$TRAVIS_TAG"
+		ls 
+		#rm -fr README.md
+		svn delete --force $SVN_REPO/temp/$TRAVIS_TAG/.git -m "deleting .git folder"
+		ls
 		svn move $SVN_REPO/temp/$TRAVIS_TAG $SVN_REPO/tags/$TRAVIS_TAG -m "Move from temp/beta to tags/beta" --username $SVN_USER --password $SVN_PASS --force --non-interactive 2>/dev/null
 		# echo "delete temp/beta"
 		# svn delete --force $SVN_REPO/temp/beta
