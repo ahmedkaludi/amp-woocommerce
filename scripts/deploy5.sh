@@ -59,17 +59,6 @@ rm -fr ./git
 
 cd ./temp/$TRAVIS_TAG/
 
-if [ -e ".distignore" ]; then
-	echo "svn propset form .distignore"
-	svn propset -q -R svn:ignore -F .distignore .
-
-else
-	if [ -e ".svnignore" ]; then
-		echo "svn propset"
-		svn propset -q -R svn:ignore -F .svnignore .
-	fi
-fi
-
 echo "Run svn add"
 svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 echo "Run svn del"
