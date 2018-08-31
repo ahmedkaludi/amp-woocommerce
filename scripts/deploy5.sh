@@ -48,8 +48,9 @@ echo "Getting clone from $GH_REF to $SVN_REPO ..."
 git clone -q $GH_REF ./git
 git branch -a
 git checkout beta
+ls
 cd $BASE_DIR
-
+ls
 echo "Syncing git repository to svn"
 rsync -a --exclude=".svn" --checksum --delete ./git/ ./temp/$TRAVIS_TAG/
 rm -fr ./git
