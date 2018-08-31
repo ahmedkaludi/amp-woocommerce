@@ -54,7 +54,7 @@ ls
 cd $BASE_DIR
 ls
 echo "Syncing git repository to svn"
-rsync -a --exclude=".svn" --checksum --delete ./git/amp-woocommerce ./temp/$TRAVIS_TAG/
+rsync -a --exclude=".svn" --checksum --delete ./git/amp-woocommerce/ ./temp/$TRAVIS_TAG/
 rm -fr ./git
 
 cd ./temp/$TRAVIS_TAG/
