@@ -81,7 +81,7 @@ if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
         if [[ -d ./tags/$TRAVIS_TAG ]]; then
             echo "$TRAVIS_TAG exists"
         else
-            echo "TRAVIS_TAG doesnt exists"
+            echo "$TRAVIS_TAG doesnt exists"
         fi
         echo "move temp/$TRAVIS_TAG into tags/$TRAVIS_TAG"
 		svn delete $SVN_REPO/tags/$TRAVIS_TAG -m "deleting existing beta" --username $SVN_USER --password $SVN_PASS --force --non-interactive 2>/dev/null
