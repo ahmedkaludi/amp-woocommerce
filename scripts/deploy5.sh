@@ -45,16 +45,16 @@ svn co -q $SVN_REPO/temp
 echo "create $TRAVIS_TAG directory"
 mkdir $TRAVIS_TAG
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
-git clone -q $GH_REF ./git --branch master
-ls
+git clone -q $GH_REF ./git
+
 cd $BASE_DIR
-ls
+
 echo "Syncing git repository to svn"
 rsync -a --exclude=".svn" --checksum --delete ./git/ ./temp/$TRAVIS_TAG/
 rm -fr ./git
-ls
+
 cd ./temp/$TRAVIS_TAG/
-ls
+
 if [ -e ".distignore" ]; then
 	echo "svn propset form .distignore"
 	svn propset -q -R svn:ignore -F .distignore .
