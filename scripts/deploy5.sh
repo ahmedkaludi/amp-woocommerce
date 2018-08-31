@@ -38,6 +38,18 @@ cd build
 BASE_DIR=$(pwd)
 
 echo "Checking out temp from $SVN_REPO ..."
+svn co -q $SVN_REPO
+cd amp-woocommerce
+if [ -e ".distignore" ]; then
+	echo "svn propset form .distignore"
+	svn propset -q -R svn:ignore -F .distignore .
+
+else
+	if [ -e ".svnignore" ]; then
+		echo "svn propset"
+		svn propset -q -R svn:ignore -F .svnignore .
+	fi
+fi
 svn co -q $SVN_REPO/temp
 # echo "delete current temp/beta"
 # rm -fr ./beta
