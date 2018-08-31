@@ -37,10 +37,10 @@ git clone -q $GH_REF --branch beta
 cd $BASE_DIR
 
 # Syncing git repository to svn
-rsync -a --exclude=".svn" --checksum --delete ./git/amp-woocommerce/ ./temp/$TRAVIS_TAG/
+rsync -a --exclude=".svn" --checksum --delete ./git/amp-woocommerce/ ./temp/$TAG/
 rm -fr ./git
 
-cd ./temp/$TRAVIS_TAG/
+cd ./temp/$TAG/
 
 # Run svn add
 svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
@@ -52,18 +52,18 @@ svn delete --force .git scripts .travis.yml
 # If tag number and credentials are provided, commit to temp.
 if [[ $TAG && $WP_ORG_USERNAME && $WP_ORG_PASSWORD ]]; then
     # "Commit to $SVN_REPO."
-    svn commit -m "commit version $TRAVIS_TAG" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --non-interactive 2>/dev/null
-    # "Take snapshot of $TRAVIS_TAG"
+    svn commit -m "commit version $TAG" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --non-interactive 2>/dev/null
+    # "Take snapshot of $TAG"
     # checkout svn repo and delete $Tag directory if its already present
     svn co $SVN_REPO
-    if [[ -d $SVN_REPO/tags/$TRAVIS_TAG ]]; then
-        echo "$TRAVIS_TAG exists"
+    if [[ -d $SVN_REPO/tags/$TAG ]]; then
+        echo "$TAG exists"
     else
-        echo "$TRAVIS_TAG doesnt exists"
+        echo "$TAG doesnt exists"
     fi
-    echo "move temp/$TRAVIS_TAG into tags/$TRAVIS_TAG"
-	svn delete $SVN_REPO/tags/$TRAVIS_TAG -m "deleting existing beta" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --force --non-interactive 2>/dev/null
-	svn move $SVN_REPO/temp/$TRAVIS_TAG $SVN_REPO/tags/$TRAVIS_TAG -m "Move from temp/beta to tags/beta" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --force --non-interactive 2>/dev/null
+    echo "move temp/$TAG into tags/$TAG"
+	svn delete $SVN_REPO/tags/$TAG -m "deleting existing beta" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --force --non-interactive 2>/dev/null
+	svn move $SVN_REPO/temp/$TAG $SVN_REPO/tags/$TAG -m "Move from temp/beta to tags/beta" --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD --force --non-interactive 2>/dev/null
 else
 	echo "Nothing to commit and check \`svn st\`."
 	svn st
