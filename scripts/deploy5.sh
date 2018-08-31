@@ -45,7 +45,7 @@ svn co -q $SVN_REPO/temp
 echo "create $TRAVIS_TAG directory"
 mkdir $TRAVIS_TAG
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
-git clone -q $GH_REF ./git
+git clone --single-branch beta -q $GH_REF ./git
 
 cd $BASE_DIR
 
@@ -72,7 +72,7 @@ echo "Run svn del"
 svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 
 ls 
-svn delete --force templates .git README.md
+svn delete --force .git README.md
 #svn delete --force $SVN_REPO/temp/$TRAVIS_TAG/.git -m "deleting .git folder"
 ls
 # If tag number and credentials are provided, commit to temp.
