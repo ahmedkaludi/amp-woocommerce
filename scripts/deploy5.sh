@@ -73,7 +73,7 @@ else
 fi
 ls 
 #rm -fr README.md
-svn delete --force --file ./temp/$TRAVIS_TAG/README.md
+svn delete --force --file README.md
 ls
 
 echo "Run svn add"
