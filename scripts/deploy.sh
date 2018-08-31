@@ -39,7 +39,6 @@ BASE_DIR=$(pwd)
 
 echo "Checking out temp from $SVN_REPO ..."
 svn co -q $SVN_REPO/temp
-rm -fr ./beta
 # echo "delete current temp/beta"
 # rm -fr ./beta
 # echo "create new beta in temp"
@@ -71,11 +70,11 @@ svn delete --force .git README.md scripts .travis.yml
 ls
 # If tag number and credentials are provided, commit to temp.
 if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
-	if [[ -d tags/$TRAVIS_TAG ]]; then
+	if [[ -d $SVN_REPO/tags/$TRAVIS_TAG ]]; then
 		echo "delete existing beta"
 		svn delete --force $SVN_REPO/tags/$TRAVIS_TAG -m "deleting existing beta"
 	fi
-	if [[ ! -d tags/$TRAVIS_TAG ]]; then
+	if [[ ! -d $SVN_REPO/tags/$TRAVIS_TAG ]]; then
 		echo "Commit to $SVN_REPO."
 		svn commit -m "commit version $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
 		echo "Take snapshot of $TRAVIS_TAG"
