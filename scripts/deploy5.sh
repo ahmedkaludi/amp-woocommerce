@@ -71,6 +71,9 @@ else
 		svn propset -q -R svn:ignore -F .svnignore .
 	fi
 fi
+ls 
+rm -fr README.md
+ls
 
 echo "Run svn add"
 svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
