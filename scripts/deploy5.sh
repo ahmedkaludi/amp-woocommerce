@@ -46,7 +46,7 @@ echo "create $TRAVIS_TAG directory"
 mkdir $TRAVIS_TAG
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
 mkdir git
-cd git
+cd ./git
 git clone -q $GH_REF --branch beta
 #git branch -a
 #git checkout beta
