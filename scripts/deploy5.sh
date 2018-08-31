@@ -45,13 +45,19 @@ svn co -q $SVN_REPO/temp
 echo "create $TRAVIS_TAG directory"
 mkdir $TRAVIS_TAG
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
-git clone -q $GH_REF ./git
-
+mkdir git
+ls
+cd ./git
+ls
+git clone --branch beta -q $GH_REF
+ls
+cd ..
+ls
 cd $BASE_DIR
 
 echo "Syncing git repository to svn"
-rsync -a --exclude=".svn" --checksum --delete ./git/ ./temp/$TRAVIS_TAG/
-rm -fr ./git
+rsync -a --exclude=".svn" --checksum --delete ./temp/git/ ./temp/$TRAVIS_TAG/
+rm -fr ./temp/git
 
 cd ./temp/$TRAVIS_TAG/
 
