@@ -71,16 +71,16 @@ else
 		svn propset -q -R svn:ignore -F .svnignore .
 	fi
 fi
-ls 
-svn delete --force templates
-#svn delete --force $SVN_REPO/temp/$TRAVIS_TAG/.git -m "deleting .git folder"
-ls
+
 echo "Run svn add"
 svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 echo "Run svn del"
 svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 
-
+ls 
+svn delete --force templates
+#svn delete --force $SVN_REPO/temp/$TRAVIS_TAG/.git -m "deleting .git folder"
+ls
 # If tag number and credentials are provided, commit to temp.
 if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
 	if [[ -d tags/$TRAVIS_TAG ]]; then
