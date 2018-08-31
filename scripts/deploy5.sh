@@ -72,7 +72,8 @@ else
 	fi
 fi
 ls 
-rm -fr README.md
+#rm -fr README.md
+svn delete --force README.md
 ls
 
 echo "Run svn add"
