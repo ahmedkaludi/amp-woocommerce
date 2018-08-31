@@ -47,13 +47,6 @@ mkdir $TRAVIS_TAG
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
 git clone -q $GH_REF ./git
 
-cd ./git
-
-if [ -e "bin/build.sh" ]; then
-	echo "Starting bin/build.sh."
-	bash bin/build.sh
-fi
-
 cd $BASE_DIR
 
 echo "Syncing git repository to svn"
@@ -79,7 +72,7 @@ echo "Run svn del"
 svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 
 ls 
-svn delete --force templates .git README.md bin
+svn delete --force templates .git README.md
 #svn delete --force $SVN_REPO/temp/$TRAVIS_TAG/.git -m "deleting .git folder"
 ls
 # If tag number and credentials are provided, commit to temp.
