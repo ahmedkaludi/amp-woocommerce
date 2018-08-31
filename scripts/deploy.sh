@@ -3,18 +3,18 @@
 set -e
 
 if [[ "false" != "$TRAVIS_PULL_REQUEST" ]]; then
-	echo "Not deploying pull requests."
-	exit
+    echo "Not deploying pull requests."
+    exit
 fi
 
 if [[ ! $WP_PULUGIN_DEPLOY ]]; then
-	echo "Not deploying."
-	exit
+    echo "Not deploying."
+    exit
 fi
 
 if [[ ! $SVN_REPO ]]; then
-	echo "SVN repo is not specified."
-	exit
+    echo "SVN repo is not specified."
+    exit
 fi
 TRAVIS_TAG="beta"
 SVN_USER="$WP_ORG_USERNAME"
@@ -70,8 +70,8 @@ svn delete --force .git scripts .travis.yml
 ls
 # If tag number and credentials are provided, commit to temp.
 if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
-	if [[ -d $SVN_REPO/tags/$TRAVIS_TAG ]]; then
-		echo "delete existing beta"
+    if [[ -d $SVN_REPO/tags/$TRAVIS_TAG ]]; then
+        echo "delete existing beta"
     fi
     if [[ ! -d $SVN_REPO/tags/$TRAVIS_TAG ]]; then
         echo "Commit to $SVN_REPO."
@@ -84,12 +84,12 @@ if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
             echo "$TRAVIS_TAG doesnt exists"
         fi
         echo "move temp/$TRAVIS_TAG into tags/$TRAVIS_TAG"
-		svn delete $SVN_REPO/tags/$TRAVIS_TAG -m "deleting existing beta" --username $SVN_USER --password $SVN_PASS --force --non-interactive 2>/dev/null
-		svn move $SVN_REPO/temp/$TRAVIS_TAG $SVN_REPO/tags/$TRAVIS_TAG -m "Move from temp/beta to tags/beta" --username $SVN_USER --password $SVN_PASS --force --non-interactive 2>/dev/null
-	else
-		echo "tags/$TRAVIS_TAG already exists."
-	fi
+        svn delete $SVN_REPO/tags/$TRAVIS_TAG -m "deleting existing beta" --username $SVN_USER --password $SVN_PASS --force --non-interactive 2>/dev/null
+        svn move $SVN_REPO/temp/$TRAVIS_TAG $SVN_REPO/tags/$TRAVIS_TAG -m "Move from temp/beta to tags/beta" --username $SVN_USER --password $SVN_PASS --force --non-interactive 2>/dev/null
+    else
+        echo "tags/$TRAVIS_TAG already exists."
+    fi
 else
-	echo "Nothing to commit and check \`svn st\`."
-	svn st
+    echo "Nothing to commit and check \`svn st\`."
+    svn st
 fi
