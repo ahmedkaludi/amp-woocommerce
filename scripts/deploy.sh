@@ -39,6 +39,7 @@ BASE_DIR=$(pwd)
 
 echo "Checking out temp from $SVN_REPO ..."
 svn co -q $SVN_REPO/temp
+rm -fr ./beta
 # echo "delete current temp/beta"
 # rm -fr ./beta
 # echo "create new beta in temp"
