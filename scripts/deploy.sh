@@ -72,13 +72,13 @@ ls
 if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
 	if [[ -d $SVN_REPO/tags/$TRAVIS_TAG ]]; then
 		echo "delete existing beta"
+    fi
+    if [[ ! -d $SVN_REPO/tags/$TRAVIS_TAG ]]; then
+        echo "Commit to $SVN_REPO."
+        svn commit -m "commit version $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
+        echo "Take snapshot of $TRAVIS_TAG"
+        echo "move temp/$TRAVIS_TAG into tags/$TRAVIS_TAG"
 		svn delete --force $SVN_REPO/tags/$TRAVIS_TAG -m "deleting existing beta"
-	fi
-	if [[ ! -d $SVN_REPO/tags/$TRAVIS_TAG ]]; then
-		echo "Commit to $SVN_REPO."
-		svn commit -m "commit version $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
-		echo "Take snapshot of $TRAVIS_TAG"
-		echo "move temp/$TRAVIS_TAG into tags/$TRAVIS_TAG"
 		svn move $SVN_REPO/temp/$TRAVIS_TAG $SVN_REPO/tags/$TRAVIS_TAG -m "Move from temp/beta to tags/beta" --username $SVN_USER --password $SVN_PASS --force --non-interactive 2>/dev/null
 	else
 		echo "tags/$TRAVIS_TAG already exists."
