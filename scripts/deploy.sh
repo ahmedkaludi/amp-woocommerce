@@ -78,7 +78,7 @@ if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
         svn commit -m "commit version $TRAVIS_TAG" --username $SVN_USER --password $SVN_PASS --non-interactive 2>/dev/null
         echo "Take snapshot of $TRAVIS_TAG"
         svn co $SVN_REPO
-        if [[ -d ./tags/$TRAVIS_TAG ]]
+        if [[ -d ./tags/$TRAVIS_TAG ]]; then
             echo "$TRAVIS_TAG exists"
         else
             echo "TRAVIS_TAG doesnt exists"
