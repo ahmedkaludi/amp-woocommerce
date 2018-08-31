@@ -45,6 +45,8 @@ svn co -q $SVN_REPO/temp
 echo "create $TRAVIS_TAG directory"
 mkdir $TRAVIS_TAG
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
+mkdir git
+cd ./git
 git clone -q $GH_REF --branch beta
 #git branch -a
 #git checkout beta
@@ -52,8 +54,8 @@ ls
 cd $BASE_DIR
 ls
 echo "Syncing git repository to svn"
-rsync -a --exclude=".svn" --checksum --delete ./amp-woocommerce/ ./temp/$TRAVIS_TAG/
-rm -fr ./amp-woocommerce
+rsync -a --exclude=".svn" --checksum --delete ./git/amp-woocommerce ./temp/$TRAVIS_TAG/
+rm -fr ./git
 
 cd ./temp/$TRAVIS_TAG/
 
@@ -74,7 +76,7 @@ echo "Run svn del"
 svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 
 ls 
-svn delete --force .git README.md
+#svn delete --force .git README.md
 #svn delete --force $SVN_REPO/temp/$TRAVIS_TAG/.git -m "deleting .git folder"
 ls
 # If tag number and credentials are provided, commit to temp.
