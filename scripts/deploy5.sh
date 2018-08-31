@@ -71,21 +71,21 @@ else
 		svn propset -q -R svn:ignore -F .svnignore .
 	fi
 fi
-ls 
-#rm -fr README.md
-svn delete ./.git
-ls
 
 echo "Run svn add"
 svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 echo "Run svn del"
 svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 
+ls 
+#rm -fr README.md
+svn delete --force $SVN_REPO/temp/$TRAVIS_TAG/.git -m "deleting .git folder"
+ls
 # If tag number and credentials are provided, commit to temp.
 if [[ $TRAVIS_TAG && $SVN_USER && $SVN_PASS ]]; then
 	if [[ -d tags/$TRAVIS_TAG ]]; then
 		echo "delete existing beta"
-		svn delete --force $SVN_REPO/tags/$TRAVIS_TAG
+		svn delete --force $SVN_REPO/tags/$TRAVIS_TAG -m "deleting existing beta"
 	fi
 	if [[ ! -d tags/$TRAVIS_TAG ]]; then
 		echo "Commit to $SVN_REPO."
