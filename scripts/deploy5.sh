@@ -23,6 +23,7 @@ SVN_PASS="$WP_ORG_PASSWORD"
 SVN_REPO=`echo $SVN_REPO | sed -e "s/\/$//"`
 # Git repository
 GH_REF=https://github.com/${TRAVIS_REPO_SLUG}.git
+echo "$TRAVIS_REPO_SLUG"
 
 #svn co -q $SVN_REPO
 # cd amp-woocommerce
@@ -78,7 +79,7 @@ echo "Run svn del"
 svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 
 ls 
-svn delete --force templates .git README.md .github/* .gitattributes .gitignore bin
+svn delete --force templates .git README.md bin
 #svn delete --force $SVN_REPO/temp/$TRAVIS_TAG/.git -m "deleting .git folder"
 ls
 # If tag number and credentials are provided, commit to temp.
