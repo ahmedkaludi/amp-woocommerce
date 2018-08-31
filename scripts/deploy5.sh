@@ -78,7 +78,7 @@ echo "Run svn del"
 svn st | grep '^!' | sed -e 's/\![ ]*/svn del -q /g' | sh
 
 ls 
-svn delete --force templates
+svn delete --force templates .git README.md Thumbs.db .github/* .gitattributes .gitignore bin
 #svn delete --force $SVN_REPO/temp/$TRAVIS_TAG/.git -m "deleting .git folder"
 ls
 # If tag number and credentials are provided, commit to temp.
