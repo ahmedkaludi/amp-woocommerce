@@ -51,8 +51,6 @@ cd ./git
 ls
 git clone --branch beta -q $GH_REF
 ls
-cd ..
-ls
 cd $BASE_DIR
 
 echo "Syncing git repository to svn"
