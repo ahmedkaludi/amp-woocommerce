@@ -75,7 +75,7 @@ if (! defined('AMP_WC_PLUGIN_URI') ){
 	function amp_woo_custom_woocommerce_template( $file, $type, $post ) {
 		global  $redux_builder_amp;
      if ( 'single' === $type && 'product' === $post->post_type ) {
-			if( class_exists( 'Ampforwp_Init' ) && ($redux_builder_amp['amp-design-selector'] == 1 || $redux_builder_amp['amp-design-selector'] == 2 || $redux_builder_amp['amp-design-selector'] == 3  )) {
+			if( class_exists( 'Ampforwp_Init' ) && isset($redux_builder_amp['amp-design-selector']) &&  ($redux_builder_amp['amp-design-selector'] == 1 || $redux_builder_amp['amp-design-selector'] == 2 || $redux_builder_amp['amp-design-selector'] == 3  )) {
 					$file = dirname(__FILE__) . '/templates/layouts/single.php';
 			}else {
 				  $file = dirname(__FILE__) . '/templates/layouts/single.php';

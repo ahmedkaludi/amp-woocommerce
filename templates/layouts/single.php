@@ -17,8 +17,8 @@ do_action( 'woocommerce_after_main_content' );
 
 $single_product_html = ob_get_contents();
 ob_get_clean();
-
-
+$sanitizer_content = '';
+if(class_exists('AMPFORWP_Content')){
 $sanitizer_obj = new AMPFORWP_Content( $single_product_html,
 						array(), 
 						apply_filters( 'amp_content_sanitizers', 
@@ -38,6 +38,7 @@ $GLOBALS['sanitized_wc_styles'] = $sanitizer_obj->get_amp_styles();
 $sanitizer_content = $sanitizer_obj->get_amp_content();
 
 add_action("amp_post_template_css" , 'amp_woo_single_product_inline_css');
+}
 function amp_woo_single_product_inline_css(){
 	  foreach ($GLOBALS['sanitized_wc_styles'] as $key => $value) {
 	  echo $key.'{'.$value[0].'}';
@@ -45,11 +46,12 @@ function amp_woo_single_product_inline_css(){
 }
 
 $pluginsData = array();
+$design_selected = '';
 $pluginsData = get_transient( 'ampforwp_themeframework_active_plugins' );
 if(isset($redux_builder_amp['amp-design-selector'])){
  $design_selected=$redux_builder_amp['amp-design-selector'];
 }
-if( 4 == $redux_builder_amp['amp-design-selector'] ) { 
+if( isset($redux_builder_amp['amp-design-selector']) && 4 == $redux_builder_amp['amp-design-selector'] ) { 
 	$this->load_parts( array( 'header' ) );
 	do_action( 'ampforwp_after_header', $this );
 }
