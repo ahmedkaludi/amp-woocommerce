@@ -1,9 +1,9 @@
 <?php 
-add_filter('ampforwp_the_content_last_filter','ampwoo_comment_html'); 
+add_filter('ampforwp_the_content_last_filter','amp_woo_comment_html'); 
 
-function ampwoo_comment_html($comments_html){
+function amp_woo_comment_html($comments_html){
 
-$submit_url =  admin_url('admin-ajax.php?action=ampwoo_comment_handle'); 
+$submit_url =  admin_url('admin-ajax.php?action=amp_woo_comment_handle'); 
 	   $actionXhrUrl = preg_replace('#^https?:#', '', $submit_url);
 
 
@@ -31,9 +31,9 @@ $submit_url =  admin_url('admin-ajax.php?action=ampwoo_comment_handle');
 }
 
 
-add_filter('woocommerce_product_review_comment_form_args','ampwoo_rating_markup',10,1);
+add_filter('woocommerce_product_review_comment_form_args','amp_woo_rating_markup',10,1);
 
-function ampwoo_rating_markup($comment_form){
+function amp_woo_rating_markup($comment_form){
 
   if ( (function_exists( 'ampforwp_is_amp_endpoint' ) && ampforwp_is_amp_endpoint()) 
   	|| (function_exists( 'is_amp_endpoint' ) && is_amp_endpoint()) ) {
@@ -64,10 +64,10 @@ return $comment_form;
 
 }
 
-add_action("wp_ajax_ampwoo_comment_handle", "ampwoo_comment_handle");
-add_action("wp_ajax_nopriv_ampwoo_comment_handle", "ampwoo_comment_handle");
+add_action("wp_ajax_amp_woo_comment_handle", "amp_woo_comment_handle");
+add_action("wp_ajax_nopriv_amp_woo_comment_handle", "amp_woo_comment_handle");
 
-function ampwoo_comment_handle(){
+function amp_woo_comment_handle(){
   global $redux_builder_amp;
   header("access-control-allow-credentials:true");
   header("access-control-allow-headers:Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token");

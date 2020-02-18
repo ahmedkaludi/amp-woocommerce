@@ -18,7 +18,7 @@
 defined( 'ABSPATH' ) || exit;
 
 global $product, $post;
-$allStaticData = ampwoo_product_json_generator('array'); 
+$allStaticData = amp_woo_product_json_generator('array'); 
 $cart_url = $allStaticData['product']['cart_url'].'amp/';
 $submit_url = admin_url('admin-ajax.php?action=amp_woo_add_to_cart_submit');
 $actionXhrUrl = preg_replace('#^https?:#', '', $submit_url); 

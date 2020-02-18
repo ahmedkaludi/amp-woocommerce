@@ -1,7 +1,7 @@
 <?php // 2. Add Custom Style for WooCommerce Page
 
-function ampwoo_main_css(){
-    if(function_exists('ampwoo_active_theme_data') && ampwoo_active_theme_data('theme_name') == 'Flatsome' && function_exists('is_woocommerce') && is_woocommerce()){
+function amp_woo_main_css(){
+    if(function_exists('amp_woo_active_theme_data') && amp_woo_active_theme_data('theme_name') == 'Flatsome' && function_exists('is_woocommerce') && is_woocommerce()){
          add_action('amp_post_template_css', 'amp_woo_flatsome_default_css_v3',11);
          add_action('amp_post_template_css', 'amp_woo_flatsome_theme_custom_css',11);
        }else{
@@ -9,13 +9,13 @@ function ampwoo_main_css(){
         add_action('amp_post_template_css','amp_woo_custom_styles',999);
         add_action('amp_post_template_css', 'amp_woo_default_woocommerce_css',11);
 
-          if( function_exists('ampwoo_active_theme_data') && ampwoo_active_theme_data('theme_name') == 'The7' ){   
+          if( function_exists('amp_woo_active_theme_data') && amp_woo_active_theme_data('theme_name') == 'The7' ){   
               add_action('amp_post_template_css','amp_woo_The7',999);      
               }   
-              if( function_exists('ampwoo_active_theme_data') && ampwoo_active_theme_data('theme_name') == 'Rehub theme'  ||  function_exists ('rehub_framework_register_scripts') ) {  
+              if( function_exists('amp_woo_active_theme_data') && amp_woo_active_theme_data('theme_name') == 'Rehub theme'  ||  function_exists ('rehub_framework_register_scripts') ) {  
                   add_action('amp_post_template_css','amp_woo_Rehub_theme',11);  
               }
-              if( function_exists('ampwoo_active_theme_data') && ampwoo_active_theme_data('theme_name') == 'XStore' ) {                  
+              if( function_exists('amp_woo_active_theme_data') && amp_woo_active_theme_data('theme_name') == 'XStore' ) {                  
                   add_action('amp_post_template_css','amp_woo_XStore_theme',11);  
               }
       }
@@ -2231,7 +2231,7 @@ if(function_exists('is_woocommerce') && !is_woocommerce()){?>
     white-space: normal;
 }
 }
-<?php if(function_exists('ampwoo_active_theme_data') && ampwoo_active_theme_data('theme_name') == 'Astra'){?>
+<?php if(function_exists('amp_woo_active_theme_data') && amp_woo_active_theme_data('theme_name') == 'Astra'){?>
    @media (max-width: 767px){
       .ampwoocommerce .products[class*=columns-] li.product, .w-pg .products[class*=columns-] li.product {
           width: 49%;

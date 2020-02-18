@@ -17,7 +17,7 @@
 
 defined( 'ABSPATH' ) || exit;
 global $redux_builder_amp;
-$allStaticData = ampwoo_product_json_generator('array'); 
+$allStaticData = amp_woo_product_json_generator('array'); 
 $submit_url = admin_url('admin-ajax.php?action=amp_woo_add_to_cart_submit');
 $actionXhrUrl = preg_replace('#^https?:#', '', $submit_url);  
 do_action( 'woocommerce_before_add_to_cart_form' ); ?>

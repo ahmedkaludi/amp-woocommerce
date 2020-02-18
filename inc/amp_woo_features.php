@@ -12,7 +12,7 @@
 */
 
 //1. Overriding Woocommerce Templates
-function ampwoo_woocommerce_template_override($template, $template_name, $args, $template_path, $default_path){
+function amp_woo_woocommerce_template_override($template, $template_name, $args, $template_path, $default_path){
 
  if ( (function_exists( 'ampforwp_is_amp_endpoint' ) && ampforwp_is_amp_endpoint()) 
 	|| (function_exists( 'is_amp_endpoint' ) && is_amp_endpoint()) ) {
@@ -62,7 +62,7 @@ function ampwoo_woocommerce_template_override($template, $template_name, $args, 
 } 
 
 // 2. Adding Woocommece Blackist for forms
-function ampwoo_add_woocommerce_blacklist($data){
+function amp_woo_add_woocommerce_blacklist($data){
 
 	require_once AMP_WOO_INC_DIR .'/class-amp-woo-blacklist.php';
 		unset($data['AMP_Blacklist_Sanitizer']);
@@ -76,14 +76,14 @@ function ampwoo_add_woocommerce_blacklist($data){
 	return $data;
 } 
 // 3. Adding Classes in Body Tag
-function ampwoo_add_body_classes($classes, $class){
+function amp_woo_add_body_classes($classes, $class){
  $classes[] ="woocommerce"; 
  $classes[] = "woocommerce-page";
 
  return $classes;
 }
 // 4. Creating Product Json
- function ampwoo_product_json_generator($retunType="") {  
+ function amp_woo_product_json_generator($retunType="") {  
         global $woocommerce;
         global $product;
 		$images 		= array();
@@ -214,9 +214,9 @@ function ampwoo_add_body_classes($classes, $class){
  }
 
  // 5. Unregister Theme widgets in amp product pages
-  add_action( 'widgets_init', 'ampwoo_unregister_widgets', 20 );
+  add_action( 'widgets_init', 'amp_woo_unregister_widgets', 20 );
 
-  function ampwoo_unregister_widgets(){
+  function amp_woo_unregister_widgets(){
   	global $redux_builder_amp;
    if ( function_exists('amp_active_theme_data')) {
    $active_theme = amp_active_theme_data('theme_name'); 
@@ -233,7 +233,7 @@ function ampwoo_add_body_classes($classes, $class){
 	}
 
 // 6. Current Active theme data.
-function ampwoo_active_theme_data($data=""){
+function amp_woo_active_theme_data($data=""){
 
 	$theme   	= wp_get_theme( get_template() );
 	$version 	= $theme->get( 'Version' );

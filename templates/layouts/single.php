@@ -36,18 +36,12 @@ $sanitizer_obj = new AMPFORWP_Content( $single_product_html,
 $sanitizer_script = $sanitizer_obj->get_amp_scripts();
 $GLOBALS['sanitized_wc_styles'] = $sanitizer_obj->get_amp_styles();
 $sanitizer_content = $sanitizer_obj->get_amp_content();
-// function test(){
-//echo $GLOBALS['a'];
-// }
-//print_r($GLOBALS['sanitized_wc_styles']);die;
 
-//print_r($sanitizer_obj->get_amp_content());die;
-
-add_action("amp_post_template_css" , 'amp_wc_single_product_inline_css');
-function amp_wc_single_product_inline_css(){
+add_action("amp_post_template_css" , 'amp_woo_single_product_inline_css');
+function amp_woo_single_product_inline_css(){
 	  foreach ($GLOBALS['sanitized_wc_styles'] as $key => $value) {
 	  echo $key.'{'.$value[0].'}';
-	  }//die;
+	  }
 }
 
 $pluginsData = array();
@@ -87,10 +81,10 @@ else { ?>
 		<?php $this->load_parts( array( 'header-bar' ) ); ?>
 		<?php do_action( 'ampforwp_after_header', $this ); ?>
 <?php } ?>
-<?php $allStaticData = ampwoo_product_json_generator('array'); 
+<?php $allStaticData = amp_woo_product_json_generator('array'); 
 global $post, $woocommerce, $wp, $redux_builder_amp; ?>
 <amp-state id="product">
-  <script type="application/json"><?php echo ampwoo_product_json_generator();
+  <script type="application/json"><?php echo amp_woo_product_json_generator();
    ?>
   </script>
 </amp-state>

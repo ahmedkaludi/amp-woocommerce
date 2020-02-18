@@ -46,7 +46,7 @@ $variations_json = wp_json_encode( $available_variations );
 $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_json ) : _wp_specialchars( $variations_json, ENT_QUOTES, 'UTF-8', true );
 
 
-$allStaticData = ampwoo_product_json_generator('array');
+$allStaticData = amp_woo_product_json_generator('array');
 
 $cart_url = $allStaticData['product']['cart_url'].'amp/';
 $submit_url = admin_url('admin-ajax.php?action=amp_woo_add_to_cart_submit');
@@ -74,7 +74,7 @@ do_action( 'woocommerce_before_add_to_cart_form' );
 
 
  ?>
-<amp-script src="<?php echo str_replace('http:','https:',AMP_WOO_PLUGIN_URI);?>amp-scripts/ampwoo_variation_calc.js">
+<amp-script src="<?php echo str_replace('http:','https:',AMP_WOO_PLUGIN_URI);?>amp-scripts/amp_woo_variation_calc.js">
 <form class="variations_form cart" id="amp_variations" action-xhr="<?php echo  esc_url($actionXhrUrl)."&ampsubmit=1"; ?>" method="post" enctype='multipart/form-data' data-product_id="<?php echo absint( $product->get_id() ); ?>" data-site-url="<?php echo get_site_url(); ?>">
   <?php do_action( 'woocommerce_before_variations_form' ); ?>
 

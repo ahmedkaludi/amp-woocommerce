@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 
 do_action( 'woocommerce_before_cart' ); 
 
-$submit_url =  admin_url('admin-ajax.php?action=ampwoo_cart_coupon_operation');
+$submit_url =  admin_url('admin-ajax.php?action=amp_woo_cart_coupon_operation');
 $applyCouponXhrUrl = preg_replace('#^https?:#', '', $submit_url);
 	$nonce 			= 	wp_create_nonce( 'wc_cart_wpnonce' );
 ?>

@@ -36,7 +36,7 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
 <div class="<?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>" style="opacity: 0; transition: opacity .25s ease-in-out;">
 	<figure class="woocommerce-product-gallery__wrapper">
 
-	<?php $allStaticData = ampwoo_product_json_generator('array');
+	<?php $allStaticData = amp_woo_product_json_generator('array');
 
 
           $variant_slug = array();

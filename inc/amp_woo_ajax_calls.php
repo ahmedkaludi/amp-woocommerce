@@ -43,10 +43,10 @@ function amp_woo_add_to_cart_submit(){
 }
 
 // 2. Cart & Coupon code Ajax.
-add_action('wp_ajax_ampwoo_cart_coupon_operation','ampwoo_cart_coupon_operation');
-add_action('wp_ajax_nopriv_ampwoo_cart_coupon_operation','ampwoo_cart_coupon_operation');
+add_action('wp_ajax_amp_woo_cart_coupon_operation','amp_woo_cart_coupon_operation');
+add_action('wp_ajax_nopriv_amp_woo_cart_coupon_operation','amp_woo_cart_coupon_operation');
 
-function ampwoo_cart_coupon_operation(){
+function amp_woo_cart_coupon_operation(){
 
 	if(!wp_verify_nonce(sanitize_key($_POST['wc_cart_wpnonce']),'wc_cart_wpnonce') ){
 		header('HTTP/1.1 500 FORBIDDEN');

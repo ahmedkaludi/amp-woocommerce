@@ -10,7 +10,7 @@ if ( $amp_blacklist_sanitizer ) {
 }
  
 if ( class_exists( 'AMP_Blacklist_Sanitizer' ) ) {
-	class AMPFORWP_Woo_Blacklist extends AMP_Blacklist_Sanitizer {
+	class AMP_WOO_Blacklist extends AMP_Blacklist_Sanitizer {
 		const PATTERN_REL_WP_ATTACHMENT = '#wp-att-([\d]+)#';
 
 		protected $DEFAULT_ARGS = array(
