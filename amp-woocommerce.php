@@ -21,7 +21,7 @@ if (! defined('AMP_WC_PLUGIN_URI') ){
 // 	/* Add WooCommerce elements in the page
 // 	    1. Enable WooCommerce support for AMP
 // 		2. Include Files
-// 		3. Add Custom Style for WooCommerce Page.
+// 		3. Adds main fuctionalities for WooCommerce Pages.
 // 		4. Overriding Ampforwp Plugin Single Files.
 // 	*/
 
@@ -35,7 +35,7 @@ if (! defined('AMP_WC_PLUGIN_URI') ){
 	include_once(plugin_dir_path(__FILE__). '/templates/layouts/product-review.php');
 
 //    // 3.
-    add_action('pre_amp_render_post','amp_woo_add_tree_shaking',10);
+    add_action('pre_amp_render_post','amp_woo_main_fuctionalities',10);
 
 //    // 4. Overriding Ampforwp Plugin Single Files.
     	add_filter( 'amp_post_template_file', 'amp_woo_custom_woocommerce_template', 11, 3 );
@@ -57,8 +57,8 @@ if (! defined('AMP_WC_PLUGIN_URI') ){
 		add_post_type_support( 'product', AMP_QUERY_VAR );
 	}
 
-   // 3. Add Custom Style for WooCommerce Page.
-	function amp_woo_add_tree_shaking (){
+   // 3. Adds main fuctionalities for WooCommerce Pages.
+	function amp_woo_main_fuctionalities (){
     global $redux_builder_amp;
 	add_filter('wc_get_template','amp_woo_woocommerce_template_override',10,5);
 	add_filter('ampforwp_body_class','amp_woo_add_body_classes',10,2);
@@ -66,6 +66,9 @@ if (! defined('AMP_WC_PLUGIN_URI') ){
 	if( function_exists('ampforwp_tree_shaking_purify_amphtml') && isset($redux_builder_amp['ampforwp_css_tree_shaking']) && $redux_builder_amp['ampforwp_css_tree_shaking'] == 0  ){
 		add_filter('ampforwp_the_content_last_filter','ampforwp_tree_shaking_purify_amphtml',11);
 		}
+	if(function_exists('amp_woo_active_theme_data') && amp_woo_active_theme_data('theme_name') == 'Storefront'){	
+		add_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 18 );
+	}
 
    }
    //4. Overriding Ampforwp Plugin Single Files.

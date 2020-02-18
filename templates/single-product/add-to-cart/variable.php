@@ -131,7 +131,7 @@ do_action( 'woocommerce_before_add_to_cart_form' );
   <?php do_action( 'woocommerce_after_variations_form' ); ?>
     <div submit-success class="amp-form-status-success-new woocommerce-notices-wrapper" >
         <div class="amp_wc_cart_success woocommerce-message"><?php if (class_exists( 'YITH_WC_Min_Max_Qty_Premium' )) { ?>{{{message}}} <?php }
-          else{echo esc_html__('“'.$allStaticData['product']['name'].'”&nbsp;&nbsp has been added to your cart&nbsp;','amp-woocommerce');} ?><?php
+          else{echo esc_html__('“'.$allStaticData['product']['name'].'”&nbsp;&nbsp; has been added to your cart&nbsp;','amp-woocommerce');} ?><?php
           if ( class_exists( 'YITH_WC_Min_Max_Qty_Premium' ) ) { 
             add_filter( 'woocommerce_add_to_cart_validation', array( $this, 'ywmmq_add_to_cart_validation' ), 11, 6 );
           }else { ?><a class="view_cart_button" href="<?php echo esc_url($cart_url); ?>"><?php echo esc_html__('View Cart','amp-woocommerce'); ?></a><?php } ?> 

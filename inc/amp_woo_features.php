@@ -10,6 +10,7 @@
     6. Current Active theme data.
     7. Modify Content before the page loads.
     8. Hex Code Sanitization.
+    9. Adds Breadcrumbs on Cart Page.
 */
 
 //1. Overriding Woocommerce Templates
@@ -57,6 +58,9 @@ function amp_woo_woocommerce_template_override($template, $template_name, $args,
 		}
 		if($template_name == 'cart/shipping-calculator.php'){
     	  $template = AMP_WOO_PLUGIN_PATH.'templates/cart/shipping-calculator.php';
+		}
+		if($template_name == 'global/breadcrumb.php'){
+		    $template = AMP_WOO_PLUGIN_PATH.'templates/single-product/breadcrumb.php';
 		}
     }
 	return $template;
@@ -283,4 +287,24 @@ function amp_woo_sanitize_color($color) {
 		$color = sanitize_hex_color($color);
 	}
 	return $color;
+}
+// 9. Adds Breadcrumbs on Cart Page.
+add_action('ampforwp_above_the_title','amp_woo_cart_page_breadcrumbs');
+function amp_woo_cart_page_breadcrumbs(){
+   global $redux_builder_amp;
+   if(  function_exists('woocommerce_breadcrumb') && (function_exists('is_cart') && is_cart()) ){
+   	  ob_start();
+     woocommerce_breadcrumb();
+     $breadcrumb = ob_get_contents();
+     ob_get_clean();
+
+     if(isset($redux_builder_amp['amp-core-end-point']) && $redux_builder_amp['amp-core-end-point'] == true ){
+        $breadcrumb = preg_replace('/<a\shref="(.*?)">/s','<a href="$1?amp">',$breadcrumb);
+      }else{
+        $breadcrumb = preg_replace('/<a\shref="(.*?)">/s','<a href="$1/amp/">',$breadcrumb);
+        $breadcrumb = preg_replace('/\/\/amp/s','/amp',$breadcrumb);
+         }
+	 echo $breadcrumb;
+    
+   }
 }
