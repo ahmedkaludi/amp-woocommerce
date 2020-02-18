@@ -224,7 +224,7 @@ if ( class_exists( 'AMP_Blacklist_Sanitizer' ) ) {
 				// 'select',
 				// 'option',
 				'link',
-				'picture',
+				// 'picture',
 
 				// Sanitizers run after embed handlers, so if anything wasn't matched, it needs to be removed.
 				'embed',

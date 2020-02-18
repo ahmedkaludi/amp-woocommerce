@@ -228,7 +228,7 @@ amp-img.w-wp-gallery {
 .product-type-variable .summary span.woocommerce-Price-amount.amount,li.product-type-variable span.woocommerce-Price-amount.amount{display:inline;}
 .price del .amount {text-decoration: line-through;}
 <?php
-  if( isset($redux_builder_amp['amp-rtl-select-option']) &&  true == $redux_builder_amp['amp-rtl-select-option'] ){ ?>
+  if( isset($redux_builder_amp['amp-rtl-select-option']) &&  true == esc_attr($redux_builder_amp['amp-rtl-select-option']) ){ ?>
     .login-att, .form-coupen { float: right;}
 <?php } ?>
 
@@ -1712,7 +1712,7 @@ amp-img.w-wp-gallery {
       /** Design 2 CSS **/
       <?php 
       global $redux_builder_amp;   
-      if( isset($redux_builder_amp['amp-design-selector']) && 2 == $redux_builder_amp['amp-design-selector'] ){?>
+      if( isset($redux_builder_amp['amp-design-selector']) && 2 == esc_attr($redux_builder_amp['amp-design-selector']) ){?>
       .v3_wc_content_wrap main {
           padding: 0;
       }
@@ -1741,7 +1741,7 @@ amp-img.w-wp-gallery {
       /** Responsive **/
  
       @media(max-width:1100px){
-      <?php if(isset($redux_builder_amp['amp-design-selector']) && $redux_builder_amp['amp-design-selector'] == 4){?>
+      <?php if(isset($redux_builder_amp['amp-design-selector']) && esc_attr($redux_builder_amp['amp-design-selector']) == 4){?>
         .woocommerce .v3_wc_content_wrap{
           max-width:100%;
         }
@@ -2248,24 +2248,28 @@ if(function_exists('is_woocommerce') && !is_woocommerce()){?>
 function amp_woo_default_woocommerce_css(){
     $srcs = array();
 
-    /*$srcs[] = 'http://localhost/wordpress/wp-content/themes/storefront/assets/css/woocommerce/woocommerce.css?ver=2.5.3';*/
-    /*0*/
-    //$srcs[] = plugins_url( 'packages/woocommerce-blocks/build/style.css',WC_PLUGIN_FILE );
     $srcs[] = plugins_url( 'assets/css/woocommerce-layout.css',WC_PLUGIN_FILE );
     $srcs[] = plugins_url( 'assets/css/woocommerce.css',WC_PLUGIN_FILE );
     $srcs[] = plugins_url( 'packages/woocommerce-blocks/build/style.css', WC_PLUGIN_FILE );
     $srcs[] = plugins_url( 'assets/css/photoswipe/photoswipe.css', WC_PLUGIN_FILE );
     $srcs[] = plugins_url( 'assets/css/photoswipe/default-skin/default-skin.css', WC_PLUGIN_FILE );
-    /*$srcs[] = plugins_url( 'assets/css/woocommerce-smallscreen.css', WC_PLUGIN_FILE );*/
 
     foreach ($srcs as $key => $urlValue) {
-        $cssData = ampwoo_remote_content($urlValue);
+        $cssData = amp_woo_remote_content($urlValue);
         $cssData = preg_replace("/\/\*(.*?)\*\//si", "", $cssData);
         $cssData = str_replace('img', 'amp-img', $cssData);
-              echo $cssData;
+              echo amp_woo_css_sanitizer($cssData); // XSS ok.
       }
 
 }
+
+function amp_woo_css_sanitizer($css){
+    $css = preg_replace( '/\s*!important/', '', $css, -1, $important_count );
+    $css = preg_replace( '/overflow(-[xy])?\s*:\s*(auto|scroll)\s*;?\s*/', '', $css, -1, $overlow_count );
+            $css = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css);
+        $css = str_replace(array (chr(10), ' {', '{ ', ' }', '} ', '( ', ' )', ' :', ': ', ' ;', '; ', ' ,', ', ', ';}', '::-' ), array('', '{', '{', '}', '}', '(', ')', ':', ':', ';', ';', ',', ', ', '}', ' ::-'), $css);
+    return $css;
+  }
 // Flatsome Theme CSS 
 function amp_woo_flatsome_theme_custom_css(){ ?>
 
@@ -2919,10 +2923,10 @@ function amp_woo_flatsome_default_css_v3(){
    $srcs[] = $theme_uri.'/assets/css/flatsome-shop.css';
 
    foreach ($srcs as $key => $urlValue) {
-      $cssData = ampwoo_remote_content($urlValue);
+      $cssData = amp_woo_remote_content($urlValue);
       $cssData = preg_replace("/\/\*(.*?)\*\//si", "", $cssData);
       $cssData = str_replace('img', 'amp-img', $cssData);
-            echo $cssData;
+           echo amp_woo_css_sanitizer($cssData); // XSS ok.
     }
 }
 
@@ -2930,7 +2934,7 @@ function amp_woo_flatsome_default_css_v3(){
 
 
 
-  function ampwoo_remote_content($src){
+  function amp_woo_remote_content($src){
       if($src){
         $arg = array( "sslverify" => false, "timeout" => 60 ) ;
         $response = wp_remote_get( $src, $arg );
@@ -2939,12 +2943,17 @@ function amp_woo_flatsome_default_css_v3(){
               $contentData =  wp_remote_retrieve_body($response); // use the content
               return $contentData;
             }else{
-          $contentData = file_get_contents( $src );
+              global $wp_filesystem;
+              require_once ABSPATH . '/wp-admin/includes/class-wp-filesystem-base.php';
+              require_once ABSPATH . '/wp-admin/includes/class-wp-filesystem-direct.php';
+           $wp_filesystem = new WP_Filesystem_Direct( array() );
+
+          $contentData = $wp_filesystem->get_contents( $src );
           if(! $contentData ){
             $data = str_replace(get_site_url(), '', $src);//content_url()
             $data = getcwd().$data;
             if(file_exists($data)){
-              $contentData = file_get_contents($data);
+              $contentData = $wp_filesystem->get_contents($data);
             }
           }
           return $contentData;

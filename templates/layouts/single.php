@@ -98,7 +98,7 @@ global $post, $woocommerce, $wp, $redux_builder_amp; ?>
 <div class="ampwoocommerce sdf">
 <div id="content" class="v3_wc_content_wrap">
 	<?php
-	 echo  $sanitizer_content; // XXS OK
+	 echo  $sanitizer_content; // XSS OK
 	?>
 </div>
 </div>

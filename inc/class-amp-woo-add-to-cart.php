@@ -148,7 +148,7 @@ class AMP_WOO_Form_Submit extends AMP_WOO_Form_Header {
 		}
 	}
 	function add_to_cart_handler_simple( $product_id ) {
-		$quantity 			= empty( $_REQUEST['quantity'] ) ? 1 : wc_stock_amount( $_REQUEST['quantity'] );
+		$quantity 			= empty( $_REQUEST['quantity'] ) ? 1 : wc_stock_amount( esc_attr($_REQUEST['quantity']) );
 		$passed_validation 	= apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity );
 
 
@@ -163,7 +163,7 @@ class AMP_WOO_Form_Submit extends AMP_WOO_Form_Header {
         if(function_exists('YITH_WCBK_Frontend')){
 		 YITH_WCBK_Frontend();
 	     }
-		$quantity 			= empty( $_REQUEST['quantity'] ) ? 1 : wc_stock_amount( $_REQUEST['quantity'] );
+		$quantity 			= empty( $_REQUEST['quantity'] ) ? 1 : wc_stock_amount( esc_attr($_REQUEST['quantity']) );
 		$passed_validation 	= apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity );
 
 
@@ -213,7 +213,7 @@ class AMP_WOO_Form_Submit extends AMP_WOO_Form_Header {
 	function add_to_cart_handler_variable( $product_id ) {
 		$adding_to_cart     = wc_get_product( $product_id );
 		$variation_id       = empty( $_REQUEST['variation_id'] ) ? '' : absint( $_REQUEST['variation_id'] );
-		$quantity           = empty( $_REQUEST['quantity'] ) ? 1 : wc_stock_amount( $_REQUEST['quantity'] );
+		$quantity           = empty( $_REQUEST['quantity'] ) ? 1 : wc_stock_amount( esc_attr($_REQUEST['quantity']) );
 		$missing_attributes = array();
 		$variations         = array();
 		$attributes         = $adding_to_cart->get_attributes();

@@ -204,7 +204,7 @@ function amp_woo_add_body_classes($classes, $class){
 			}else{
 				unset($details['product']['description']);
 				unset($details['product']['categories']);
-				$json_detail =  wp_json_encode($details );  // XXS OK
+				$json_detail =  wp_json_encode($details );  // XSS OK
 			}
 	    return $json_detail;
  }

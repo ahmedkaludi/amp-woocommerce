@@ -1,19 +1,4 @@
 <?php
-/**
- * Single Product Image
- *
- * This template can be overridden by copying it to yourtheme/woocommerce/single-product/product-image.php.
- *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to do this as little as possible, but it does
- * happen. When this occurs the version of the template file will be bumped and
- * the readme will list any important changes.
- *
- * @see     https://docs.woocommerce.com/document/template-structure/
- * @package WooCommerce/Templates
- * @version 3.5.1
- */
 
 defined( 'ABSPATH' ) || exit;
 
@@ -35,26 +20,22 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
 ?>
 <div class="<?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>" style="opacity: 0; transition: opacity .25s ease-in-out;">
 	<figure class="woocommerce-product-gallery__wrapper">
-
-	<?php $allStaticData = amp_woo_product_json_generator('array');
-
-
+    	<?php 
+          $allStaticData = amp_woo_product_json_generator('array');
           $variant_slug = array();  
-    $variant_slug = implode(".sOpt+",$variant_slug);
-    $variant_slug = $variant_slug.'.sOpt+';
-    $variant_slug = substr_replace($variant_slug,"", -1);
-
-   ?>
-<amp-state id="img_prev_next">
-  <script type="application/json"><?php 
-        $img_array = array();
-       foreach ($allStaticData['bigImage'] as $key => $gallery) {
-            $img_array['images'][] = $gallery[0];
-       } $img_array['next_img'] = 1; 
-        $img_array['prev_img'] = count($img_array['images']) - 1; 
-       echo wp_json_encode($img_array);
-   ?></script>
-</amp-state>
+          $variant_slug = implode(".sOpt+",$variant_slug);
+          $variant_slug = $variant_slug.'.sOpt+';
+          $variant_slug = substr_replace($variant_slug,"", -1);?>
+      <amp-state id="img_prev_next">
+        <script type="application/json"><?php 
+              $img_array = array();
+             foreach ($allStaticData['bigImage'] as $key => $gallery) {
+                  $img_array['images'][] = $gallery[0];
+             } $img_array['next_img'] = 1; 
+              $img_array['prev_img'] = count($img_array['images']) - 1; 
+             echo wp_json_encode($img_array);
+         ?></script>
+      </amp-state>
 
 <div class="gallery-big-image">
         <?php
@@ -125,9 +106,9 @@ if( $allStaticData['gallery'][0] == true && count($img_array['images']) > 1) {  
                      <amp-img src="<?php echo esc_url($gallery[0]); ?>"
                        <?php echo $swatch_thumb_src; 
                              echo $swatch_thumb_src_width;
-                             echo  $swatch_thumb_src_height; ?>
+                             echo $swatch_thumb_src_height; ?>
                              selected="selected"
-                              option="<?php echo $key; ?>" 
+                              option="<?php echo absint($key); ?>" 
                               width="<?php echo esc_attr($gallery[1]); ?>"
                               height="<?php echo esc_attr($gallery[2]); ?>"
                               layout=responsive>

@@ -26,7 +26,7 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 ?>
 
 <?php if ( $heading ) : ?>
-  <h2><?php echo $heading; ?></h2>
+  <h2><?php echo esc_html($heading); ?></h2>
 <?php endif; ?>
 
 <?php ob_start();
@@ -52,7 +52,7 @@ $output = preg_replace_callback($regex,
             $markup = '<div class = "amp_wp_gal">';
             foreach ($id_array as $id_key => $id_value) {
 
-              $url =  wp_get_attachment_url( $attachment_id = $id_value );
+              $url =  wp_get_attachment_url( $id_value );
               $markup .='<amp-img class="w-wp-gallery" width="150" height="150" src="'.esc_url($url).'"></amp-img>';
             }
             $markup .= '</div>';

@@ -35,7 +35,7 @@ if ( ! $short_description ) {
 $regex = '/\[gallery(.*?)ids="(.*?)"(.*?)\]/';
 $string = $short_description ;
 $string =  str_replace(array('&#8221;','&#8243;'),array('"','"'), $string);
-
+$markup = '';
 $output = preg_replace_callback($regex,
     function($m)use($string) {
 
@@ -46,11 +46,12 @@ $output = preg_replace_callback($regex,
             $gal_img_ids = $m[2];
             $id_array = explode(',', $gal_img_ids);
            $markup = '<div class = "amp_wp_gal">';
-            foreach ($id_array as $id_key => $id_value) {
-
-              $url =  wp_get_attachment_url( $attachment_id = $id_value );
-              $markup .='<amp-img class="w-wp-gallery" width="150" height="150" src="'.$url.'"></amp-img>';
-            }
+            if ( is_array($id_array) ){
+                foreach ($id_array as $id_key => $id_value) {
+                  $url =  wp_get_attachment_url(  $id_value );
+                  $markup .='<amp-img class="w-wp-gallery" width="150" height="150" src="'.esc_url($url).'"></amp-img>';
+                }
+              }
             $markup .= '</div>';
 
             return $markup;
