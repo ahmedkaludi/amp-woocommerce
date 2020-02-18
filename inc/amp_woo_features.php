@@ -72,7 +72,7 @@ function amp_woo_add_woocommerce_blacklist($data){
 	 	unset($data['AMP_Review_Form_Blacklist']);
     }
 	
-	$data[ 'AMPFORWP_Woocomerce_Blacklist' ] = array();
+	$data[ 'AMP_WOO_Blacklist' ] = array();
 	 
 	return $data;
 } 

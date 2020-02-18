@@ -39,15 +39,7 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
 	<?php $allStaticData = amp_woo_product_json_generator('array');
 
 
-          $variant_slug = array();
-      foreach($allStaticData['attributes'] as $attrKey=>$attr){
-      
-          if($attr['is_variation']==0){
-            continue;
-          }
-          $attributeName = "a".$attr['id'];
-          $variant_slug[] = $attributeName; 
-      }   
+          $variant_slug = array();  
     $variant_slug = implode(".sOpt+",$variant_slug);
     $variant_slug = $variant_slug.'.sOpt+';
     $variant_slug = substr_replace($variant_slug,"", -1);
