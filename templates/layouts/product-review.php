@@ -7,7 +7,7 @@ $submit_url =  admin_url('admin-ajax.php?action=amp_woo_comment_handle');
 	   $actionXhrUrl = preg_replace('#^https?:#', '', $submit_url);
 
 
-        $comments_html = preg_replace('/<form action="(.*?)"(.*?)>/','<form action-xhr="'.$actionXhrUrl.'"$2>', $comments_html);
+        $comments_html = preg_replace('/<form action="(.*?)"(.*?)>/','<form action-xhr="'.esc_url($actionXhrUrl).'"$2>', $comments_html);
         if(preg_match('/<form(.*?)id="commentform"(.*?)<\/form>/s', $comments_html)){
         $comments_html = preg_replace('/<form(.*?)id="commentform"(.*?)<\/form>/s','<form$1id="commentform"$2<div submit-success>
 				<template type="amp-mustache">
@@ -37,13 +37,8 @@ function amp_woo_rating_markup($comment_form){
 
   if ( (function_exists( 'ampforwp_is_amp_endpoint' ) && ampforwp_is_amp_endpoint()) 
   	|| (function_exists( 'is_amp_endpoint' ) && is_amp_endpoint()) ) {
-    global $redux_builder_amp;
-  if(isset($redux_builder_amp['ampforwp-wcp-your-rating-txt']) && !empty($redux_builder_amp['ampforwp-wcp-your-rating-txt'])){
-    $rating_test = $redux_builder_amp['ampforwp-wcp-your-rating-txt'];
-  }else{
     $rating_test = 'Your rating';
-  }
-$comment_form['comment_field'] = preg_replace('/<div class="comment-form-rating">(.*?)<\/div>/si', '<div class="comment-form-rating"><label for="rating">'.$rating_test.'</label>         <fieldset class="ratingtest">
+$comment_form['comment_field'] = preg_replace('/<div class="comment-form-rating">(.*?)<\/div>/si', '<div class="comment-form-rating"><label for="rating">'.esc_html__($rating_test,'amp-woocommerce').'</label>         <fieldset class="ratingtest">
             <input name="rating" type="radio" id="rating5" value="5" on="change:rating.submit" required />
             <label for="rating5" title="1 stars" >☆</label>
 
@@ -71,9 +66,10 @@ function amp_woo_comment_handle(){
   global $redux_builder_amp;
   header("access-control-allow-credentials:true");
   header("access-control-allow-headers:Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token");
-  header("Access-Control-Allow-Origin:".$_SERVER['HTTP_ORIGIN']);
+  header("Access-Control-Allow-Origin:".esc_url($_SERVER['HTTP_ORIGIN']));
   $siteUrl = parse_url(  get_site_url() );
-  header("AMP-Access-Control-Allow-Source-Origin:".$siteUrl['scheme'] . '://' . $siteUrl['host']);
+  $source_origin = $siteUrl['scheme'] . '://' . $siteUrl['host'];
+  header("AMP-Access-Control-Allow-Source-Origin:".esc_url($source_origin));
   header("access-control-expose-headers:AMP-Access-Control-Allow-Source-Origin");
   header("Content-Type:application/json;charset=utf-8");
   $comment = wp_handle_comment_submission( wp_unslash( $_POST ) );
@@ -84,11 +80,10 @@ function amp_woo_comment_handle(){
       $comment_html = $comment->get_error_message();
       $comment_html = str_replace("&#8217;","'",$comment_html);
       $comment_html = str_replace(array('<strong>','</strong>'),array('',''),$comment_html);
-      $comment_status = array('response' => $comment_html );
+      $comment_status = array('response' => esc_html($comment_html) );
       header('HTTP/1.1 500 FORBIDDEN');
-      echo json_encode($comment_status);
+      echo wp_json_encode($comment_status);
       die;
-      // wp_die( '<p>' . $comment->get_error_message() . '</p>', __( 'Comment Submission Failure' ), array( 'response' => $error_data, 'back_link' => true ) );
     } else {
       wp_die( 'Unknown error' );
     }
@@ -108,10 +103,9 @@ function amp_woo_comment_handle(){
   $GLOBALS['comment'] = $comment;
   $GLOBALS['comment_depth'] = $comment_depth;
   $comment_html = $text_data;
-  $comment_status = array('response' => $comment_html );
+  $comment_status = array('response' => esc_html($comment_html) );
 
 
-  echo json_encode($comment_status);
-  //echo $comment_html;
+  echo wp_json_encode($comment_status);
   die;
 }

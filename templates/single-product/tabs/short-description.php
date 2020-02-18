@@ -44,8 +44,6 @@ $output = preg_replace_callback($regex,
         $tab_content = '';
         if($m){
             $gal_img_ids = $m[2];
-
-          //  $id =  str_replace(array('&#8221;','&#8243;'),array('',''), $gal_img_ids);
             $id_array = explode(',', $gal_img_ids);
            $markup = '<div class = "amp_wp_gal">';
             foreach ($id_array as $id_key => $id_value) {

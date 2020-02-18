@@ -8,7 +8,8 @@
 	4. Creating Product Json.
     5. Unregister Theme widgets in amp product pages
     6. Current Active theme data.
-    7. Hex Code Sanitization.
+    7. Modify Content before the page loads.
+    8. Hex Code Sanitization.
 */
 
 //1. Overriding Woocommerce Templates
@@ -89,7 +90,6 @@ function amp_woo_add_body_classes($classes, $class){
 		$images 		= array();
 		$image_gallery  = array();
 		
-	      /*	print_r($product);die;*/
 			$product_id_some = $woocommerce->product_factory->get_product();
 			$addtoCartText = $product_id_some->add_to_cart_text();
 			if ($product_id_some->get_type()=='variable' ) {
@@ -128,7 +128,6 @@ function amp_woo_add_body_classes($classes, $class){
 							'rating'=>$product_id_some->get_average_rating(),
 							'categories'=> wc_get_product_category_list($product_id_some->get_id()),
 							'currency_sym'=> html_entity_decode(get_woocommerce_currency_symbol()),
-							//$product_id_some->get_categories(),
 							'add_cart_text'=> $addtoCartText,
 							'add_cart_url'=>$product_id_some->add_to_cart_url(),
 							'cart_url'=>$cart_url = user_trailingslashit(trailingslashit(wc_get_cart_url())),
@@ -151,14 +150,11 @@ function amp_woo_add_body_classes($classes, $class){
     	
 	    	$image_gal = $woocommerce->product_factory->get_product()->get_gallery_image_ids();
 
-	    	$gallery_src_swatches ='';
-		    $big_img_src_swatches = '';
-
 			$gal_url = array();
 			$big_img_url = array();
 			foreach ($image_gal as $key => $value) {
-				$gal_url[] = wp_get_attachment_image_src($value,'thumbnail');
-				$big_img_url[] = wp_get_attachment_image_src($value,'full');
+				$gal_url[] = wp_get_attachment_image_src(esc_attr($value),'thumbnail');
+				$big_img_url[] = wp_get_attachment_image_src(esc_attr($value),'full');
 			}
 			$gallery_src = array();
 			foreach ($gal_url as $key) {
@@ -171,14 +167,9 @@ function amp_woo_add_body_classes($classes, $class){
 			array_unshift($gallery_src, $imagesrc);
 			array_unshift($big_img_src, $imagesrc);
 
-			if(!empty($gallery_src_swatches) || !empty($big_img_src_swatches)){
-				$gallery_src = $gallery_src_swatches;
-				$big_img_src = $big_img_src_swatches;
-			}
-			else{
 				$gallery_src = $gallery_src;
 				$big_img_src = $big_img_src;
-			}
+		
 		    if($product_id_some->get_type() === "simple"){
 			$attributes = array();
 		    }  
@@ -208,7 +199,7 @@ function amp_woo_add_body_classes($classes, $class){
 			}else{
 				unset($details['product']['description']);
 				unset($details['product']['categories']);
-				$json_detail =   json_encode($details );  //json_encode($details,JSON_PRETTY_PRINT);
+				$json_detail =  wp_json_encode($details );  // XXS OK
 			}
 	    return $json_detail;
  }
@@ -268,15 +259,23 @@ function amp_woo_active_theme_data($data=""){
 
    if ( empty($data) ) {
    		$data  = array(
-   			'theme_name' 	=> $theme_name , 
-   	        'theme_uri' 	=> $theme_uri, 
-   	        'is_child' 		=> $is_child
+   			'theme_name' 	=> esc_html($theme_name) , 
+   	        'theme_uri' 	=> esc_url($theme_uri), 
+   	        'is_child' 		=> esc_html($is_child)
        	);
    }
    return $data;
 }
+// 7. Modify Content before the page loads 
+add_filter('ampforwp_the_content_last_filter', 'amp_woo_content_modify');
 
-// 7. Hex Code Sanitization
+function amp_woo_content_modify($content_buffer){
+	$content_buffer = preg_replace('/data-openbrack/', '[' , $content_buffer);
+	$content_buffer = preg_replace('/closebrack/', ']' , $content_buffer);
+ return $content_buffer;
+}
+
+// 8. Hex Code Sanitization
 function amp_woo_sanitize_color($color) {
 	if (function_exists('ampforwp_sanitize_color')){
 		$color = ampforwp_sanitize_color($color);

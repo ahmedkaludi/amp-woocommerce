@@ -19,13 +19,12 @@ defined( 'ABSPATH' ) || exit;
 global $redux_builder_amp;
 $allStaticData = amp_woo_product_json_generator('array'); 
 $submit_url = admin_url('admin-ajax.php?action=amp_woo_add_to_cart_submit');
-$actionXhrUrl = preg_replace('#^https?:#', '', $submit_url);  
+$action_url = preg_replace('#^https?:#', '', $submit_url); 
+$actionXhrUrl =  $action_url."&ampsubmit=1";
 do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 
-<form class="cart" action-xhr="<?php echo  esc_url($actionXhrUrl)."&ampsubmit=1"; ?>" method="post">
+<form class="cart" action-xhr="<?php echo  esc_url($actionXhrUrl); ?>" method="post">
 	<?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
-
-<!-- 	<button type="submit" class="single_add_to_cart_button button alt"><?php // echo esc_html( $button_text ); ?></button> -->
       <?php 
 	     if($allStaticData['product']['product_type']=='external'){
               //This link show only when product type is "external" ?>        

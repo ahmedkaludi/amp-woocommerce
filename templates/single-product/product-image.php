@@ -60,7 +60,7 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
             $img_array['images'][] = $gallery[0];
        } $img_array['next_img'] = 1; 
         $img_array['prev_img'] = count($img_array['images']) - 1; 
-       echo json_encode($img_array);
+       echo wp_json_encode($img_array);
    ?></script>
 </amp-state>
 
@@ -70,7 +70,7 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
             $class="hide";
             $swatch_src = $swatch_width = $swatch_height = '';
             $default_width = 494; $default_height = round(((494/esc_attr($gallery[1]))*(esc_attr($gallery[2]))),3);
-             $vriant_attrbtes_bind = '.variant_attributes['.$variant_slug.']';
+             $vriant_attrbtes_bind = '.variant_attributes['.esc_attr($variant_slug).']';
             if($variant_slug == '.sOpt'){
               $vriant_attrbtes_bind = '';
             }
@@ -84,7 +84,7 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
             }
           if($gallery[0] != NULL) { ?>
             <amp-img  src="<?php echo esc_url($gallery[0]); ?>" <?php echo  $swatch_src;
-            echo $swatch_height; ?>   width="<?php echo esc_attr($gallery[1]); ?>" class="<?php echo $class; ?>" [class]="(+product.selectedImage)==<?php echo $key; ?> ? 'show fadeIn' : 'hide'" height="<?php echo esc_attr($gallery[2]); ?>" layout=responsive></amp-img> 
+            echo $swatch_height; ?>   width="<?php echo esc_attr($gallery[1]); ?>" class="<?php echo $class; ?>" data-openbrackclassclosebrack="(+product.selectedImage)==<?php echo $key; ?> ? 'show fadeIn' : 'hide'" height="<?php echo esc_attr($gallery[2]); ?>" layout=responsive></amp-img> 
           <?php } 
           else{ 
             $placeholder_url = AMP_WOO_PLUGIN_URI.'assets/placeholder.png';  ?>
@@ -115,7 +115,7 @@ if( $allStaticData['gallery'][0] == true && count($img_array['images']) > 1) {  
                     })">
               <ul class="p0 m1">
             <?php 
-             $vriant_attr_bd = '.variant_attributes['.$variant_slug.']';
+             $vriant_attr_bd = '.variant_attributes['.esc_attr($variant_slug).']';
             if($variant_slug == '.sOpt'){
               $vriant_attr_bd = '';
             }

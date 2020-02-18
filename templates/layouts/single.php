@@ -11,7 +11,7 @@ wc_get_template_part( 'content', 'single-product' );
 endwhile; 
 
 do_action( 'woocommerce_after_main_content' );
-//do_action( 'woocommerce_sidebar' );
+
 ?></div> 
    <?php
 

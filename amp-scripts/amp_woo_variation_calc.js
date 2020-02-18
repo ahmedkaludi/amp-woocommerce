@@ -67,7 +67,6 @@ function amp_woo_ajax_request_sending(formData){
              var  image_url = output.image.url;
              var thumb_url_src = output.image.gallery_thumbnail_src;
              var image_height = (494/output.image.full_src_w)*(output.image.full_src_h);
-
              AMP.setState({product:{swatch_image:{bigswatch_url:image_url,big_tmb_src:thumb_url_src,height:image_height}}});
          document.getElementById("var_price").innerHTML = price;
         }

@@ -32,7 +32,7 @@ $nonce        = wp_create_nonce( 'wc_shop_wpnonce' );
                              }
         })">+</span>
       
-    <input type="hidden" name="quantity" value="<?php echo $allStaticData['minqty']; ?>" [value]="product.selectedqty">
+    <input type="hidden" name="quantity" value="<?php echo absint($allStaticData['minqty']); ?>" [value]="product.selectedqty">
 </div>
 <?php 
 	do_action( 'woocommerce_after_add_to_cart_quantity' );

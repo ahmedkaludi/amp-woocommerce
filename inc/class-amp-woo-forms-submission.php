@@ -112,16 +112,16 @@ class AMP_WOO_Form_Header {
 		nocache_headers();
 		$headers = $this->getHeaders();
 		foreach ( $headers as $name => $value ) {
-			@header( $name . ': ' . $value );
+			@header( esc_attr($name) . ': ' . esc_attr($value) );
 		}
-		echo json_encode( $this->response );
+		echo wp_json_encode( $this->response );
 		return $this;
 	}
 
 	protected function getHeaders() {
 		$headers = $this->cors_Headers;
-		$headers['Access-Control-Allow-Origin']  = $this->origin;
-		$headers['AMP-Access-Control-Allow-Source-Origin'] = $this->amp_woo_site;
+		$headers['Access-Control-Allow-Origin']  = esc_url($this->origin);
+		$headers['AMP-Access-Control-Allow-Source-Origin'] = esc_url($this->amp_woo_site);
 		$headers = array_merge(
 			$headers,
 			$this->more_Headers

@@ -34,7 +34,6 @@ class AMP_WOO_Form_Submit extends AMP_WOO_Form_Header {
 		global $woocommerce;
 		$cart = $woocommerce->cart;
 		$this->response['message'] = $message = WC()->session->get( 'wc_notices', array() );
-		//if ( count($cart->cart_contents)==0 ) {
 		if (isset($message['error'])  ) {
 			$this->response['status'] = 'error';
 			if(count($message)>0){
@@ -113,8 +112,8 @@ class AMP_WOO_Form_Submit extends AMP_WOO_Form_Header {
 			$was_added_to_cart = $this->add_to_cart_handler_grouped( $product_id );
 
 		// Custom Handler
-		} elseif ( has_action( 'woocommerce_add_to_cart_handler_' . $add_to_cart_handler ) ) {
-			do_action( 'woocommerce_add_to_cart_handler_' . $add_to_cart_handler, $url );
+		} elseif ( has_action( 'woocommerce_add_to_cart_handler_' . esc_attr($add_to_cart_handler )) ) {
+			do_action( 'woocommerce_add_to_cart_handler_' . esc_attr($add_to_cart_handler ), esc_url($url) );
 
 
 		}elseif('booking' === $add_to_cart_handler){
@@ -134,16 +133,16 @@ class AMP_WOO_Form_Submit extends AMP_WOO_Form_Header {
 				if(isset($redux_builder_amp['ampforwp-wcp-cart-amp']) && $redux_builder_amp['ampforwp-wcp-cart-amp']==1){
 					$url = user_trailingslashit(trailingslashit($url).AMPFORWP_AMP_QUERY_VAR);
 				}
-				$this->cors_Headers['AMP-Redirect-To'] = $url;
-				$this->cors_Headers['Access-Control-Expose-Headers'] = "AMP-Redirect-To, ".$headers['Access-Control-Expose-Headers'];
+				$this->cors_Headers['AMP-Redirect-To'] = esc_url($url);
+				$this->cors_Headers['Access-Control-Expose-Headers'] = "AMP-Redirect-To, ".esc_attr($headers['Access-Control-Expose-Headers']);
 				//exit;
 			} elseif ( get_option( 'woocommerce_cart_redirect_after_add' ) === 'yes' ) {
 				$url = str_replace("http://", "https://", wc_get_cart_url());
 				if(isset($redux_builder_amp['ampforwp-wcp-cart-amp']) && $redux_builder_amp['ampforwp-wcp-cart-amp']==1){
 					$url = user_trailingslashit(trailingslashit($url).AMPFORWP_AMP_QUERY_VAR);
 				}
-				$this->cors_Headers['AMP-Redirect-To'] = $url;
-				$this->cors_Headers['Access-Control-Expose-Headers'] = "AMP-Redirect-To, ".$this->cors_Headers['Access-Control-Expose-Headers'];
+				$this->cors_Headers['AMP-Redirect-To'] = esc_url($url);
+				$this->cors_Headers['Access-Control-Expose-Headers'] = "AMP-Redirect-To, ".esc_attr($this->cors_Headers['Access-Control-Expose-Headers']);
 				// exit;
 			}
 		}

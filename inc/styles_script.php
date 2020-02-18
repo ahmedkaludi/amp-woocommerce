@@ -1634,13 +1634,7 @@ amp-img.w-wp-gallery {
       }
       input[type=color], input[type=date], input[type=datetime-local], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], textarea,select {
        height: 36px;width: 90%;padding: 6px 12px;font-size: 14px;line-height: 1.42857143;color: #555;background-color: #fff;background-image: none;border: 1px solid #ccc;border-radius: 0;}
-        button,button[type=submit]{<?php global $redux_builder_amp;
-        if( isset($redux_builder_amp['ampforwp-wcp-button-color']['rgba']) && $redux_builder_amp['ampforwp-wcp-button-color']['rgba']){ ?>
-          background-color:<?php echo $redux_builder_amp['ampforwp-wcp-button-color']['rgba']?>;
-          <?php } else{ ?> background-color:#333; <?php } ?>
-         <?php if( isset($redux_builder_amp['ampforwp-wcp-button-text-color']['rgba']) && $redux_builder_amp['ampforwp-wcp-button-text-color']['rgba']){?>
-          color:<?php echo $redux_builder_amp['ampforwp-wcp-button-text-color']['rgba']?>;
-          <?php } else{ ?> color: #fff; <?php } ?>
+        button,button[type=submit]{background-color:#333;color: #fff;
           font-size: 12px;font-weight: bold;padding: 11px 13px 10px 13px;text-transform: uppercase;border: 0;border-radius: 2px;line-height: 1;cursor: pointer;
         }
           .woocommerce form .form-row-first, .woocommerce form .form-row-last, .woocommerce-page form .form-row-first, .woocommerce-page form .form-row-last {float:left;width: 47%;overflow: visible;}
@@ -1652,10 +1646,10 @@ amp-img.w-wp-gallery {
       .woocommerce-form-login label{font-size: 14px;color: #333;line-height: 1.4;letter-spacing: 0.5px;}
       .woocommerce-form-login input{padding: 15px 10px;background-color: #f2f2f2;color: #43454b;outline: 0;border: 0;box-sizing: border-box;font-weight: 400;margin:0;}
 
-      .woocommerce-Button{background-color: <?php echo $redux_builder_amp['swift-color-scheme']['color'] ?>;border: none;color: #ffffff;padding: 13px 19px;font-weight: 600;
+      .woocommerce-Button{background-color: <?php if(isset($redux_builder_amp['swift-color-scheme']['color'])){echo amp_woo_sanitize_color($redux_builder_amp['swift-color-scheme']['color']); ?>;<?php } ?>border: none;color: #ffffff;padding: 13px 19px;font-weight: 600;
           font-size: 15px;line-height: 1.2; margin-right: 10px;cursor: pointer;}
       .woocommerce-form-login .woocommerce-form__input-checkbox{margin-right:7px;width:auto;height:auto;}
-      .woocommerce-LostPassword a{font-size: 14px;line-height: 1.4;color: <?php echo $redux_builder_amp['swift-color-scheme']['color'] ?>;}
+      .woocommerce-LostPassword a{font-size: 14px;line-height: 1.4;color: <?php  if(isset($redux_builder_amp['swift-color-scheme']['color'])){echo amp_woo_sanitize_color($redux_builder_amp['swift-color-scheme']['color']); ?>;<?php } ?>}
       .woocommerce-MyAccount-navigation ul li a {padding: 15px 0px;display: block;
           border-bottom: 1px solid #eee;font-size: 14px;line-height: 1.5;}
       .woocommerce-MyAccount-navigation ul{border-top:1px solid #eee;}

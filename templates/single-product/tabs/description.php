@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $post;
 
-$heading = esc_html( apply_filters( 'woocommerce_product_description_heading', __( 'Description', 'woocommerce' ) ) );
+$heading = esc_html( apply_filters( 'woocommerce_product_description_heading', __( 'Description', 'amp-woocommerce' ) ) );
 
 ?>
 
@@ -33,7 +33,6 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 		the_content();
 		$content = ob_get_contents();
 		ob_get_clean();
-
 
 		#gallery
 $regex = '/\[gallery(.*?)ids="(.*?)"(.*?)\]/';
@@ -49,13 +48,12 @@ $output = preg_replace_callback($regex,
         if($m){
             $gal_img_ids = $m[2];
 
-           // $id =  str_replace(array('&#8221;','&#8243;'),array('',''), $gal_img_ids);
             $id_array = explode(',',  $gal_img_ids);
             $markup = '<div class = "amp_wp_gal">';
             foreach ($id_array as $id_key => $id_value) {
 
               $url =  wp_get_attachment_url( $attachment_id = $id_value );
-              $markup .='<amp-img class="w-wp-gallery" width="150" height="150" src="'.$url.'"></amp-img>';
+              $markup .='<amp-img class="w-wp-gallery" width="150" height="150" src="'.esc_url($url).'"></amp-img>';
             }
             $markup .= '</div>';
             return $markup;

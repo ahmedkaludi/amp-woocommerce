@@ -37,7 +37,7 @@ if ( ! empty( $breadcrumb ) ) {
 		echo $after;
 
 		if ( sizeof( $breadcrumb ) !== $key + 1 ) {
-			//echo $delimiter;
+
 		}
 	}
 

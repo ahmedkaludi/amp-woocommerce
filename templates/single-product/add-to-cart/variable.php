@@ -50,7 +50,8 @@ $allStaticData = amp_woo_product_json_generator('array');
 
 $cart_url = $allStaticData['product']['cart_url'].'amp/';
 $submit_url = admin_url('admin-ajax.php?action=amp_woo_add_to_cart_submit');
-$actionXhrUrl = preg_replace('#^https?:#', '', $submit_url); 
+$action_url = preg_replace('#^https?:#', '', $submit_url); 
+$actionXhrUrl =  $action_url."&ampsubmit=1";
 
 if(function_exists('wc_get_price_decimals')  && function_exists('get_woocommerce_price_format') ) {
   if(!isset($args)){ 
@@ -70,16 +71,14 @@ $args = apply_filters('wc_price_args', wp_parse_args($args,
           }
 
 do_action( 'woocommerce_before_add_to_cart_form' );
-/*data-product_variations="<?php echo $variations_attr; // WPCS: XSS ok. ?>"*/
-
-
+ // WPCS: XSS ok. 
  ?>
 <amp-script src="<?php echo str_replace('http:','https:',AMP_WOO_PLUGIN_URI);?>amp-scripts/amp_woo_variation_calc.js">
-<form class="variations_form cart" id="amp_variations" action-xhr="<?php echo  esc_url($actionXhrUrl)."&ampsubmit=1"; ?>" method="post" enctype='multipart/form-data' data-product_id="<?php echo absint( $product->get_id() ); ?>" data-site-url="<?php echo get_site_url(); ?>">
+<form class="variations_form cart" id="amp_variations" action-xhr="<?php echo  esc_url($actionXhrUrl); ?>" method="post" enctype='multipart/form-data' data-product_id="<?php echo absint( $product->get_id() ); ?>" data-site-url="<?php echo get_site_url(); ?>">
   <?php do_action( 'woocommerce_before_variations_form' ); ?>
 
   <?php if ( empty( $available_variations ) && false !== $available_variations ) : ?>
-    <p class="stock out-of-stock"><?php echo esc_html( apply_filters( 'woocommerce_out_of_stock_message', __( 'This product is currently out of stock and unavailable.', 'woocommerce' ) ) ); ?></p>
+    <p class="stock out-of-stock"><?php echo esc_html( apply_filters( 'woocommerce_out_of_stock_message', __( 'This product is currently out of stock and unavailable.', 'amp-woocommerce' ) ) ); ?></p>
   <?php else : ?>
     <table class="variations" cellspacing="0">
       <tbody>
@@ -93,7 +92,7 @@ do_action( 'woocommerce_before_add_to_cart_form' );
                   'attribute' => $attribute_name,
                   'product'   => $product,
                 ) );
-                echo end( $attribute_keys ) === $attribute_name ? wp_kses_post( apply_filters( 'woocommerce_reset_variations_link', '<a class="reset_variations" href="#">' . esc_html__( 'Clear', 'woocommerce' ) . '</a>' ) ) : '';
+                echo end( $attribute_keys ) === $attribute_name ? wp_kses_post( apply_filters( 'woocommerce_reset_variations_link', '<a class="reset_variations" href="#">' . esc_html__( 'Clear', 'amp-woocommerce' ) . '</a>' ) ) : '';
               ?>
             </td>
           </tr>
@@ -132,10 +131,10 @@ do_action( 'woocommerce_before_add_to_cart_form' );
   <?php do_action( 'woocommerce_after_variations_form' ); ?>
     <div submit-success class="amp-form-status-success-new woocommerce-notices-wrapper" >
         <div class="amp_wc_cart_success woocommerce-message"><?php if (class_exists( 'YITH_WC_Min_Max_Qty_Premium' )) { ?>{{{message}}} <?php }
-          else{echo '“'.$allStaticData['product']['name'].'”&nbsp;&nbsp;';echo esc_html__('has been added to your cart&nbsp;');} ?><?php
+          else{echo esc_html__('“'.$allStaticData['product']['name'].'”&nbsp;&nbsp has been added to your cart&nbsp;','amp-woocommerce');} ?><?php
           if ( class_exists( 'YITH_WC_Min_Max_Qty_Premium' ) ) { 
             add_filter( 'woocommerce_add_to_cart_validation', array( $this, 'ywmmq_add_to_cart_validation' ), 11, 6 );
-          }else { ?><a class="view_cart_button" href="<?php echo $cart_url; ?>"><?php echo esc_html__('View Cart'); ?></a><?php } ?> 
+          }else { ?><a class="view_cart_button" href="<?php echo esc_url($cart_url); ?>"><?php echo esc_html__('View Cart','amp-woocommerce'); ?></a><?php } ?> 
            </div>
    </div>
   <div submit-error id="add_to_cart_error"  class="woocommerce-notices-wrapper">
@@ -148,16 +147,16 @@ do_action( 'woocommerce_before_add_to_cart_form' );
                 $product_name = $product->get_name();
               }
         if(empty($product_sold_indv)){            
-                echo esc_html__('Cart not added! Please try again.');              
+                echo esc_html__('Cart not added! Please try again.','amp-woocommerce');              
         }?>
       <div class="ampforwp-form-status amp_gravity_error woocommerce-error">
        {{#errors}} 
           <div>{{error_detail}}</div>
          <?php if( !empty($product_sold_indv) && $product_sold_indv == 1 ){ ?>  
          <div class = "sold_individual">     
-        <p style="margin-top: 10px; "> You cannot add another  <?php echo $product_name; ?> to your cart </p>
+        <p style="margin-top: 10px; "> You cannot add another  <?php echo esc_html__($product_name,'amp-woocommerce'); ?> to your cart </p>
         <a  href="<?php echo $cart_url; ?>" class="button wc-forward" >
-              <?php echo esc_html__('View Cart');?>
+              <?php echo esc_html__('View Cart','amp-woocommerce');?>
                 </a> 
                 </div> 
           <?php } ?>
