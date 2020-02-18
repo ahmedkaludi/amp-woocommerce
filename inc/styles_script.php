@@ -1739,14 +1739,22 @@ amp-img.w-wp-gallery {
 
 
       /** Responsive **/
-
+ 
       @media(max-width:1100px){
+      <?php if(isset($redux_builder_amp['amp-design-selector']) && $redux_builder_amp['amp-design-selector'] == 4){?>
         .woocommerce .v3_wc_content_wrap{
           max-width:100%;
         }
-
+        <?php if(function_exists('is_cart') && is_cart()){?>
+        .content-wrapper{padding:20px;}
+       <?php } }else{?>
+        .woocommerce .v3_wc_content_wrap{
+          max-width:90%;
+        }
+        table.cart tbody{width:100%;}
+        table.cart tr{padding-left:0px;}
+      <?php } ?>
       }
-
 
       @media(max-width:768px){
         .woocommerce table.cart .product-thumbnail{

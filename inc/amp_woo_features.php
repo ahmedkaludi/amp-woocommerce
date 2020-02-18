@@ -11,6 +11,7 @@
     7. Modify Content before the page loads.
     8. Hex Code Sanitization.
     9. Adds Breadcrumbs on Cart Page.
+    10. Clear Amp tree shaking css code add actions.
 */
 
 //1. Overriding Woocommerce Templates
@@ -307,4 +308,55 @@ function amp_woo_cart_page_breadcrumbs(){
 	 echo $breadcrumb;
     
    }
+}
+
+// 10. Clear Amp tree shaking css code add actions..
+add_action('plugins_loaded','amp_woo_clear_tree_shaking_conditions',10);
+function amp_woo_clear_tree_shaking_conditions(){
+	global $redux_builder_amp;
+	if(isset($redux_builder_amp['ampforwp_css_tree_shaking']) && $redux_builder_amp['ampforwp_css_tree_shaking'] == 0){  
+   add_action( 'redux/options/redux_builder_amp/saved', 'amp_woo_clear_tree_shaking',10,2); 
+   add_action( 'save_post', 'amp_woo_clear_tree_shaking_post');
+        }
+   } 
+
+
+ if( !function_exists("amp_woo_clear_tree_shaking") ) {
+	function amp_woo_clear_tree_shaking( $options = '', $changed_values = array() ) {
+		// If the current user don't have proper permission then return
+		if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+		if ( is_admin() &&  ( count( $changed_values ) != 0 ) ) {
+			$upload_dir   = wp_upload_dir();
+			$user_dirname = $upload_dir['basedir'] . '/' . 'ampforwp-tree-shaking';
+			if ( file_exists( $user_dirname ) ) {
+				$files = glob( $user_dirname . '/*' );
+				//Loop through the file list.
+				foreach ( $files as $file ) {
+					//Make sure that this is a file and not a directory.
+					if ( is_file( $file ) && strpos( $file, '_transient' ) !== false ) {
+						//Use the unlink function to delete the file.
+						unlink( $file );
+					}
+				}
+			}
+		}
+	}
+ }
+
+ // Clear amp tree shaking CSS.
+if( !function_exists("amp_woo_clear_tree_shaking_post") ) {
+	function amp_woo_clear_tree_shaking_post() {
+		if ( current_user_can( 'edit_posts' ) && is_user_logged_in() && function_exists('ampforwp_get_the_ID')  ){
+			    $transient_filename = "post-".ampforwp_get_the_ID();
+				$upload_dir = wp_upload_dir();
+				$ts_file = $upload_dir['basedir'] . '/' . 'ampforwp-tree-shaking/_transient_'.esc_attr($transient_filename).".css";
+				if(file_exists($ts_file) && is_file($ts_file)){
+					unlink($ts_file);
+				}
+			
+		}
+	}
+
 }
