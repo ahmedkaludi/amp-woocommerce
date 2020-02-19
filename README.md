@@ -6,8 +6,8 @@ Contributors: ahmedkaludi, mohammed_kaludi
 Tags: WooCommerce, AMP
 Donate link: https://www.paypal.me/Kaludi/5
 Requires at least: 3.5
-Tested up to: 4.8
-Stable tag: 0.4
+Tested up to: 5.3.2
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,9 @@ Step 2: Activate this plugin,
 Step 3. Done.
 
 == Changelog ==
+= 1.0 (19th Feb 2020) =
+* Restructured the functionality and Design of Single Product & Cart pages.
+
 = 0.4 (28th June 2017) =
 * Fixed Meta Viewport issue #17
 * Style not getting stripped in product_description #15

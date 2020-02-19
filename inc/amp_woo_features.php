@@ -11,7 +11,8 @@
     7. Modify Content before the page loads.
     8. Hex Code Sanitization.
     9. Adds Breadcrumbs on Cart Page.
-    10. Clear Amp tree shaking css code add actions.
+   10. Clear Amp tree shaking css code add actions.
+   11. Adding scripts 
 */
 
 //1. Overriding Woocommerce Templates
@@ -359,4 +360,32 @@ if( !function_exists("amp_woo_clear_tree_shaking_post") ) {
 		}
 	}
 
+}
+
+// 11. Adding scripts 
+add_filter('amp_post_template_data','amp_woo_scripts', 20);
+function amp_woo_scripts($data) {
+
+		if( function_exists('is_product') && is_product() ){ 
+				// Adding AMP Bind Script
+			if ( empty( $data['amp_component_scripts']['amp-bind'] ) ) {
+				$data['amp_component_scripts']['amp-bind'] = 'https://cdn.ampproject.org/v0/amp-bind-0.1.js';
+			}
+				// Adding AMP selector Script
+			if ( empty( $data['amp_component_scripts']['amp-selector'] ) ) {
+				$data['amp_component_scripts']['amp-selector'] = 'https://cdn.ampproject.org/v0/amp-selector-0.1.js';
+			}
+			
+		}
+          if( (function_exists('is_product') && is_product()) ||  (function_exists('is_cart') && is_cart()) ){ 
+						// Adding Form Script
+			if ( empty( $data['amp_component_scripts']['amp-form'] ) ) {
+				$data['amp_component_scripts']['amp-form'] = 'https://cdn.ampproject.org/v0/amp-form-0.1.js';
+			}
+				// Adding Mustache Script
+			if ( empty( $data['amp_component_scripts']['amp-mustache'] ) ) {
+				$data['amp_component_scripts']['amp-mustache'] = 'https://cdn.ampproject.org/v0/amp-mustache-latest.js';
+			}
+         }
+	return $data;
 }
