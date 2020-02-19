@@ -55,10 +55,10 @@ $output = preg_replace_callback($regex,
     if(preg_match($regex, $string)){
   
      $output =  preg_replace('/\[gallery ids=(.*?)\]/', $markup , $output);
-     echo $output;
+     echo $output; // XSS Ok.
     }else{
 
-      echo $content;
+      echo $content; // XSS Ok.
     }
 do_action('ampwcpro_after_the_description');
 

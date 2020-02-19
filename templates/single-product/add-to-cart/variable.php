@@ -14,7 +14,6 @@ $show_class = "hide";
   if(!empty($default_variation)){
       $dflt_var_arr = array();
       foreach ($default_variation as $new_key => $def_value) {
-        # code...
         $dflt_var_arr['attribute_' .$new_key] = $def_value;
       }
 
@@ -63,7 +62,9 @@ do_action( 'woocommerce_before_add_to_cart_form' );
 $variation_js_src = str_replace('http:','https:',AMP_WOO_PLUGIN_URI).'amp-scripts/amp_woo_variation_calc.js';
  ?>
 <amp-script src="<?php echo esc_url($variation_js_src);?>">
+
 <form class="variations_form cart" id="amp_variations" action-xhr="<?php echo  esc_url($actionXhrUrl); ?>" method="post" enctype='multipart/form-data' data-product_id="<?php echo absint( $product->get_id() ); ?>" data-site-url="<?php echo esc_url(get_site_url()); ?>">
+
   <?php do_action( 'woocommerce_before_variations_form' ); ?>
 
   <?php if ( empty( $available_variations ) && false !== $available_variations ) : ?>

@@ -305,7 +305,7 @@ function amp_woo_cart_page_breadcrumbs(){
         $breadcrumb = preg_replace('/<a\shref="(.*?)">/s','<a href="$1/amp/">',$breadcrumb);
         $breadcrumb = preg_replace('/\/\/amp/s','/amp',$breadcrumb);
          }
-	 echo $breadcrumb;
+	 echo $breadcrumb; // XSS Ok.
     
    }
 }

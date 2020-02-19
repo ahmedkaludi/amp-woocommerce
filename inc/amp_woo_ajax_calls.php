@@ -15,7 +15,6 @@ function amp_woo_add_to_cart_submit(){
 		header('HTTP/1.1 500 FORBIDDEN');
 		echo wp_json_encode( 'Sorry, your nonce did not verify.' );
 		die;
-    	//wp_die();
 	}
 	else{
 		 if( !isset($_POST['ampforwp_wc_membership'])){
@@ -34,7 +33,6 @@ function amp_woo_add_to_cart_submit(){
     header("AMP-Access-Control-Allow-Source-Origin:".esc_url($source_origin));
     header("access-control-expose-headers:AMP-Access-Control-Allow-Source-Origin");
     header("Content-Type:application/json");
-    //echo wp_json_encode( 'Sorry, your nonce did not verify.' );
 	if(is_plugin_active('woocommerce-memberships/woocommerce-memberships.php')){
 		$redirect_url = user_trailingslashit(trailingslashit(wc_get_cart_url()));
 		header("AMP-Redirect-To: ".esc_url($redirect_url));

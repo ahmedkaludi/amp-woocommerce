@@ -105,12 +105,9 @@ function amp_woo_comment_handle(){
     $parent_comment = get_comment( $comment_parent );
     $comment_parent = $parent_comment->comment_parent;
   }
-  $GLOBALS['comment'] = $comment;
-  $GLOBALS['comment_depth'] = $comment_depth;
   $comment_html = $text_data;
   $comment_status = array('response' => esc_html($comment_html) );
-
-
+  
   echo wp_json_encode($comment_status);
   die;
 }

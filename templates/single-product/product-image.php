@@ -50,14 +50,14 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
             if($key==0){
                 $class="show fadeIn";
                 if($allStaticData['product']['product_type'] == "variable"){
-                  $swatch_src = 'data-openbracksrcclosebrack = "(product'.$vriant_attrbtes_bind.'.swatch_image.bigswatch_url)? product'.$vriant_attrbtes_bind.'.swatch_image.bigswatch_url:\''.esc_url($gallery[0]).'\'"'; 
-                  $swatch_width = 'data-openbrackwidthclosebrack = "((product'.$vriant_attrbtes_bind.'.swatch_image.bigswatch_url))?494:'.absint($default_width).'"'; 
-                  $swatch_height = 'data-openbrackheightclosebrack = "((product'.$vriant_attrbtes_bind.'.swatch_image.bigswatch_url))?product'.$vriant_attrbtes_bind.'.swatch_image.height:'.absint($default_height).'"';
+                  $swatch_src = 'data-openbracksrcclosebrack = "(product'.esc_attr($vriant_attrbtes_bind).'.swatch_image.bigswatch_url)? product'.esc_attr($vriant_attrbtes_bind).'.swatch_image.bigswatch_url:\''.esc_url($gallery[0]).'\'"'; 
+                  $swatch_width = 'data-openbrackwidthclosebrack = "((product'.esc_attr($vriant_attrbtes_bind).'.swatch_image.bigswatch_url))?494:'.absint($default_width).'"'; 
+                  $swatch_height = 'data-openbrackheightclosebrack = "((product'.esc_attr($vriant_attrbtes_bind).'.swatch_image.bigswatch_url))?product'.esc_attr($vriant_attrbtes_bind).'.swatch_image.height:'.absint($default_height).'"';
                   } 
             }
           if($gallery[0] != NULL) { ?>
             <amp-img  src="<?php echo esc_url($gallery[0]); ?>" <?php echo  $swatch_src;
-            echo $swatch_height; ?>   width="<?php echo esc_attr($gallery[1]); ?>" class="<?php echo esc_attr($class); ?>" data-openbrackclassclosebrack="(+product.selectedImage)==<?php echo absint($key); ?> ? 'show fadeIn' : 'hide'" height="<?php echo esc_attr($gallery[2]); ?>" layout=responsive></amp-img> 
+            echo $swatch_height; // XSS OK. ?>   width="<?php echo esc_attr($gallery[1]); ?>" class="<?php echo esc_attr($class); ?>" data-openbrackclassclosebrack="(+product.selectedImage)==<?php echo absint($key); ?> ? 'show fadeIn' : 'hide'" height="<?php echo esc_attr($gallery[2]); ?>" layout=responsive></amp-img> 
           <?php } 
           else{ 
             $placeholder_url = AMP_WOO_PLUGIN_URI.'assets/placeholder.png';  ?>
@@ -95,7 +95,7 @@ if( $allStaticData['gallery'][0] == true && count($img_array['images']) > 1) {  
             foreach ($allStaticData['gallery'] as $key => $gallery) { 
               $swatch_thumb_src = $swatch_thumb_src_width = $swatch_thumb_src_height ='';
               if($key==0){
-                  $swatch_thumb_src = 'data-openbracksrcclosebrack = "(product'.$vriant_attr_bd.'.swatch_image.big_tmb_src)? product'.$vriant_attr_bd.'.swatch_image.big_tmb_src : \''.esc_url($gallery[0]).'\'"'; 
+                  $swatch_thumb_src = 'data-openbracksrcclosebrack = "(product'.esc_attr($vriant_attr_bd).'.swatch_image.big_tmb_src)? product'.esc_attr($vriant_attr_bd).'.swatch_image.big_tmb_src : \''.esc_url($gallery[0]).'\'"'; 
                   $swatch_thumb_src_width = 'data-openbrackwidthclosebrack = "60"'; 
                   $swatch_thumb_src_height = 'data-openbrackheightclosebrack = "60"'; 
 
@@ -104,9 +104,9 @@ if( $allStaticData['gallery'][0] == true && count($img_array['images']) > 1) {  
                 if($allStaticData['gallery']){ ?>   
                   <li class="small-image">
                      <amp-img src="<?php echo esc_url($gallery[0]); ?>"
-                       <?php echo $swatch_thumb_src; 
-                             echo $swatch_thumb_src_width;
-                             echo $swatch_thumb_src_height; ?>
+                       <?php echo $swatch_thumb_src; // XSS Ok.
+                             echo $swatch_thumb_src_width; // XSS Ok.
+                             echo $swatch_thumb_src_height; // XSS Ok.?>
                              selected="selected"
                               option="<?php echo absint($key); ?>" 
                               width="<?php echo esc_attr($gallery[1]); ?>"

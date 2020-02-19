@@ -63,7 +63,7 @@ $output = preg_replace_callback($regex,
     $string);
     if(preg_match($regex, $string)){
       $output =  preg_replace('/\[gallery ids=(.*?)\]/', $markup , $output);
-      echo $output;
+      echo $output; // XSS Ok.
     }else{
       echo $short_description;
     }// WPCS: XSS ok. ?>
