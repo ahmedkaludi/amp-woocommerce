@@ -2,17 +2,6 @@
 /**
  * Cart Page
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/cart/cart.php.
- *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to do this as little as possible, but it does
- * happen. When this occurs the version of the template file will be bumped and
- * the readme will list any important changes.
- *
- * @see     https://docs.woocommerce.com/document/template-structure/
- * @package WooCommerce/Templates
- * @version 3.7.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -21,7 +10,7 @@ do_action( 'woocommerce_before_cart' );
 
 $submit_url =  admin_url('admin-ajax.php?action=amp_woo_cart_coupon_operation');
 $applyCouponXhrUrl = preg_replace('#^https?:#', '', $submit_url);
-	$nonce 			= 	wp_create_nonce( 'wc_cart_wpnonce' );
+$nonce 			= 	wp_create_nonce( 'wc_cart_wpnonce' );
 ?>
 
 <form class="woocommerce-cart-form" action-xhr="<?php echo esc_url($applyCouponXhrUrl); ?>"  method="post">
@@ -144,17 +133,17 @@ $applyCouponXhrUrl = preg_replace('#^https?:#', '', $submit_url);
 				<td colspan="6" class="actions">
 
 					<?php 
- if ( wc_coupons_enabled() ) { ?>
+         if ( wc_coupons_enabled() ) { ?>
 						<div class="coupon">
 						<label for="coupon_code"><?php echo esc_html( 'Coupon:', 'amp-woocommerce' ); ?></label> 
 
 						<input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Coupon Code"> 
 						<input type="hidden" name="option_perform" value="apply_coupon"/>
-						<input type="hidden" id="wc_cart_wpnonce" name="wc_cart_wpnonce" value="<?php echo $nonce;?>">
+						<input type="hidden" id="wc_cart_wpnonce" name="wc_cart_wpnonce" value="<?php echo esc_attr($nonce);?>">
 						<input type="submit" class="button" name="apply_coupon" value="<?php echo esc_attr_e( 'Apply coupon', 'amp-woocommerce' ); ?>">
 			           </div>
  	       <?php do_action( 'woocommerce_cart_coupon' ); ?>				
-		<?php 	}   ?>
+		 <?php 	}   ?>
 					<button type="submit" class="button" name="update_cart" value="<?php esc_attr_e( 'Update cart', 'woocommerce' ); ?>"><?php esc_html_e( 'Update cart', 'amp-woocommerce' ); ?></button>
 
 					<?php do_action( 'woocommerce_cart_actions' ); ?>
@@ -167,24 +156,24 @@ $applyCouponXhrUrl = preg_replace('#^https?:#', '', $submit_url);
 		</tbody>
 	</table>
 	<?php do_action( 'woocommerce_after_cart_table' ); ?>
-	 <div submit-success >
-              <template type="amp-mustache" >
-                    <div class="chk_success" >
-                   Coupon Code applied.
-                     </div>
-              </template>
+      <div submit-success >
+          <template type="amp-mustache" >
+            <div class="chk_success" >
+            <?php esc_html_e('Coupon Code applied.','amp-woocommerce'); ?>
              </div>
-           <div submit-error>
-            <template type="amp-mustache">
-                <div class="ampforwp-form-status_">
-                    <div class="ampforwp-form-status_cart ">
-    
-                    <div class="checkout_form_error">{{{message}}}</div>
-     
-                    </div> 
-                </div>
-            </template>
-           </div>
+          </template>
+       </div>
+       <div submit-error>
+        <template type="amp-mustache">
+            <div class="ampforwp-form-status_">
+              <div class="ampforwp-form-status_cart ">
+                 <div class="checkout_form_error">
+                  {{{message}}}
+                 </div>
+               </div> 
+            </div>
+        </template>
+       </div>
 </form>
 
 <?php do_action( 'woocommerce_before_cart_collaterals' ); ?>

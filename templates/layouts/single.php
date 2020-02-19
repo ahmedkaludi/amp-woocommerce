@@ -41,7 +41,8 @@ add_action("amp_post_template_css" , 'amp_woo_single_product_inline_css');
 }
 function amp_woo_single_product_inline_css(){
 	  foreach ($GLOBALS['sanitized_wc_styles'] as $key => $value) {
-	  echo $key.'{'.$value[0].'}';
+	  	$inline_css = $key.'{'.$value[0].'}';
+	  echo amp_woo_css_sanitizer($inline_css); //XSS OK.
 	  }
 }
 
@@ -91,7 +92,7 @@ global $post, $woocommerce, $wp, $redux_builder_amp; ?>
   </script>
 </amp-state>
 <amp-state id="wc_product_cart">
-  <script type="application/json"><?php echo json_encode(array("cartvalue"=>1));
+  <script type="application/json"><?php echo wp_json_encode(array("cartvalue"=>1));
    ?>
   </script>
 </amp-state>

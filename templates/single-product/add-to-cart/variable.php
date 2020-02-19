@@ -1,18 +1,6 @@
 <?php
 /**
  * Variable product add to cart
- *
- * This template can be overridden by copying it to yourtheme/woocommerce/single-product/add-to-cart/variable.php.
- *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to do this as little as possible, but it does
- * happen. When this occurs the version of the template file will be bumped and
- * the readme will list any important changes.
- *
- * @see https://docs.woocommerce.com/document/template-structure/
- * @package WooCommerce/Templates
- * @version 3.5.5
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -31,13 +19,13 @@ $show_class = "hide";
       }
 
 
-         $variable_product = wc_get_product( absint( $product->get_id() ) );
-         $data_store   = WC_Data_Store::load( 'product' );
-          $variation_id = $data_store->find_matching_product_variation( $variable_product, $dflt_var_arr );
-          $variation    = $variation_id ? $variable_product->get_available_variation( $variation_id ) : false;
+  $variable_product = wc_get_product( absint( $product->get_id() ) );
+  $data_store   = WC_Data_Store::load( 'product' );
+  $variation_id = $data_store->find_matching_product_variation( $variable_product, $dflt_var_arr );
+  $variation    = $variation_id ? $variable_product->get_available_variation( $variation_id ) : false;
 
-    $default_varprice = $variation['display_price'];
-    $show_class = '';
+  $default_varprice = $variation['display_price'];
+  $show_class = '';
   }
 
 
@@ -54,31 +42,34 @@ $action_url = preg_replace('#^https?:#', '', $submit_url);
 $actionXhrUrl =  $action_url."&ampsubmit=1";
 
 if(function_exists('wc_get_price_decimals')  && function_exists('get_woocommerce_price_format') ) {
-  if(!isset($args)){ 
-    $args = "";
+    if(!isset($args)){ 
+      $args = "";
+    }
+    $args = apply_filters('wc_price_args', wp_parse_args($args,
+                                      array(
+                                        'ex_tax_label'       => false,
+                                        'currency'           => '',
+                                        'decimals'           => wc_get_price_decimals(),
+                                        'decimal_separator'  => wc_get_price_decimal_separator(),
+                                        'thousand_separator' => wc_get_price_thousand_separator(),
+                                        'price_format'       => get_woocommerce_price_format(),
+                                            )
+                                           )
+                            );
   }
-$args = apply_filters('wc_price_args', wp_parse_args($args,
-                                  array(
-                                    'ex_tax_label'       => false,
-                                    'currency'           => '',
-                                    'decimals'           => wc_get_price_decimals(),
-                                    'decimal_separator'  => wc_get_price_decimal_separator(),
-                                    'thousand_separator' => wc_get_price_thousand_separator(),
-                                    'price_format'       => get_woocommerce_price_format(),
-                                        )
-                                       )
-                        );
-          }
 
 do_action( 'woocommerce_before_add_to_cart_form' );
  // WPCS: XSS ok. 
+$variation_js_src = str_replace('http:','https:',AMP_WOO_PLUGIN_URI).'amp-scripts/amp_woo_variation_calc.js';
  ?>
-<amp-script src="<?php echo str_replace('http:','https:',AMP_WOO_PLUGIN_URI);?>amp-scripts/amp_woo_variation_calc.js">
-<form class="variations_form cart" id="amp_variations" action-xhr="<?php echo  esc_url($actionXhrUrl); ?>" method="post" enctype='multipart/form-data' data-product_id="<?php echo absint( $product->get_id() ); ?>" data-site-url="<?php echo get_site_url(); ?>">
+<amp-script src="<?php echo esc_url($variation_js_src);?>">
+<form class="variations_form cart" id="amp_variations" action-xhr="<?php echo  esc_url($actionXhrUrl); ?>" method="post" enctype='multipart/form-data' data-product_id="<?php echo absint( $product->get_id() ); ?>" data-site-url="<?php echo esc_url(get_site_url()); ?>">
   <?php do_action( 'woocommerce_before_variations_form' ); ?>
 
   <?php if ( empty( $available_variations ) && false !== $available_variations ) : ?>
-    <p class="stock out-of-stock"><?php echo esc_html( apply_filters( 'woocommerce_out_of_stock_message', __( 'This product is currently out of stock and unavailable.', 'amp-woocommerce' ) ) ); ?></p>
+    <p class="stock out-of-stock">
+      <?php echo esc_html( apply_filters( 'woocommerce_out_of_stock_message', __( 'This product is currently out of stock and unavailable.', 'amp-woocommerce' ) ) ); ?>
+    </p>
   <?php else : ?>
     <table class="variations" cellspacing="0">
       <tbody>
@@ -100,10 +91,19 @@ do_action( 'woocommerce_before_add_to_cart_form' );
       </tbody>
     </table>
 
-    <div id="var_display_price"  class="single_variation_wrap <?php echo $show_class; ?>">
-      <div class="var_show_price ">
-        <span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol"><?php echo $allStaticData['product']['currency_sym']; ?></span><span id="var_price" ><?php echo $default_varprice; ?></span></span></span>
-      </div>
+   <div id="var_display_price"  class="single_variation_wrap <?php echo esc_attr($show_class); ?>">
+        <div class="var_show_price ">
+          <span class="price">
+            <span class="woocommerce-Price-amount amount">
+              <span class="woocommerce-Price-currencySymbol">
+                <?php echo esc_attr($allStaticData['product']['currency_sym']); ?>
+                </span>
+                <span id="var_price" >
+                  <?php echo esc_attr($default_varprice); ?>
+                </span>
+              </span>
+            </span>
+        </div>
       <?php
         /**
          * Hook: woocommerce_before_single_variation.
@@ -130,11 +130,19 @@ do_action( 'woocommerce_before_add_to_cart_form' );
 
   <?php do_action( 'woocommerce_after_variations_form' ); ?>
     <div submit-success class="amp-form-status-success-new woocommerce-notices-wrapper" >
-        <div class="amp_wc_cart_success woocommerce-message"><?php if (class_exists( 'YITH_WC_Min_Max_Qty_Premium' )) { ?>{{{message}}} <?php }
-          else{echo esc_html__('“'.$allStaticData['product']['name'].'”&nbsp;&nbsp; has been added to your cart&nbsp;','amp-woocommerce');} ?><?php
-          if ( class_exists( 'YITH_WC_Min_Max_Qty_Premium' ) ) { 
+        <div class="amp_wc_cart_success woocommerce-message">
+          <?php if (class_exists( 'YITH_WC_Min_Max_Qty_Premium' )) { ?>
+            {{{message}}} 
+          <?php }
+          else{
+            echo esc_html__('“'.$allStaticData['product']['name'].'”&nbsp;&nbsp; has been added to your cart&nbsp;','amp-woocommerce');
+          } ?>
+          <?php if ( class_exists( 'YITH_WC_Min_Max_Qty_Premium' ) ) { 
             add_filter( 'woocommerce_add_to_cart_validation', array( $this, 'ywmmq_add_to_cart_validation' ), 11, 6 );
-          }else { ?><a class="view_cart_button" href="<?php echo esc_url($cart_url); ?>"><?php echo esc_html__('View Cart','amp-woocommerce'); ?></a><?php } ?> 
+          }else { ?>
+            <a class="view_cart_button" href="<?php echo esc_url($cart_url); ?>">
+              <?php echo esc_html__('View Cart','amp-woocommerce'); ?></a>
+          <?php } ?> 
            </div>
    </div>
   <div submit-error id="add_to_cart_error"  class="woocommerce-notices-wrapper">
@@ -154,8 +162,8 @@ do_action( 'woocommerce_before_add_to_cart_form' );
           <div>{{error_detail}}</div>
          <?php if( !empty($product_sold_indv) && $product_sold_indv == 1 ){ ?>  
          <div class = "sold_individual">     
-        <p style="margin-top: 10px; "> You cannot add another  <?php echo esc_html__($product_name,'amp-woocommerce'); ?> to your cart </p>
-        <a  href="<?php echo $cart_url; ?>" class="button wc-forward" >
+        <p style="margin-top: 10px; "> <?php echo esc_html__('You cannot add another.'.$product_name.' to your cart','amp-woocommerce'); ?></p>
+        <a  href="<?php echo  esc_url($cart_url); ?>" class="button wc-forward" >
               <?php echo esc_html__('View Cart','amp-woocommerce');?>
                 </a> 
                 </div> 

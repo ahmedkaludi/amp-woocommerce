@@ -31,14 +31,16 @@ if ( ! empty( $tabs ) ) : ?>
 	<div class="woocommerce-tabs wc-tabs-wrapper">
 		   <amp-selector class="tabs-with-selector" role="tablist"
         on="select:myTabPanels.toggle(index=event.targetOption, value=true)">
-			<?php $count = 0; foreach ( $tabs as $key => $tab ) : ?>
+			<?php $count = 0; 
+			//print_r($tabs);die;
+			foreach ( $tabs as $key => $tab ) : ?>
 				<?php if($count == 0){
 					$selected = "selected";
 				}else{
 					$selected = "";
 				} ?>
-				<div class="<?php echo esc_attr( $key ); ?>_tab" id="tab-title-<?php echo esc_attr( $key ); ?>" role="tab" aria-controls="tab-<?php echo esc_attr( $key ); ?>" option="<?php echo $count; ?>" <?php echo $selected; ?> >
-			<?php echo apply_filters( 'woocommerce_product_' . $key . '_tab_title', esc_html( $tab['title'] ), $key ); ?>
+				<div class="<?php echo esc_attr( $key ); ?>_tab" id="tab-title-<?php echo esc_attr( $key ); ?>" role="tab" aria-controls="tab-<?php echo esc_attr( $key ); ?>" option="<?php echo absint($count); ?>" <?php echo esc_attr($selected); ?> >
+			<?php echo apply_filters( 'woocommerce_product_' . esc_attr($key) . '_tab_title', esc_html( $tab['title'] ), esc_attr($key) ); ?>
 				</div>
 				<?php $count++; ?>
 			<?php endforeach; ?>
@@ -50,7 +52,7 @@ if ( ! empty( $tabs ) ) : ?>
 				}else{
 					$selected = "";
 				} ?>
-			<div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content wc-tab" id="tab-<?php echo esc_attr( $key ); ?>" role="tabpanel" aria-labelledby="tab-title-<?php echo esc_attr( $key ); ?>" option <?php echo $selected; ?> >
+			<div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content wc-tab" id="tab-<?php echo esc_attr( $key ); ?>" role="tabpanel" aria-labelledby="tab-title-<?php echo esc_attr( $key ); ?>" option <?php echo esc_attr($selected); ?> >
 				<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
 			</div>
 			<?php $count++; ?>

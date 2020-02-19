@@ -3,22 +3,28 @@ add_filter('ampforwp_the_content_last_filter','amp_woo_comment_html');
 
 function amp_woo_comment_html($comments_html){
 
-$submit_url =  admin_url('admin-ajax.php?action=amp_woo_comment_handle'); 
-	   $actionXhrUrl = preg_replace('#^https?:#', '', $submit_url);
-
+  $submit_url =  admin_url('admin-ajax.php?action=amp_woo_comment_handle'); 
+  $actionXhrUrl = preg_replace('#^https?:#', '', $submit_url);
 
         $comments_html = preg_replace('/<form action="(.*?)"(.*?)>/','<form action-xhr="'.esc_url($actionXhrUrl).'"$2>', $comments_html);
         if(preg_match('/<form(.*?)id="commentform"(.*?)<\/form>/s', $comments_html)){
-        $comments_html = preg_replace('/<form(.*?)id="commentform"(.*?)<\/form>/s','<form$1id="commentform"$2<div submit-success>
-				<template type="amp-mustache">
-				 <div class="checkout_form_success" style="color:green;">{{response}}</div>
-				</template>
-			</div>					 
-			<div submit-error>
-				<template type="amp-mustache">
-				 <div class="checkout_form_error" style="color:red;">{{response}}</div>
-				</template>
-			</div></form>',$comments_html);
+        $comments_html = preg_replace('/<form(.*?)id="commentform"(.*?)<\/form>/s','
+          <form$1id="commentform"$2
+            <div submit-success>
+    				 <template type="amp-mustache">
+      				 <div class="checkout_form_success" style="color:green;">
+               {{response}}
+               </div>
+    				</template>
+  			   </div>					 
+  			  <div submit-error>
+    				<template type="amp-mustache">
+    				 <div class="checkout_form_error" style="color:red;">
+             {{response}}
+             </div>
+    				</template>
+			    </div>
+       </form>',$comments_html);
         }
       if(preg_match('/<script>(.*?)<\/script>/s', $comments_html)){
         $comments_html = preg_replace('/<script>(.*?)<\/script>/s', '', $comments_html);
@@ -27,7 +33,7 @@ $submit_url =  admin_url('admin-ajax.php?action=amp_woo_comment_handle');
         $comments_html = preg_replace('/<script\stype="text\/javascript">(.*?)<\/script>/s', '', $comments_html);
       }
 
-         return $comments_html; 
+      return $comments_html; 
 }
 
 
@@ -99,7 +105,6 @@ function amp_woo_comment_handle(){
     $parent_comment = get_comment( $comment_parent );
     $comment_parent = $parent_comment->comment_parent;
   }
- 
   $GLOBALS['comment'] = $comment;
   $GLOBALS['comment_depth'] = $comment_depth;
   $comment_html = $text_data;

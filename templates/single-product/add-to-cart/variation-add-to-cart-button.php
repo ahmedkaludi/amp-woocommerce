@@ -2,9 +2,6 @@
 /**
  * Single variation cart button
  *
- * @see https://docs.woocommerce.com/document/template-structure/
- * @package WooCommerce/Templates
- * @version 3.4.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -45,5 +42,5 @@ $nonce        = wp_create_nonce( 'wc_shop_wpnonce' );
 	<input type="hidden" name="add-to-cart" value="<?php echo absint( $product->get_id() ); ?>" />
 	<input type="hidden" name="product_id" value="<?php echo absint( $product->get_id() ); ?>" />
 	<input type="hidden" name="variation_id" class="variation_id" value="0" />
-	<input type="hidden" id="wc_shop_wpnonce" name="wc_shop_wpnonce" value="<?php echo $nonce; ?>">  
+	<input type="hidden" id="wc_shop_wpnonce" name="wc_shop_wpnonce" value="<?php echo esc_attr($nonce); ?>">  
 </div>

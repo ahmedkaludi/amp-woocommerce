@@ -51,13 +51,13 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
                 $class="show fadeIn";
                 if($allStaticData['product']['product_type'] == "variable"){
                   $swatch_src = 'data-openbracksrcclosebrack = "(product'.$vriant_attrbtes_bind.'.swatch_image.bigswatch_url)? product'.$vriant_attrbtes_bind.'.swatch_image.bigswatch_url:\''.esc_url($gallery[0]).'\'"'; 
-                  $swatch_width = 'data-openbrackwidthclosebrack = "((product'.$vriant_attrbtes_bind.'.swatch_image.bigswatch_url))?494:'.$default_width.'"'; 
-                  $swatch_height = 'data-openbrackheightclosebrack = "((product'.$vriant_attrbtes_bind.'.swatch_image.bigswatch_url))?product'.$vriant_attrbtes_bind.'.swatch_image.height:'.$default_height.'"';
+                  $swatch_width = 'data-openbrackwidthclosebrack = "((product'.$vriant_attrbtes_bind.'.swatch_image.bigswatch_url))?494:'.absint($default_width).'"'; 
+                  $swatch_height = 'data-openbrackheightclosebrack = "((product'.$vriant_attrbtes_bind.'.swatch_image.bigswatch_url))?product'.$vriant_attrbtes_bind.'.swatch_image.height:'.absint($default_height).'"';
                   } 
             }
           if($gallery[0] != NULL) { ?>
             <amp-img  src="<?php echo esc_url($gallery[0]); ?>" <?php echo  $swatch_src;
-            echo $swatch_height; ?>   width="<?php echo esc_attr($gallery[1]); ?>" class="<?php echo $class; ?>" data-openbrackclassclosebrack="(+product.selectedImage)==<?php echo $key; ?> ? 'show fadeIn' : 'hide'" height="<?php echo esc_attr($gallery[2]); ?>" layout=responsive></amp-img> 
+            echo $swatch_height; ?>   width="<?php echo esc_attr($gallery[1]); ?>" class="<?php echo esc_attr($class); ?>" data-openbrackclassclosebrack="(+product.selectedImage)==<?php echo absint($key); ?> ? 'show fadeIn' : 'hide'" height="<?php echo esc_attr($gallery[2]); ?>" layout=responsive></amp-img> 
           <?php } 
           else{ 
             $placeholder_url = AMP_WOO_PLUGIN_URI.'assets/placeholder.png';  ?>
